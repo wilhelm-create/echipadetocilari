@@ -1,0 +1,104 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileStickyCta from '../components/MobileStickyCta.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { business } from '../data/business';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  schemas?: Record<string, unknown>[];
+  datePublished?: string;
+  dateModified?: string;
+}
+
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  ogImage = '/images/Logo_Echipa_de_Tocilari-1024x1024.webp',
+  type = 'website',
+  noindex = false,
+  schemas = [],
+  datePublished,
+  dateModified,
+} = Astro.props;
+
+const site = Astro.site?.href?.replace(/\/$/, '') || business.url;
+const canonical = new URL(canonicalPath, site + '/').href;
+const ogImageAbs = ogImage.startsWith('http') ? ogImage : new URL(ogImage, site + '/').href;
+const fullTitle = title.includes(business.name) ? title : `${title} · ${business.name}`;
+---
+
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {
+      noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
+      )
+    }
+
+    <meta property="og:locale" content="ro_RO" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:image" content={ogImageAbs} />
+    {datePublished && <meta property="article:published_time" content={datePublished} />}
+    {dateModified && <meta property="article:modified_time" content={dateModified} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbs} />
+
+    <meta name="theme-color" content="#fd8649" />
+    <link rel="icon" type="image/png" href="/images/Copie-a-fisierului-echipadetocilari-logo-pe-diforma-portocalie1.png" />
+    <link rel="apple-touch-icon" href="/images/Logo_Echipa_de_Tocilari-1024x1024.webp" />
+
+    <!-- Fonts: display + UI + body — display swap for LCP/CLS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+
+    <slot name="head" />
+    <JsonLd schemas={schemas} />
+  </head>
+  <body class="min-h-dvh flex flex-col pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-lg"
+    >
+      Sari la conținut
+    </a>
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <MobileStickyCta />
+  </body>
+</html>

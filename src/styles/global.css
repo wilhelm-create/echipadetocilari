@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/* Brand tokens — matched from original Elementor palette */
+@theme {
+  --color-brand: #fd8649;
+  --color-brand-dark: #ff6c2a;
+  --color-brand-deeper: #ff5600;
+  --color-brand-soft: #ff9762;
+  --color-brand-pale: #ffbc7d;
+  --color-accent-green: #34b233;
+  --color-ink: #27272d;
+  --color-ink-soft: #3d4459;
+  --color-muted: #5b6575;
+  --color-muted-light: #828282;
+  --color-surface: #fcfcfc;
+  --color-surface-2: #f9f9f9;
+  --font-display: "Varela Round", system-ui, sans-serif;
+  --font-sans: "Montserrat", system-ui, sans-serif;
+  --font-body: "Noto Sans", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-white text-ink font-body antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink font-normal tracking-tight;
+  }
+
+  p {
+    @apply text-ink-soft leading-relaxed;
+  }
+
+  /* 16px min on form controls — prevents iOS zoom */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-brand {
+    background: linear-gradient(135deg, #ff6c2a 0%, #fd8649 45%, #ff9762 100%);
+  }
+
+  .gradient-brand-soft {
+    background: linear-gradient(180deg, rgba(253, 134, 73, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .shadow-brand {
+    box-shadow: 0 12px 40px -12px rgba(253, 134, 73, 0.45);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #ff6c2a 0%, #fd8649 45%, #ff9762 100%);
+    box-shadow: 0 12px 40px -12px rgba(253, 134, 73, 0.45);
+    transition: filter 0.2s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover {
+    filter: brightness(1.05);
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 2px solid var(--color-brand);
+    background: #fff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-brand-dark);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-secondary:hover {
+    background: color-mix(in srgb, var(--color-brand) 8%, white);
+  }
+  .btn-secondary:active {
+    transform: scale(0.98);
+  }
+
+  .section-pad {
+    @apply py-14 sm:py-16 lg:py-20;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand-dark sm:text-sm;
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-black/5 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-transform duration-200 hover:-translate-y-0.5;
+  }
+}
+
+/* Fade-up on view — CSS only, no heavy JS */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: fade-up 0.6s ease-out both;
+}
+
+.reveal-delay-1 {
+  animation-delay: 0.08s;
+}
+.reveal-delay-2 {
+  animation-delay: 0.16s;
+}
+.reveal-delay-3 {
+  animation-delay: 0.24s;
+}

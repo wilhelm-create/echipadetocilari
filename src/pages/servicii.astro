@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { services } from '../data/business';
+import { organizationSchema, webPageSchema, breadcrumbSchema } from '../lib/schema';
+
+const title = 'Servicii de marketing digital';
+const description =
+  'Servicii complete: creare site web, SEO, administrare, PPC, logo design și copywriting. Alege pachetul potrivit cu Echipa de Tocilari.';
+
+const schemas = [
+  organizationSchema(),
+  webPageSchema({ path: '/servicii/', name: title, description }),
+  breadcrumbSchema([
+    { name: 'Acasă', path: '/' },
+    { name: 'Servicii', path: '/servicii/' },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/servicii/" schemas={schemas}>
+  <section class="section-pad gradient-brand-soft">
+    <div class="container-page max-w-3xl text-center">
+      <p class="eyebrow mb-2">Ce facem</p>
+      <h1 class="mb-4 text-4xl sm:text-5xl">Servicii de marketing digital</h1>
+      <p class="text-lg text-ink-soft">
+        <strong class="text-ink">Răspuns direct:</strong> acoperim lanțul de la site la trafic și
+        conversie — web, SEO, ads, brand și texte — ca să nu jonglezi cu 5 furnizori nealiniați.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-page grid gap-6 sm:grid-cols-2">
+      {
+        services.map((s) => (
+          <article id={s.slug} class="card-surface scroll-mt-28">
+            <h2 class="mb-2 text-2xl text-brand-dark">
+              <a href={s.href} class="hover:underline">
+                {s.title}
+              </a>
+            </h2>
+            <p class="mb-3 text-ink-soft">{s.answer}</p>
+            <p class="text-sm text-muted">{s.short}</p>
+            <a
+              href={s.href.startsWith('/servicii') ? '/contact/#formular' : s.href}
+              class="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-brand-dark"
+            >
+              Detalii / ofertă →
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <ContactForm />
+</BaseLayout>

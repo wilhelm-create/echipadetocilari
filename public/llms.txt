@@ -1,0 +1,20 @@
+# Echipa de Tocilari
+
+> Agenție de marketing digital din România: creare site web, SEO, mentenanță, PPC, logo design și copywriting.
+
+## Pagini principale
+
+- [Acasă](https://www.echipadetocilari.ro/): prezentare agenție și servicii
+- [Creare site web](https://www.echipadetocilari.ro/creare-site-web/): landing, prezentare, e-commerce
+- [Servicii SEO](https://www.echipadetocilari.ro/servicii-seo/): audit, on-page, off-page, monitorizare
+- [Administrare site](https://www.echipadetocilari.ro/administrare-site/): mentenanță lunară
+- [Servicii](https://www.echipadetocilari.ro/servicii/): listă completă servicii
+- [Portofoliu](https://www.echipadetocilari.ro/portofoliu/): direcții de design
+- [Despre noi](https://www.echipadetocilari.ro/despre-noi/): cine suntem
+- [Contact](https://www.echipadetocilari.ro/contact/): consultație gratuită 30 min
+
+## Contact
+
+- Email: contact@echipadetocilari.ro
+- Zonă: România (remote)
+- Program: Luni–Duminică 09:00–17:00

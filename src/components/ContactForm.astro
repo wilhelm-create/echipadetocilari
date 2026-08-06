@@ -1,0 +1,105 @@
+---
+import { business } from '../data/business';
+
+interface Props {
+  id?: string;
+  compact?: boolean;
+}
+const { id = 'formular', compact = false } = Astro.props;
+---
+
+<section id={id} class:list={['section-pad', compact ? 'bg-white' : 'gradient-brand-soft']}>
+  <div class="container-page">
+    <div class:list={['mx-auto max-w-2xl', !compact && 'card-surface sm:p-10']}>
+      <p class="eyebrow mb-2">Scrie-ne un mesaj astăzi</p>
+      <h2 class="mb-2 text-3xl sm:text-4xl">Hai să vorbim despre proiectul tău</h2>
+      <p class="mb-8 text-ink-soft">
+        Completează formularul — îți răspundem cu pașii concreți și o consultație gratuită de 30 de
+        minute. Fără obligații.
+      </p>
+
+      <!-- formsubmit.co: zero backend; change email in business.ts -->
+      <form
+        class="grid gap-4"
+        method="POST"
+        action={`https://formsubmit.co/${business.email}`}
+      >
+        <input type="hidden" name="_subject" value="Lead nou — Echipa de Tocilari" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-semibold text-ink">Nume *</span>
+            <input
+              type="text"
+              name="name"
+              required
+              autocomplete="name"
+              class="min-h-12 w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30"
+              placeholder="Numele tău"
+            />
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-semibold text-ink">Email *</span>
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              inputmode="email"
+              class="min-h-12 w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30"
+              placeholder="email@companie.ro"
+            />
+          </label>
+        </div>
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold text-ink">Telefon</span>
+          <input
+            type="tel"
+            name="phone"
+            autocomplete="tel"
+            inputmode="tel"
+            class="min-h-12 w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30"
+            placeholder="07xx xxx xxx"
+          />
+        </label>
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold text-ink">Serviciu de interes</span>
+          <select
+            name="service"
+            class="min-h-12 w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30"
+          >
+            <option value="">Alege un serviciu</option>
+            <option>Creare site web</option>
+            <option>Servicii SEO</option>
+            <option>Administrare / mentenanță</option>
+            <option>PPC</option>
+            <option>Logo & branding</option>
+            <option>Copywriting</option>
+            <option>Altceva / nu știu încă</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold text-ink">Mesaj *</span>
+          <textarea
+            name="message"
+            required
+            rows="5"
+            class="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30"
+            placeholder="Spune-ne pe scurt ce vrei să obții (site nou, mai mult trafic, magazin online…)"
+          ></textarea>
+        </label>
+        <button type="submit" class="btn-primary w-full sm:w-auto">Trimite mesajul</button>
+        <p class="text-xs text-muted">
+          Prin trimitere ești de acord să te contactăm în legătură cu cererea ta. Nu vindem datele
+          tale. Alternativ:{' '}
+          <a class="font-semibold text-brand-dark underline" href={`mailto:${business.email}`}>
+            {business.email}
+          </a>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

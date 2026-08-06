@@ -1,0 +1,99 @@
+---
+import { business, nav, services } from '../data/business';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-black/5 bg-ink text-white">
+  <div class="container-page section-pad">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <div class="space-y-4 lg:col-span-1">
+        <a href="/" class="inline-flex items-center gap-3">
+          <img
+            src="/images/Logo_Echipa_de_Tocilari-e1708028624694.webp"
+            alt=""
+            width="48"
+            height="48"
+            class="h-12 w-12 rounded-full bg-white object-contain p-1"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="font-display text-lg">{business.name}</span>
+        </a>
+        <p class="text-sm leading-relaxed text-white/75">
+          {business.description}
+        </p>
+        <p class="text-sm text-white/60">
+          <span class="block font-semibold text-white/90">Zonă deservită</span>
+          {business.areaServed} · online & remote
+        </p>
+        {
+          business.email && (
+            <a
+              href={`mailto:${business.email}`}
+              class="inline-flex min-h-11 items-center text-sm font-semibold text-brand-pale hover:text-white"
+            >
+              {business.email}
+            </a>
+          )
+        }
+      </div>
+
+      <div>
+        <h2 class="mb-4 font-display text-lg text-white">Navigare</h2>
+        <ul class="space-y-2">
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="inline-flex min-h-10 items-center text-sm text-white/75 transition hover:text-brand-pale"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="mb-4 font-display text-lg text-white">Servicii</h2>
+        <ul class="space-y-2">
+          {
+            services.slice(0, 6).map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  class="inline-flex min-h-10 items-center text-sm text-white/75 transition hover:text-brand-pale"
+                >
+                  {s.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="mb-4 font-display text-lg text-white">Hai să vorbim</h2>
+        <p class="mb-4 text-sm text-white/75">
+          Consultație gratuită de 30 de minute. Îți spunem ce merită prioritate pentru afacerea ta.
+        </p>
+        <a href="/contact/#formular" class="btn-primary w-full sm:w-auto">Programează consultația</a>
+        <p class="mt-4 text-xs text-white/50">{business.hours}</p>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {business.name}. Toate drepturile rezervate.</p>
+      <p>
+        <span class="text-white/40">NAP:</span>
+        {business.name}
+        {business.email ? ` · ${business.email}` : ''}
+        · {business.areaServed}
+      </p>
+    </div>
+  </div>
+</footer>

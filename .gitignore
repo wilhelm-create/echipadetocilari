@@ -1,0 +1,30 @@
+# build
+dist/
+.output/
+.vercel/
+.netlify/
+
+# deps
+node_modules/
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs / OS
+*.log
+.DS_Store
+Thumbs.db
+
+# editor
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# local mirror of original WP site (large, not needed in deploy)
+legacy-mirror/
+scripts/content-extract.txt
+
+# misc
+.astro/
