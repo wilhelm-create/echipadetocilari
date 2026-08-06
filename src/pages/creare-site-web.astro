@@ -56,7 +56,7 @@ const schemas = [
 >
   <section class="section-pad gradient-brand-soft">
     <div class="container-page grid items-center gap-10 lg:grid-cols-2">
-      <div>
+      <div data-animate="fade-left">
         <p class="eyebrow mb-2">Transformă viziunea digitală în realitate</p>
         <h1 class="mb-4 text-4xl sm:text-5xl">Creare site web</h1>
         <p class="mb-4 text-lg text-ink-soft">
@@ -69,31 +69,33 @@ const schemas = [
           un brand sau un proiect personal, ne ocupăm de design, structură și tehnologie ca tu să
           te concentrezi pe clienți.
         </p>
-        <a href="/contact/#formular" class="btn-primary">Cere o ofertă gratuită</a>
+        <a href="/contact/#formular" class="btn-primary anim-pulse-cta">Cere o ofertă gratuită</a>
       </div>
-      <img
-        src="/images/vr-768x905.webp"
-        alt="Creare site web modern — Echipa de Tocilari"
-        width="768"
-        height="905"
-        class="mx-auto max-h-[28rem] w-auto object-contain"
-        fetchpriority="high"
-        decoding="async"
-      />
+      <div class="anim-float" data-animate="zoom-in" data-stagger="2">
+        <img
+          src="/images/vr-768x905.webp"
+          alt="Creare site web modern — Echipa de Tocilari"
+          width="768"
+          height="905"
+          class="mx-auto max-h-[28rem] w-auto object-contain"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
     </div>
   </section>
 
   <section class="section-pad">
     <div class="container-page">
-      <h2 class="mb-3 text-center text-3xl sm:text-4xl">Prezența online contează</h2>
-      <p class="mx-auto mb-10 max-w-2xl text-center text-ink-soft">
+      <h2 class="mb-3 text-center text-3xl sm:text-4xl" data-animate="fade-up">Prezența online contează</h2>
+      <p class="mx-auto mb-10 max-w-2xl text-center text-ink-soft" data-animate="fade-up" data-stagger="2">
         Expertiza noastră, site-ul tău — fără stres. Alegem tipul de proiect după obiectivul real
         (lead-uri, brand, vânzări), nu după „ce e la modă”.
       </p>
       <div class="grid gap-6 md:grid-cols-3">
         {
-          types.map((t) => (
-            <article class="card-surface">
+          types.map((t, i) => (
+            <article class="card-surface" data-animate="fade-up" data-stagger={String(i + 1)}>
               <h3 class="mb-3 text-xl text-brand-dark">{t.title}</h3>
               <p class="text-sm leading-relaxed text-ink-soft">{t.body}</p>
             </article>

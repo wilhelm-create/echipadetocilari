@@ -33,8 +33,13 @@ const schemas = [
   <section class="section-pad">
     <div class="container-page grid gap-6 sm:grid-cols-2">
       {
-        services.map((s) => (
-          <article id={s.slug} class="card-surface scroll-mt-28">
+        services.map((s, i) => (
+          <article
+            id={s.slug}
+            class="card-surface scroll-mt-28"
+            data-animate="fade-up"
+            data-stagger={String((i % 2) + 1)}
+          >
             <h2 class="mb-2 text-2xl text-brand-dark">
               <a href={s.href} class="hover:underline">
                 {s.title}

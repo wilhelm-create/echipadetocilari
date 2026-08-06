@@ -79,7 +79,7 @@ const schemas = [
 >
   <section class="section-pad gradient-brand-soft">
     <div class="container-page grid items-center gap-10 lg:grid-cols-2">
-      <div>
+      <div data-animate="fade-left">
         <p class="eyebrow mb-2">Depășește-ți concurența</p>
         <h1 class="mb-4 text-4xl sm:text-5xl">Servicii SEO</h1>
         <p class="mb-4 text-lg text-ink-soft">
@@ -91,17 +91,19 @@ const schemas = [
           Convertim vizitatorii în clienți și maximizăm traficul pe site. Un impuls real pentru
           prezența online, fără dependență exclusivă de reclame plătite.
         </p>
-        <a href="/contact/#formular" class="btn-primary">Vorbește cu un specialist SEO</a>
+        <a href="/contact/#formular" class="btn-primary anim-pulse-cta">Vorbește cu un specialist SEO</a>
       </div>
-      <img
-        src="/images/servicii-seo-boost-afacere.png"
-        alt="Boost afacere cu servicii SEO"
-        width="800"
-        height="600"
-        class="rounded-2xl shadow-lg"
-        fetchpriority="high"
-        decoding="async"
-      />
+      <div class="anim-float" data-animate="fade-right" data-stagger="2">
+        <img
+          src="/images/servicii-seo-boost-afacere.png"
+          alt="Boost afacere cu servicii SEO"
+          width="800"
+          height="600"
+          class="rounded-2xl shadow-lg"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
     </div>
   </section>
 
@@ -122,8 +124,8 @@ const schemas = [
       <h2 class="mb-8 text-center text-3xl sm:text-4xl">Procesul nostru de optimizare SEO</h2>
       <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {
-          steps.map((s) => (
-            <li class="card-surface">
+          steps.map((s, i) => (
+            <li class="card-surface" data-animate="fade-up" data-stagger={String((i % 3) + 1)}>
               <h3 class="mb-2 text-lg text-brand-dark">{s.t}</h3>
               <p class="text-sm text-ink-soft">{s.d}</p>
             </li>

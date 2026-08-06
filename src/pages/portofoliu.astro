@@ -42,14 +42,18 @@ const schemas = [
             { img: '/images/click.png', label: 'Landing pages de conversie' },
             { img: '/images/Tocilar-creare-site-web.webp', label: 'Web design custom' },
             { img: '/images/About-Page-intro-pic.png', label: 'Pagini despre brand' },
-          ].map((item) => (
-            <figure class="card-surface overflow-hidden !p-0">
+          ].map((item, i) => (
+            <figure
+              class="card-surface group overflow-hidden !p-0"
+              data-animate="zoom-in"
+              data-stagger={String((i % 3) + 1)}
+            >
               <img
                 src={item.img}
                 alt={item.label}
                 width="640"
                 height="480"
-                class="aspect-[4/3] w-full object-cover"
+                class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
               />
