@@ -84,6 +84,8 @@ const fullTitle = title.includes(business.name) ? title : `${title} · ${busines
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Varela+Round&display=swap"
       rel="stylesheet"
     />
+    <!-- Motion: plain CSS (scroll/float/lottie helpers) — not bundled by Tailwind -->
+    <link rel="stylesheet" href="/css/motion.css" />
 
     <slot name="head" />
     <JsonLd schemas={schemas} />

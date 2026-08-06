@@ -1,0 +1,185 @@
+/* Motion — plain CSS, not processed by Tailwind */
+
+@keyframes ect-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 36px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ect-fade-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-40px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ect-fade-right {
+  from {
+    opacity: 0;
+    transform: translate3d(40px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ect-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ect-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0);
+  }
+}
+
+@keyframes ect-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 12px 40px -12px rgba(253, 134, 73, 0.45);
+  }
+  50% {
+    transform: scale(1.035);
+    box-shadow: 0 18px 50px -8px rgba(253, 134, 73, 0.7);
+  }
+}
+
+@keyframes ect-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes ect-grow {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes ect-failsafe-show {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Start hidden */
+[data-animate],
+.reveal {
+  opacity: 0;
+  will-change: opacity, transform;
+  /* If JS never runs, become visible after 2.5s */
+  animation: ect-failsafe-show 0.4s ease 2.5s forwards;
+}
+
+/* JS reveal — full shorthand resets failsafe delay */
+[data-animate='fade-up'].is-inview,
+.reveal.is-inview {
+  animation: ect-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+[data-animate='fade-left'].is-inview {
+  animation: ect-fade-left 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+[data-animate='fade-right'].is-inview {
+  animation: ect-fade-right 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+[data-animate='zoom-in'].is-inview {
+  animation: ect-zoom-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* default if data-animate has other/empty value */
+[data-animate].is-inview:not([data-animate='fade-left']):not([data-animate='fade-right']):not(
+    [data-animate='zoom-in']
+  ) {
+  animation: ect-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Continuous loops */
+.anim-float {
+  animation: ect-float 4s ease-in-out infinite !important;
+}
+.anim-pulse-cta {
+  animation: ect-pulse 2.2s ease-in-out infinite !important;
+}
+.anim-gradient {
+  background-image: linear-gradient(120deg, #ff5600, #fd8649, #ff9762, #ff6c2a, #fd8649) !important;
+  background-size: 200% 200% !important;
+  animation: ect-shimmer 7s ease infinite !important;
+}
+.anim-grow-icon {
+  animation: ect-grow 2.5s ease-in-out infinite !important;
+}
+
+.card-surface {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+}
+@media (hover: hover) {
+  .card-surface:hover {
+    transform: translateY(-8px) scale(1.025);
+    box-shadow: 0 20px 44px -12px rgba(253, 134, 73, 0.32);
+  }
+}
+
+.lottie-host {
+  width: 100%;
+  max-width: 100%;
+  min-height: 140px;
+  margin-inline: auto;
+}
+.lottie-host svg {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+/* Reduced motion: show content, stop loops only */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate],
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .anim-float,
+  .anim-pulse-cta,
+  .anim-gradient,
+  .anim-grow-icon {
+    animation: none !important;
+  }
+  .card-surface:hover {
+    transform: none;
+  }
+}
