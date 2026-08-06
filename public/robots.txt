@@ -1,26 +1,35 @@
+# Staging / Vercel preview — not for search engines.
+# When launching the real domain, set PUBLIC_INDEXABLE=true and restore Allow + Sitemap.
+
 User-agent: *
-Allow: /
+Disallow: /
 
-# AI / answer-engine crawlers — keep allowed for AEO citations
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Googlebot-Image
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
 User-agent: GPTBot
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
+Disallow: /
 
 User-agent: ChatGPT-User
-Allow: /
+Disallow: /
 
 User-agent: ClaudeBot
-Allow: /
+Disallow: /
 
 User-agent: PerplexityBot
-Allow: /
+Disallow: /
 
 User-agent: Google-Extended
-Allow: /
+Disallow: /
 
 User-agent: Applebot-Extended
-Allow: /
+Disallow: /
 
-Sitemap: https://www.echipadetocilari.ro/sitemap-index.xml
+User-agent: Bytespider
+Disallow: /

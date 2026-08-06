@@ -31,6 +31,10 @@ const {
   dateModified,
 } = Astro.props;
 
+// Staging default: not indexable. Set PUBLIC_INDEXABLE=true only for the real domain launch.
+const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
+const blockIndexing = noindex || !indexable;
+
 const site = Astro.site?.href?.replace(/\/$/, '') || business.url;
 const canonical = new URL(canonicalPath, site + '/').href;
 const ogImageAbs = ogImage.startsWith('http') ? ogImage : new URL(ogImage, site + '/').href;
@@ -46,15 +50,21 @@ const fullTitle = title.includes(business.name) ? title : `${title} · ${busines
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
     {
-      noindex ? (
-        <meta name="robots" content="noindex, nofollow" />
+      blockIndexing ? (
+        <>
+          <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+          <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+          <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet" />
+        </>
       ) : (
-        <meta
-          name="robots"
-          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-        />
+        <>
+          <link rel="canonical" href={canonical} />
+          <meta
+            name="robots"
+            content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          />
+        </>
       )
     }
 

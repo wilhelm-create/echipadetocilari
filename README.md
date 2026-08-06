@@ -32,7 +32,8 @@ npm run preview
 
 - Brand / NAP / email: `src/data/business.ts`
 - FAQ: `src/data/faqs.ts`
-- Site URL: `PUBLIC_SITE_URL` (vezi `.env.example`)
+- Site URL: `PUBLIC_SITE_URL`
+- **Indexare:** implicit **blocată** (`noindex` + `robots.txt` Disallow + `X-Robots-Tag`). Pentru lansare publică: set `PUBLIC_INDEXABLE=true` pe Vercel și actualizează `public/robots.txt` (Allow + Sitemap).
 
 ## Note
 
