@@ -31,39 +31,20 @@ const schemas = [
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/" schemas={schemas}>
-  <!-- HERO -->
+  <!-- HERO — mobile: logo first (like brand site), text always visible -->
   <section class="relative overflow-hidden gradient-brand-soft">
     <div
       class="pointer-events-none absolute inset-0 opacity-40"
       style="background-image: url('/images/BG-HomePage-High.png'); background-size: cover; background-position: center;"
       aria-hidden="true"
     ></div>
-    <div class="container-page relative grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-2 lg:gap-12 lg:py-20">
-      <div data-animate="fade-up">
-        <p class="eyebrow mb-3">Agenție web design & marketing digital</p>
-        <h1 class="mb-4 text-4xl leading-tight text-balance sm:text-5xl lg:text-[3.25rem]">
-          Marketing online făcut de <span class="text-brand-dark">tocilari</span>!
-        </h1>
-        <p class="mb-4 max-w-xl text-lg text-ink-soft">
-          Suntem nerdy, suntem pricepuți și suntem gata să-ți oferim soluțiile de marketing online
-          de care afacerea ta are nevoie — site rapid, SEO care rankează și campanii care convertesc.
-        </p>
-        <p class="mb-8 max-w-xl text-base text-muted">
-          <strong class="text-ink">Răspuns direct:</strong> {business.name} este agenția de
-          marketing digital din România care construiește prezența online (web + SEO + ads) pentru
-          afaceri care vor rezultate măsurabile, nu doar „prezență pe internet”.
-        </p>
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <a href="#formular" class="btn-primary anim-pulse-cta">
-            Participă la o consultație <strong class="ml-1">GRATUITĂ</strong> de 30 min
-          </a>
-          <a href="/servicii/" class="btn-secondary">Vezi serviciile</a>
-        </div>
-      </div>
+    <div
+      class="container-page relative grid items-center gap-8 py-10 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:gap-12 lg:py-20"
+    >
+      <!-- Visual first on mobile -->
       <div
-        class="relative mx-auto w-full max-w-md lg:max-w-none"
-        data-animate="zoom-in"
-        data-stagger="2"
+        class="relative order-1 mx-auto w-full max-w-[280px] sm:max-w-md lg:order-2 lg:max-w-none"
+        data-animate-hero="zoom"
       >
         <div class="anim-float">
           <img
@@ -71,13 +52,37 @@ const schemas = [
             alt={`${business.name} — logo agenție marketing digital`}
             width="836"
             height="870"
-            class="mx-auto h-auto w-full max-w-sm drop-shadow-2xl lg:max-w-md"
+            class="mx-auto h-auto w-full drop-shadow-2xl"
             fetchpriority="high"
             decoding="async"
           />
         </div>
-        <div class="pointer-events-none absolute -bottom-4 -right-2 w-28 sm:w-36 lg:w-44 opacity-90">
+        <div
+          class="pointer-events-none absolute -bottom-2 -right-1 w-24 sm:-bottom-4 sm:-right-2 sm:w-36 lg:w-44"
+        >
           <Lottie src="/lottie/services.json" label="Animație decorativă" aspect="1 / 1" />
+        </div>
+      </div>
+
+      <div class="order-2 text-center lg:order-1 lg:text-left" data-animate-hero>
+        <p class="eyebrow mb-3">Agenție web design & marketing digital</p>
+        <h1 class="mb-4 text-3xl leading-tight text-balance sm:text-5xl lg:text-[3.25rem]">
+          Marketing online făcut de <span class="text-brand-dark">tocilari</span>!
+        </h1>
+        <p class="mx-auto mb-4 max-w-xl text-base text-ink-soft sm:text-lg lg:mx-0">
+          Suntem nerdy, suntem pricepuți și suntem gata să-ți oferim soluțiile de marketing online
+          de care afacerea ta are nevoie — site rapid, SEO care rankează și campanii care convertesc.
+        </p>
+        <p class="mx-auto mb-8 max-w-xl text-sm text-muted sm:text-base lg:mx-0">
+          <strong class="text-ink">Răspuns direct:</strong> {business.name} este agenția de
+          marketing digital din România care construiește prezența online (web + SEO + ads) pentru
+          afaceri care vor rezultate măsurabile.
+        </p>
+        <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+          <a href="#formular" class="btn-primary anim-pulse-cta">
+            Consultație <strong class="ml-1">GRATUITĂ</strong> · 30 min
+          </a>
+          <a href="/servicii/" class="btn-secondary">Vezi serviciile</a>
         </div>
       </div>
     </div>

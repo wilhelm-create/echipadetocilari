@@ -1,45 +1,40 @@
-/* Motion — plain CSS, not processed by Tailwind */
+/* Motion — NEVER hide content with opacity:0 (that broke mobile hero).
+   Animate only transform/filter; text always readable. */
 
-@keyframes ect-fade-up {
+@keyframes ect-rise {
   from {
-    opacity: 0;
-    transform: translate3d(0, 36px, 0);
+    transform: translate3d(0, 28px, 0);
+    filter: blur(2px);
   }
   to {
-    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes ect-from-left {
+  from {
+    transform: translate3d(-28px, 0, 0);
+  }
+  to {
     transform: translate3d(0, 0, 0);
   }
 }
 
-@keyframes ect-fade-left {
+@keyframes ect-from-right {
   from {
-    opacity: 0;
-    transform: translate3d(-40px, 0, 0);
+    transform: translate3d(28px, 0, 0);
   }
   to {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
 
-@keyframes ect-fade-right {
+@keyframes ect-pop {
   from {
-    opacity: 0;
-    transform: translate3d(40px, 0, 0);
+    transform: scale(0.92);
   }
   to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes ect-zoom-in {
-  from {
-    opacity: 0;
-    transform: scale(0.86);
-  }
-  to {
-    opacity: 1;
     transform: scale(1);
   }
 }
@@ -50,7 +45,7 @@
     transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translate3d(0, -18px, 0);
+    transform: translate3d(0, -16px, 0);
   }
 }
 
@@ -61,8 +56,8 @@
     box-shadow: 0 12px 40px -12px rgba(253, 134, 73, 0.45);
   }
   50% {
-    transform: scale(1.035);
-    box-shadow: 0 18px 50px -8px rgba(253, 134, 73, 0.7);
+    transform: scale(1.04);
+    box-shadow: 0 18px 50px -8px rgba(253, 134, 73, 0.75);
   }
 }
 
@@ -88,57 +83,64 @@
   }
 }
 
-@keyframes ect-failsafe-show {
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* Start hidden */
+/* Content ALWAYS visible — only motion when .is-inview */
 [data-animate],
 .reveal {
-  opacity: 0;
-  will-change: opacity, transform;
-  /* If JS never runs, become visible after 2.5s */
-  animation: ect-failsafe-show 0.4s ease 2.5s forwards;
+  opacity: 1;
+  will-change: transform, filter;
 }
 
-/* JS reveal — full shorthand resets failsafe delay */
-[data-animate='fade-up'].is-inview,
+[data-animate].is-inview,
 .reveal.is-inview {
-  animation: ect-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
 }
-[data-animate='fade-left'].is-inview {
-  animation: ect-fade-left 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-[data-animate='fade-right'].is-inview {
-  animation: ect-fade-right 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-[data-animate='zoom-in'].is-inview {
-  animation: ect-zoom-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-/* default if data-animate has other/empty value */
+
+[data-animate='fade-up'].is-inview,
+.reveal.is-inview,
 [data-animate].is-inview:not([data-animate='fade-left']):not([data-animate='fade-right']):not(
     [data-animate='zoom-in']
   ) {
-  animation: ect-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-name: ect-rise;
 }
 
-/* Continuous loops */
+[data-animate='fade-left'].is-inview {
+  animation-name: ect-from-left;
+}
+
+[data-animate='fade-right'].is-inview {
+  animation-name: ect-from-right;
+}
+
+[data-animate='zoom-in'].is-inview {
+  animation-name: ect-pop;
+}
+
+/* Hero: play immediately without waiting for IO (above the fold) */
+[data-animate-hero] {
+  opacity: 1;
+  animation: ect-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+[data-animate-hero='zoom'] {
+  animation-name: ect-pop;
+  animation-delay: 0.12s;
+}
+
+/* Continuous loops — always on */
 .anim-float {
-  animation: ect-float 4s ease-in-out infinite !important;
+  animation: ect-float 4s ease-in-out infinite;
 }
 .anim-pulse-cta {
-  animation: ect-pulse 2.2s ease-in-out infinite !important;
+  animation: ect-pulse 2.2s ease-in-out infinite;
 }
 .anim-gradient {
-  background-image: linear-gradient(120deg, #ff5600, #fd8649, #ff9762, #ff6c2a, #fd8649) !important;
-  background-size: 200% 200% !important;
-  animation: ect-shimmer 7s ease infinite !important;
+  background-image: linear-gradient(120deg, #ff5600, #fd8649, #ff9762, #ff6c2a, #fd8649);
+  background-size: 200% 200%;
+  animation: ect-shimmer 7s ease infinite;
 }
 .anim-grow-icon {
-  animation: ect-grow 2.5s ease-in-out infinite !important;
+  animation: ect-grow 2.5s ease-in-out infinite;
 }
 
 .card-surface {
@@ -156,8 +158,9 @@
 .lottie-host {
   width: 100%;
   max-width: 100%;
-  min-height: 140px;
+  min-height: 100px;
   margin-inline: auto;
+  pointer-events: none;
 }
 .lottie-host svg {
   width: 100% !important;
@@ -165,21 +168,16 @@
   display: block;
 }
 
-/* Reduced motion: show content, stop loops only */
 @media (prefers-reduced-motion: reduce) {
   [data-animate],
-  .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
+  [data-animate-hero],
+  .reveal,
   .anim-float,
   .anim-pulse-cta,
   .anim-gradient,
   .anim-grow-icon {
     animation: none !important;
-  }
-  .card-surface:hover {
-    transform: none;
+    filter: none !important;
+    transform: none !important;
   }
 }

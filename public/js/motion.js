@@ -1,6 +1,5 @@
 /**
- * Scroll reveals + Lottie — plain IIFE, no bundler, no circular deps.
- * Loaded as classic <script defer src="/js/motion.js">
+ * Scroll reveals + Lottie. Content is never hidden — only transform animations.
  */
 (function () {
   'use strict';
@@ -25,11 +24,24 @@
     var nodes = document.querySelectorAll(SELECTOR);
     if (!nodes.length) return;
 
-    // Always show content eventually (a11y + no-JS-failsafe already in CSS)
+    // Mark everything currently in viewport immediately
+    function revealVisible() {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      nodes.forEach(function (el) {
+        var rect = el.getBoundingClientRect();
+        // partially visible
+        if (rect.top < vh * 0.95 && rect.bottom > 0) {
+          markInView(el);
+        }
+      });
+    }
+
     if (reducedMotion()) {
       nodes.forEach(markInView);
       return;
     }
+
+    revealVisible();
 
     if (!('IntersectionObserver' in window)) {
       nodes.forEach(markInView);
@@ -43,41 +55,32 @@
           var el = entry.target;
           var delay = parseInt(el.getAttribute('data-delay') || '0', 10) || 0;
           var stagger = parseInt(el.getAttribute('data-stagger') || '0', 10) || 0;
-          var extra = stagger > 0 ? (stagger - 1) * 80 : 0;
+          var extra = stagger > 0 ? (stagger - 1) * 70 : 0;
           window.setTimeout(function () {
             markInView(el);
           }, delay + extra);
           io.unobserve(el);
         });
       },
-      {
-        threshold: 0.08,
-        rootMargin: '0px 0px -5% 0px',
-      }
+      { threshold: 0.05, rootMargin: '40px 0px 0px 0px' }
     );
 
     nodes.forEach(function (el) {
-      io.observe(el);
+      if (!el.classList.contains('is-inview')) io.observe(el);
     });
 
-    // Failsafe: nothing stays invisible forever
+    // Failsafe
     window.setTimeout(function () {
-      document.querySelectorAll(SELECTOR).forEach(function (el) {
-        if (!el.classList.contains('is-inview')) markInView(el);
-      });
-    }, 2500);
+      document.querySelectorAll(SELECTOR).forEach(markInView);
+    }, 1200);
   }
 
   function initLottie() {
     var hosts = document.querySelectorAll('[data-lottie]');
-    if (!hosts.length) return;
-    if (reducedMotion()) return;
+    if (!hosts.length || reducedMotion()) return;
 
     function boot(lottie) {
-      if (!lottie || typeof lottie.loadAnimation !== 'function') {
-        console.warn('[motion] lottie.loadAnimation missing');
-        return;
-      }
+      if (!lottie || typeof lottie.loadAnimation !== 'function') return;
 
       hosts.forEach(function (host) {
         if (host.getAttribute(readyAttr) === '1') return;
@@ -85,38 +88,20 @@
         if (!path) return;
         host.setAttribute(readyAttr, '1');
 
-        var loop = host.getAttribute('data-lottie-loop') !== 'false';
-        var anim;
         try {
-          anim = lottie.loadAnimation({
+          lottie.loadAnimation({
             container: host,
             renderer: 'svg',
-            loop: loop,
+            loop: host.getAttribute('data-lottie-loop') !== 'false',
             autoplay: true,
             path: path,
           });
         } catch (err) {
-          console.warn('[motion] lottie error', err);
-          return;
-        }
-
-        if ('IntersectionObserver' in window) {
-          var pio = new IntersectionObserver(
-            function (entries) {
-              entries.forEach(function (entry) {
-                if (!anim) return;
-                if (entry.isIntersecting) anim.play();
-                else anim.pause();
-              });
-            },
-            { threshold: 0.05 }
-          );
-          pio.observe(host);
+          console.warn('[motion] lottie', err);
         }
       });
     }
 
-    // Prefer global from CDN; else dynamic import of local vendor file
     if (window.lottie) {
       boot(window.lottie);
       return;
@@ -127,9 +112,6 @@
     s.async = true;
     s.onload = function () {
       boot(window.lottie);
-    };
-    s.onerror = function () {
-      console.warn('[motion] failed to load lottie CDN');
     };
     document.head.appendChild(s);
   }
