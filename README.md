@@ -1,41 +1,50 @@
-# Echipa de Tocilari
+# Echipa de Tocilari — copie 1:1 + SEO/AEO/GEO
 
-Rebuild modern al site-ului [echipadetocilari.ro](https://www.echipadetocilari.ro) pe **Astro 7 + Tailwind CSS 4**, optimizat pentru:
+Site-ul este o **oglindă statică 1:1** a [echipadetocilari.ro](https://www.echipadetocilari.ro) (HTML/CSS/JS/imagini Elementor), cu **injectări doar în `<head>`** pentru SEO, AEO, GEO și mobile — **fără a schimba layout-ul vizual**.
 
-- **SEO** — semantic HTML, meta, canonical, sitemap, robots
-- **AEO** — răspunsuri directe în primele paragrafe, FAQ vizibil în DOM, JSON-LD
-- **GEO** — entitate clară (Organization), NAP unic, `llms.txt`
-- **Mobile-first** — CTA sticky pe mobil, tap targets ≥44px, input 16px
+## Cum funcționează
 
-## Stack
+| | |
+|---|---|
+| **Vizual** | Fișiere din `legacy-mirror/` (scrape WordPress/Elementor) |
+| **Build** | `npm run build` → copiază mirror în `dist/` + optimizează meta/schema |
+| **Deploy** | Vercel static (`outputDirectory: dist`) |
 
-- Astro 7 (static)
-- Tailwind CSS 4 (`@tailwindcss/vite`)
-- `@astrojs/sitemap`
-- Deploy: Vercel
-
-## Develop
+## Comenzi
 
 ```bash
 npm install
-npm run dev
+npm run build
+npm run preview   # http://localhost:3000
 ```
 
-## Build
+Re-scrape original (opțional, actualizează `legacy-mirror/`):
 
 ```bash
-npm run build
-npm run preview
+npm run mirror
+# apoi mută public/www... → legacy-mirror dacă e nevoie
 ```
 
-## Config
+## Indexare (staging)
 
-- Brand / NAP / email: `src/data/business.ts`
-- FAQ: `src/data/faqs.ts`
-- Site URL: `PUBLIC_SITE_URL`
-- **Indexare:** implicit **blocată** (`noindex` + `robots.txt` Disallow + `X-Robots-Tag`). Pentru lansare publică: set `PUBLIC_INDEXABLE=true` pe Vercel și actualizează `public/robots.txt` (Allow + Sitemap).
+Implicit **nu e indexabil**:
 
-## Note
+- `meta robots` noindex
+- `robots.txt` Disallow
+- header `X-Robots-Tag`
 
-- Formularul de contact folosește [FormSubmit](https://formsubmit.co) pe adresa din `business.email` (confirmă o dată pe e-mail).
-- `legacy-mirror/` conține scrape-ul WordPress original (ignorat de git) — referință design/conținut.
+La lansare pe domeniu real:
+
+```bash
+PUBLIC_INDEXABLE=true PUBLIC_SITE_URL=https://www.echipadetocilari.ro npm run build
+```
+
+## Optimizări (păstrează look 1:1)
+
+- `lang="ro"`
+- title + description AEO (răspunsuri directe)
+- JSON-LD Organization / WebSite / FAQ / Service
+- theme-color, viewport, input 16px (anti-zoom iOS)
+- `prefers-reduced-motion`
+- `llms.txt`
+- fără sitemap pe staging

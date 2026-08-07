@@ -1,21 +1,14 @@
 {
   "name": "echipadetocilari",
   "type": "module",
-  "version": "1.0.0",
-  "description": "Echipa de Tocilari — modern Astro rebuild (SEO / AEO / GEO / mobile-first)",
+  "version": "2.0.0",
+  "description": "1:1 static mirror of echipadetocilari.ro with SEO/AEO/GEO enhancements",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=18"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/sitemap": "^3.7.3",
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.2.0",
-    "tailwindcss": "^4.3.3"
+    "build": "node scripts/build-static.mjs",
+    "dev": "npx --yes serve dist -l 3000",
+    "preview": "npx --yes serve dist -l 3000"
   }
 }

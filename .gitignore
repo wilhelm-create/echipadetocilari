@@ -22,11 +22,8 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 
-# local mirror of original WP site (large, not needed in deploy)
-legacy-mirror/
+# scrapers / local notes
 scripts/content-extract.txt
 
 # misc
 .astro/
-
-.vercel
