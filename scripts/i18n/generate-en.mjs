@@ -192,11 +192,20 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
 #ect-lang-switch a[aria-current="true"]{background:#fd8649;color:#fff}
 #ect-lang-switch a:hover{background:#ff6c2a;color:#fff}
 #ect-lang-switch a + a{border-left:1px solid rgba(253,134,73,.35)}
-/* Mobile: still in header (right of burger), never bottom — scroll-to-top lives bottom-right */
+/* Mobile: RO|EN left of burger (logo | … | switcher | burger), never bottom */
 @media (max-width:767px){
-  .ect-lang-wrap{
-    margin:0 .35rem 0 auto;
+  .elementor-location-header .e-con-inner > .elementor-widget-theme-site-logo{
+    order:1;
+  }
+  .elementor-location-header .e-con-inner > .ect-lang-wrap{
+    order:2;
+    margin:0 .4rem 0 auto;
+  }
+  .elementor-location-header .e-con-inner > .elementor-widget-nav-menu{
     order:3;
+  }
+  .elementor-location-header .e-con-inner > .elementor-element-682f9a60{
+    order:4;
   }
   #ect-lang-switch a{min-width:36px;min-height:34px;padding:0 .5rem;font-size:11px}
 }
