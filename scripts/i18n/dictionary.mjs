@@ -498,6 +498,23 @@ export const dictionary = [
   ['Timp alocat lunar - 4 ore', 'Monthly time allocation — 4 hours'],
   ['Timp alocat lunar - 6 ore', 'Monthly time allocation — 6 hours'],
   ['sector 2', 'District 2'],
+
+  [
+    'Dacă deții o afacere sau administrezi un site web, implementarea SEO te poate ajuta să obții rezultate în mai multe moduri. Un SEO bun îți crește traficul site-ului, îmbunătățește vizibilitatea și construiește credibilitate.',
+    'If you run a business or manage a website, SEO can help in multiple ways. Strong SEO increases traffic, improves visibility, and builds credibility.',
+  ],
+  [
+    'Înțelegem ce înseamnă să deții și să conduci o afacere, și știm cât de important este să te simți încrezător în alegerea partenerului tău. Avem mulți clienți de lungă durată, cu relații construite pe ani de încredere și comunicare clară.',
+    'We understand what it means to run a business — and how important it is to trust your partner. We have many long-term clients built on years of trust and clear communication.',
+  ],
+  [
+    'Ne place să realizăm lucrurile eficient, iar metodele noastre sistematizate înseamnă că toate sarcinile SEO sunt executate într-un mod rapid și eficace. Îți raportăm rezultatele SEO clar, ca să știi mereu unde stai.',
+    'We work efficiently with systematic methods so SEO tasks are executed quickly and effectively. We report SEO results clearly so you always know where you stand.',
+  ],
+  [
+    'În timp ce obții aproximativ 50% din traficul tău din căutările organice, SEO te poate ajuta să maximizezi acest număr astfel încât să nu pierzi niciun potențial client. O echipă de specialiști SEO te ajută să fii găsit când clienții caută exact ce oferi.',
+    'While roughly half of traffic often comes from organic search, SEO helps maximize that share so you do not miss potential customers. An SEO team helps you get found when buyers search for what you offer.',
+  ],
 ];
 
 /** Page-level SEO for English (natural search phrasing). */
