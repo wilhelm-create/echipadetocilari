@@ -214,6 +214,9 @@ function enhanceHtml(file) {
   const key = pathKeyFromFile(file);
   const meta = pageMeta[key];
 
+  // Normalize scraper %3D version query → ver= (matches files on disk / Vercel)
+  html = html.replace(/(src|href)="([^"]*?)_ver%3D([^"]*)"/gi, '$1="$2_ver=$3"');
+
   // lang ro for SEO/AEO
   html = html.replace(/<html\b([^>]*)>/i, (m, attrs) => {
     if (/\blang\s*=/i.test(attrs)) {
@@ -317,6 +320,20 @@ function enhanceHtml(file) {
     html = html.replace(
       /<\/head>/i,
       `  <style>/* ect-mobile-a11y */input,textarea,select{font-size:16px}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}</style>\n</head>`
+    );
+  }
+
+  // Animation polyfill (Elementor entrance + Lottie fallback on static host)
+  if (!html.includes('/* ect-invis-fallback */')) {
+    html = html.replace(
+      /<\/head>/i,
+      `  <style>/* ect-invis-fallback */.elementor-invisible{opacity:0}.elementor-invisible.animated,.elementor-invisible[data-ect-revealed="1"]{opacity:1}@media(prefers-reduced-motion:reduce){.elementor-invisible{opacity:1!important}}</style>\n</head>`
+    );
+  }
+  if (!html.includes('ect-anim-polyfill.js')) {
+    html = html.replace(
+      /<\/body>/i,
+      '  <script src="/wp-content/ect-anim-polyfill.js" defer></script>\n</body>'
     );
   }
 
