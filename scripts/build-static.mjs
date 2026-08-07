@@ -346,32 +346,55 @@ console.log(`→ Enhancing ${htmlFiles.length} HTML pages (SEO/AEO/GEO, keep 1:1
 const keys = htmlFiles.map(enhanceHtml);
 console.log('  pages:', keys.filter((k) => pageMeta[k]).join(', ') || '(meta map partial)');
 
+// Multilingual EN (secondary language) + hreflang on RO
+console.log('→ Generating English pages (/en/…) with natural-language SEO…');
+const { generateEnglishPages, patchRomanianPages } = await import('./i18n/generate-en.mjs');
+const { routes } = await import('./i18n/routes.mjs');
+const enPages = generateEnglishPages({
+  outDir,
+  site: SITE,
+  indexable: INDEXABLE,
+  orgSchema,
+});
+patchRomanianPages({ outDir, site: SITE });
+console.log('  EN pages:', enPages.join(', '));
+
 // robots.txt — staging closed by default
 const robots = INDEXABLE
   ? `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`
   : `User-agent: *\nDisallow: /\n\nUser-agent: Googlebot\nDisallow: /\n\nUser-agent: Bingbot\nDisallow: /\n`;
 writeFileSync(path.join(outDir, 'robots.txt'), robots, 'utf8');
 
-// Minimal llms.txt for GEO/dev tools (cheap, valid URLs)
+// Minimal llms.txt for GEO/dev tools (RO + EN)
+const llmsPages = [
+  ...routes.map((r) => `- ${SITE}${r.ro === '/' ? '/' : r.ro} (ro)`),
+  ...routes.map((r) => `- ${SITE}${r.en} (en)`),
+].join('\n');
 writeFileSync(
   path.join(outDir, 'llms.txt'),
-  `# Echipa de Tocilari\n\n> Agenție marketing digital România: web, SEO, mentenanță, PPC.\n\n## Pages\n- ${SITE}/\n- ${SITE}/creare-site-web/\n- ${SITE}/servicii-seo/\n- ${SITE}/administrare-site/\n- ${SITE}/contact/\n- ${SITE}/portofoliu/\n- ${SITE}/about-2/\n`,
+  `# Echipa de Tocilari\n\n> Digital marketing agency Romania: website design, SEO, maintenance, PPC. Multilingual RO/EN.\n\n## Pages\n${llmsPages}\n`,
   'utf8'
 );
 
-// Simple sitemap only when indexable
+// Sitemap RO + EN when indexable
 if (INDEXABLE) {
-  const urls = Object.keys(pageMeta)
-    .map(
+  const urls = [
+    ...Object.keys(pageMeta).map(
       (p) =>
-        `  <url><loc>${SITE}${p === '/' ? '/' : p}</loc><changefreq>weekly</changefreq></url>`
-    )
-    .join('\n');
+        `  <url><loc>${SITE}${p === '/' ? '/' : p}</loc><changefreq>weekly</changefreq><xhtml:link rel="alternate" hreflang="ro" href="${SITE}${p === '/' ? '/' : p}"/><xhtml:link rel="alternate" hreflang="en" href="${SITE}${routes.find((r) => r.ro === p)?.en || p}"/></url>`
+    ),
+    ...routes.map(
+      (r) =>
+        `  <url><loc>${SITE}${r.en}</loc><changefreq>weekly</changefreq><xhtml:link rel="alternate" hreflang="en" href="${SITE}${r.en}"/><xhtml:link rel="alternate" hreflang="ro" href="${SITE}${r.ro === '/' ? '/' : r.ro}"/></url>`
+    ),
+  ].join('\n');
   writeFileSync(
     path.join(outDir, 'sitemap.xml'),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`,
     'utf8'
   );
 }
 
-console.log(`✓ Build complete → dist/ (1:1 visuals + SEO inject, indexable=${INDEXABLE})`);
+console.log(
+  `✓ Build complete → dist/ (1:1 RO + EN /en/…, SEO/AEO/GEO, indexable=${INDEXABLE})`
+);

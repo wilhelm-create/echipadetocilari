@@ -39,12 +39,31 @@ La lansare pe domeniu real:
 PUBLIC_INDEXABLE=true PUBLIC_SITE_URL=https://www.echipadetocilari.ro npm run build
 ```
 
+## Multilingual (RO default + EN secondary)
+
+| RO | EN (natural search slugs) |
+|----|---------------------------|
+| `/` | `/en/` |
+| `/creare-site-web/` | `/en/website-design/` |
+| `/servicii-seo/` | `/en/seo-services/` |
+| `/administrare-site/` | `/en/website-maintenance/` |
+| `/about-2/` | `/en/about/` |
+| `/contact/` | `/en/contact/` |
+| `/portofoliu/` | `/en/portfolio/` |
+| `/services/` | `/en/services/` |
+| `/clients/` | `/en/clients/` |
+| `/pay-per-click/` | `/en/ppc-advertising/` |
+
+- `hreflang` ro / en / x-default pe ambele limbi
+- Language switcher (buton fixed: English ↔ Română)
+- Dicționar + meta EN: `scripts/i18n/`
+
 ## Optimizări (păstrează look 1:1)
 
-- `lang="ro"`
-- title + description AEO (răspunsuri directe)
-- JSON-LD Organization / WebSite / FAQ / Service
+- `lang="ro"` / `lang="en"`
+- title + description AEO (răspunsuri directe, keywords naturale EN)
+- JSON-LD Organization / WebSite / FAQ / Service (per limbă)
 - theme-color, viewport, input 16px (anti-zoom iOS)
 - `prefers-reduced-motion`
-- `llms.txt`
-- fără sitemap pe staging
+- `llms.txt` (RO + EN)
+- fără sitemap pe staging (până la `PUBLIC_INDEXABLE=true`)
