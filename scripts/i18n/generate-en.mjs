@@ -147,25 +147,31 @@ function injectHreflang(html, roPath, enPath, site) {
 }
 
 /**
- * Single language switcher only (no menu items — those cluttered the header).
- * Position: top bar, left of the "Got an idea?" CTA; never over logo or scroll-top.
+ * Language switcher in the header flex row (before CTA) — never position:fixed.
+ * Fixed overlays fought logo / CTA / mobile scroll-to-top; header flow is stable.
+ * No menu items (Română / English links clutter the nav).
  */
 function injectLangSwitcher(html, currentLang, roHref, enHref) {
   const roActive = currentLang === 'ro';
   const enActive = currentLang === 'en';
 
-  const bar = `
-<!-- language switcher -->
+  const styles = `
 <style id="ect-lang-css">
-/* Clear of logo (left) and of right CTA + mobile scroll-to-top */
+/* In-header chip — part of Elementor flex row, not fixed overlay */
+.ect-lang-wrap{
+  display:flex !important;
+  align-items:center;
+  align-self:center;
+  flex:0 0 auto;
+  width:auto !important;
+  max-width:none !important;
+  margin:0 .5rem 0 .25rem;
+  padding:0;
+  z-index:5;
+}
 #ect-lang-switch{
-  position:fixed;
-  z-index:99990;
-  top:max(0.75rem, env(safe-area-inset-top));
-  /* leave room for orange CTA ~ "Got an idea?" on the right */
-  right:max(9.5rem, calc(env(safe-area-inset-right) + 9rem));
-  left:auto;
-  bottom:auto;
+  position:relative;
+  top:auto;right:auto;left:auto;bottom:auto;
   font-family:Montserrat,system-ui,sans-serif;
   display:inline-flex;
   align-items:center;
@@ -173,52 +179,74 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
   border:2px solid #fd8649;
   border-radius:999px;
   overflow:hidden;
-  box-shadow:0 4px 18px rgba(0,0,0,.1);
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+  line-height:1;
 }
 #ect-lang-switch a{
   display:inline-flex;align-items:center;justify-content:center;
-  min-width:44px;min-height:40px;padding:0 .75rem;
-  font-size:13px;font-weight:700;letter-spacing:.04em;
+  min-width:40px;min-height:36px;padding:0 .65rem;
+  font-size:12px;font-weight:700;letter-spacing:.04em;
   text-decoration:none;color:#fd8649;background:transparent;
   transition:background .15s,color .15s;
 }
 #ect-lang-switch a[aria-current="true"]{background:#fd8649;color:#fff}
 #ect-lang-switch a:hover{background:#ff6c2a;color:#fff}
 #ect-lang-switch a + a{border-left:1px solid rgba(253,134,73,.35)}
-/* Tablet / mobile: still top, more inset from right edge (CTA smaller / burger) */
-@media (max-width:1024px){
-  #ect-lang-switch{
-    right:max(5.5rem, calc(env(safe-area-inset-right) + 5rem));
-    top:max(0.55rem, env(safe-area-inset-top));
-  }
-}
+/* Mobile: still in header (right of burger), never bottom — scroll-to-top lives bottom-right */
 @media (max-width:767px){
-  #ect-lang-switch{
-    /* top-right but left of burger / CTA; never bottom (scroll-to-top lives there) */
-    top:max(0.5rem, env(safe-area-inset-top));
-    right:max(4.25rem, calc(env(safe-area-inset-right) + 3.75rem));
-    bottom:auto;
+  .ect-lang-wrap{
+    margin:0 .35rem 0 auto;
+    order:3;
   }
-  #ect-lang-switch a{min-width:40px;min-height:36px;padding:0 .55rem;font-size:12px}
+  #ect-lang-switch a{min-width:36px;min-height:34px;padding:0 .5rem;font-size:11px}
 }
 </style>
-<nav id="ect-lang-switch" aria-label="Language / Limbă">
-  <a href="${roHref}" hreflang="ro" lang="ro" ${roActive ? 'aria-current="true"' : ''} title="Română">RO</a>
-  <a href="${enHref}" hreflang="en" lang="en" ${enActive ? 'aria-current="true"' : ''} title="English">EN</a>
-</nav>
 `;
 
-  // Strip any previous switcher + menu lang items
-  html = html.replace(/<!-- language switcher[\s\S]*?<\/nav>\s*/i, '');
+  const wrap = `
+<div class="elementor-element ect-lang-wrap elementor-widget" data-id="ectlang" data-element_type="widget" data-e-type="widget">
+<nav id="ect-lang-switch" aria-label="Language">
+  <a href="${roHref}" hreflang="ro" lang="ro" ${roActive ? 'aria-current="true"' : ''} title="RO">RO</a>
+  <a href="${enHref}" hreflang="en" lang="en" ${enActive ? 'aria-current="true"' : ''} title="EN">EN</a>
+</nav>
+</div>
+`;
+
+  // Strip any previous switcher (fixed nav, wrap, styles) + menu lang items
+  html = html.replace(/<!-- language switcher[\s\S]*?<\/nav>\s*/gi, '');
   html = html.replace(/<style id="ect-lang-css">[\s\S]*?<\/style>\s*/gi, '');
   html = html.replace(/<nav id="ect-lang-switch"[\s\S]*?<\/nav>\s*/gi, '');
   html = html.replace(/<div id="ect-lang-switch"[\s\S]*?<\/div>\s*/gi, '');
   html = html.replace(
+    /<div class="elementor-element ect-lang-wrap[\s\S]*?<\/nav>\s*<\/div>\s*/gi,
+    ''
+  );
+  html = html.replace(
     /<li class="menu-item[^"]*ect-lang-menu[^"]*"[\s\S]*?<\/li>\s*/gi,
     ''
   );
+  // Remove leftover Română / English-only menu entries from older builds
+  html = html.replace(
+    /<li class="menu-item[^"]*"[\s\S]*?<a[^>]*>\s*(Română|Romana|English)\s*<\/a>\s*<\/li>\s*/gi,
+    ''
+  );
 
-  return html.replace(/<\/body>/i, `${bar}\n</body>`);
+  // Prefer inject into header flex, immediately before the orange CTA button widget
+  const ctaRe =
+    /(<div class="elementor-element elementor-element-682f9a60\b)/i;
+  if (ctaRe.test(html)) {
+    html = html.replace(ctaRe, `${wrap}$1`);
+  } else {
+    // Fallback: before </header>
+    html = html.replace(/<\/header>/i, `${wrap}</header>`);
+  }
+
+  // Styles once in <head>
+  if (!html.includes('id="ect-lang-css"')) {
+    html = html.replace(/<\/head>/i, `${styles}</head>`);
+  }
+
+  return html;
 }
 
 /**
