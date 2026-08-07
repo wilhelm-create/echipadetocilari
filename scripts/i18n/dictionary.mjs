@@ -3,11 +3,13 @@
  * Tuned for how people actually search in EN (digital marketing, web design, SEO…).
  */
 export const dictionary = [
-  // Brand / legal (keep brand name)
+  // Brand / legal — never translate the company name
   ['ECHIPA DE TOCIALRI SRL', 'ECHIPA DE TOCILARI SRL'],
-  ['ECHIPA DE TOCILARI', 'THE NERD TEAM'],
+  ['ECHIPA DE TOCILARI SRL', 'ECHIPA DE TOCILARI SRL'],
+  ['ECHIPA DE TOCILARI', 'ECHIPA DE TOCILARI'],
   ['Echipa de Tocilari', 'Echipa de Tocilari'],
   ['Echipa De Tocilari', 'Echipa de Tocilari'],
+  ['THE NERD TEAM', 'Echipa de Tocilari'],
 
   // Nav / CTAs
   ['Participa la o consultatie', 'Book a free consultation'],
@@ -83,6 +85,32 @@ export const dictionary = [
   ['Noi avem răspunsurile', 'We have the answers'],
   ['Intrebari adresate frecvent (FAQ)', 'Frequently asked questions (FAQ)'],
   ['Întrebări adresate frecvent (FAQ)', 'Frequently asked questions (FAQ)'],
+  // Contact band — real HTML includes <b> tags that break plain-text phrases
+  [
+    '<b>Noi te putem ajuta</b>, indferent de <b>orasul</b> in care te afli.',
+    '<b>We can help you</b>, no matter which <b>city</b> you are in.',
+  ],
+  [
+    '<b>Noi te putem ajuta</b>, indiferent de <b>orașul</b> în care te afli.',
+    '<b>We can help you</b>, no matter which <b>city</b> you are in.',
+  ],
+  [
+    'Ne-ar face <b>mare placere</b> sa luam legatura si sa te ajutam cu <b>proiectul</b> pe care il ai!',
+    'We would love to get in touch and help you with the <b>project</b> you have in mind!',
+  ],
+  [
+    'Ne-ar face <b>mare plăcere</b> să luăm legătura și să te ajutăm cu <b>proiectul</b> pe care îl ai!',
+    'We would love to get in touch and help you with the <b>project</b> you have in mind!',
+  ],
+  // Already half-translated leftovers (older builds / partial dict hits)
+  [
+    '<b>Noi te putem ajuta</b>, no matter <b>city</b> you are in.',
+    '<b>We can help you</b>, no matter which <b>city</b> you are in.',
+  ],
+  [
+    'Ne-ar face <b>great pleasure</b> to get in touch si sa te ajutam cu <b>proiectul</b> you have in mind!',
+    'We would love to get in touch and help you with the <b>project</b> you have in mind!',
+  ],
   [
     'Noi te putem ajuta, indferent de orasul in care te afli.',
     'We can help you no matter which city you are in.',
@@ -93,14 +121,16 @@ export const dictionary = [
   ],
   [
     'Ne-ar face mare placere sa luam legatura si sa te ajutam cu proiectul pe care il ai!',
-    'We would love to connect and help you with the project you have in mind!',
+    'We would love to get in touch and help you with the project you have in mind!',
   ],
   [
     'Ne-ar face mare plăcere să luăm legătura și să te ajutăm cu proiectul pe care îl ai!',
-    'We would love to connect and help you with the project you have in mind!',
+    'We would love to get in touch and help you with the project you have in mind!',
   ],
-  ['indferent de', 'no matter'],
-  ['indiferent de', 'no matter'],
+  // Prefer full phrases above; keep short fragments only for rare plain text
+  ['Noi te putem ajuta', 'We can help you'],
+  ['indferent de', 'no matter which'],
+  ['indiferent de', 'no matter which'],
   ['orasul', 'city'],
   ['orașul', 'city'],
   ['in care te afli', 'you are in'],
@@ -109,8 +139,14 @@ export const dictionary = [
   ['mare plăcere', 'great pleasure'],
   ['sa luam legatura', 'to get in touch'],
   ['să luăm legătura', 'to get in touch'],
-  ['proiectul pe care il ai', 'the project you have'],
-  ['proiectul pe care îl ai', 'the project you have'],
+  ['si sa te ajutam cu', 'and help you with'],
+  ['și să te ajutăm cu', 'and help you with'],
+  ['sa te ajutam cu', 'help you with'],
+  ['să te ajutăm cu', 'help you with'],
+  ['proiectul pe care il ai', 'the project you have in mind'],
+  ['proiectul pe care îl ai', 'the project you have in mind'],
+  ['proiectului tău', 'your project'],
+  ['proiectului tau', 'your project'],
 
   // About blurb
   [
@@ -692,7 +728,12 @@ export const dictionary = [
   ['Ai o idee', 'Got an idea'],
   ['Hai sa vorbim', "Let's talk"],
   ['Hai să vorbim', "Let's talk"],
+  // Form placeholders (longer first so "Nume Companie" is not split into "Name Companie")
+  ['Nume Companie', 'Company name'],
+  ['Name Companie', 'Company name'],
+  ['Numele companiei', 'Company name'],
   ['Nume', 'Name'],
+  ['Companie', 'Company'],
   ['Mesaj', 'Message'],
   ['Telefon', 'Phone'],
   ['Email', 'Email'],
