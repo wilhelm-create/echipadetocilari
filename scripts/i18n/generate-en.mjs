@@ -157,17 +157,18 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
 
   const styles = `
 <style id="ect-lang-css">
-/* In-header chip — part of Elementor flex row, not fixed overlay */
+/* Chip sits inside nav widget, immediately before burger toggle — always adjacent */
 .ect-lang-wrap{
-  display:flex !important;
+  display:inline-flex !important;
   align-items:center;
   align-self:center;
   flex:0 0 auto;
   width:auto !important;
   max-width:none !important;
-  margin:0 .5rem 0 .25rem;
+  margin:0 .45rem 0 0;
   padding:0;
   z-index:5;
+  vertical-align:middle;
 }
 #ect-lang-switch{
   position:relative;
@@ -192,33 +193,55 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
 #ect-lang-switch a[aria-current="true"]{background:#fd8649;color:#fff}
 #ect-lang-switch a:hover{background:#ff6c2a;color:#fff}
 #ect-lang-switch a + a{border-left:1px solid rgba(253,134,73,.35)}
-/* Mobile: RO|EN left of burger (logo | … | switcher | burger), never bottom */
+/* Keep RO|EN + burger as one tight right-aligned group in the nav widget */
+.elementor-location-header .elementor-widget-nav-menu .elementor-widget-container{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.elementor-location-header .elementor-widget-nav-menu .elementor-nav-menu--main{
+  flex:1 1 auto;
+}
+.elementor-location-header .ect-lang-wrap{
+  order:2;
+  margin:0 .4rem 0 0;
+}
+.elementor-location-header .elementor-menu-toggle{
+  order:3;
+  margin-left:0 !important; /* Elementor sets ml:auto — would separate chip from burger */
+}
+.elementor-location-header .elementor-nav-menu--dropdown{
+  order:4;
+  flex:1 0 100%;
+}
 @media (max-width:767px){
-  .elementor-location-header .e-con-inner > .elementor-widget-theme-site-logo{
-    order:1;
-  }
-  .elementor-location-header .e-con-inner > .ect-lang-wrap{
-    order:2;
-    margin:0 .4rem 0 auto;
-  }
+  /* Logo left, nav widget (chip+burger) flush right */
   .elementor-location-header .e-con-inner > .elementor-widget-nav-menu{
-    order:3;
+    margin-left:auto;
+    flex:0 0 auto !important;
+    width:auto !important;
   }
-  .elementor-location-header .e-con-inner > .elementor-element-682f9a60{
-    order:4;
+  .elementor-location-header .ect-lang-wrap{
+    margin:0 .35rem 0 0;
   }
   #ect-lang-switch a{min-width:36px;min-height:34px;padding:0 .5rem;font-size:11px}
+}
+@media (min-width:768px){
+  /* Desktop: chip after horizontal menu links, still tight; toggle usually hidden */
+  .elementor-location-header .ect-lang-wrap{
+    margin:0 .5rem 0 .25rem;
+  }
 }
 </style>
 `;
 
   const wrap = `
-<div class="elementor-element ect-lang-wrap elementor-widget" data-id="ectlang" data-element_type="widget" data-e-type="widget">
+<span class="ect-lang-wrap">
 <nav id="ect-lang-switch" aria-label="Language">
   <a href="${roHref}" hreflang="ro" lang="ro" ${roActive ? 'aria-current="true"' : ''} title="RO">RO</a>
   <a href="${enHref}" hreflang="en" lang="en" ${enActive ? 'aria-current="true"' : ''} title="EN">EN</a>
 </nav>
-</div>
+</span>
 `;
 
   // Strip any previous switcher (fixed nav, wrap, styles) + menu lang items
@@ -227,7 +250,7 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
   html = html.replace(/<nav id="ect-lang-switch"[\s\S]*?<\/nav>\s*/gi, '');
   html = html.replace(/<div id="ect-lang-switch"[\s\S]*?<\/div>\s*/gi, '');
   html = html.replace(
-    /<div class="elementor-element ect-lang-wrap[\s\S]*?<\/nav>\s*<\/div>\s*/gi,
+    /<(?:div|span) class="(?:elementor-element )?ect-lang-wrap[^"]*"[\s\S]*?<\/nav>\s*<\/(?:div|span)>\s*/gi,
     ''
   );
   html = html.replace(
@@ -240,14 +263,19 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
     ''
   );
 
-  // Prefer inject into header flex, immediately before the orange CTA button widget
-  const ctaRe =
-    /(<div class="elementor-element elementor-element-682f9a60\b)/i;
-  if (ctaRe.test(html)) {
-    html = html.replace(ctaRe, `${wrap}$1`);
+  // Inject immediately before the burger toggle (first in header) — sits left & tight
+  const toggleRe = /(<div class="elementor-menu-toggle"\b)/i;
+  if (toggleRe.test(html)) {
+    html = html.replace(toggleRe, `${wrap}$1`);
   } else {
-    // Fallback: before </header>
-    html = html.replace(/<\/header>/i, `${wrap}</header>`);
+    // Fallback: before CTA, then before </header>
+    const ctaRe =
+      /(<div class="elementor-element elementor-element-682f9a60\b)/i;
+    if (ctaRe.test(html)) {
+      html = html.replace(ctaRe, `${wrap}$1`);
+    } else {
+      html = html.replace(/<\/header>/i, `${wrap}</header>`);
+    }
   }
 
   // Styles once in <head>
