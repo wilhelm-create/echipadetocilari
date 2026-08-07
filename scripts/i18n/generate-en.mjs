@@ -115,15 +115,49 @@ function injectHreflang(html, roPath, enPath, site) {
   return html.replace(/<\/head>/i, `${block}</head>`);
 }
 
-function injectLangSwitcher(html, currentLang, otherHref, otherLabel) {
-  const switcher = `
-<!-- language switcher -->
-<div id="ect-lang-switch" style="position:fixed;bottom:max(1rem,env(safe-area-inset-bottom));left:1rem;z-index:9999;font-family:system-ui,sans-serif">
-  <a href="${otherHref}" style="display:inline-flex;align-items:center;gap:.4rem;min-height:44px;padding:.55rem 1rem;border-radius:999px;background:#fd8649;color:#fff;font-weight:600;font-size:14px;text-decoration:none;box-shadow:0 8px 24px rgba(253,134,73,.4)" hreflang="${currentLang === 'ro' ? 'en' : 'ro'}" lang="${currentLang === 'ro' ? 'en' : 'ro'}">${otherLabel}</a>
-</div>
+/**
+ * Visible language switcher:
+ * 1) Fixed top-right pill (always on screen)
+ * 2) Menu items injected into Elementor nav (desktop + mobile burger)
+ */
+function injectLangSwitcher(html, currentLang, roHref, enHref) {
+  const roActive = currentLang === 'ro';
+  const enActive = currentLang === 'en';
+
+  const bar = `
+<!-- language switcher: always visible -->
+<style id="ect-lang-css">
+#ect-lang-switch{position:fixed;top:max(.65rem,env(safe-area-inset-top));right:max(.65rem,env(safe-area-inset-right));z-index:2147483646;font-family:Montserrat,system-ui,sans-serif;display:flex;align-items:center;gap:0;background:#fff;border:2px solid #fd8649;border-radius:999px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.12)}
+#ect-lang-switch a{display:inline-flex;align-items:center;justify-content:center;min-width:48px;min-height:44px;padding:0 .9rem;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;color:#fd8649;background:transparent;transition:background .15s,color .15s}
+#ect-lang-switch a[aria-current="true"]{background:#fd8649;color:#fff}
+#ect-lang-switch a:hover{background:#ff6c2a;color:#fff}
+#ect-lang-switch a + a{border-left:1px solid rgba(253,134,73,.35)}
+@media (max-width:767px){#ect-lang-switch{top:max(.5rem,env(safe-area-inset-top));right:max(.5rem,env(safe-area-inset-right))}}
+</style>
+<nav id="ect-lang-switch" aria-label="Language / Limbă">
+  <a href="${roHref}" hreflang="ro" lang="ro" ${roActive ? 'aria-current="true"' : ''} title="Română">RO</a>
+  <a href="${enHref}" hreflang="en" lang="en" ${enActive ? 'aria-current="true"' : ''} title="English">EN</a>
+</nav>
 `;
-  if (html.includes('id="ect-lang-switch"')) return html;
-  return html.replace(/<\/body>/i, `${switcher}\n</body>`);
+
+  // Remove old switcher if present
+  html = html.replace(/<!-- language switcher[\s\S]*?<\/div>\s*/i, '');
+  html = html.replace(/<div id="ect-lang-switch"[\s\S]*?<\/div>\s*/i, '');
+  html = html.replace(/<style id="ect-lang-css">[\s\S]*?<\/style>\s*/i, '');
+  html = html.replace(/<nav id="ect-lang-switch"[\s\S]*?<\/nav>\s*/i, '');
+
+  // Inject menu items into Elementor nav lists (before </ul>)
+  const roItem = `<li class="menu-item menu-item-type-custom menu-item-object-custom ect-lang-menu"><a href="${roHref}" class="elementor-item" hreflang="ro" lang="ro">Română</a></li>`;
+  const enItem = `<li class="menu-item menu-item-type-custom menu-item-object-custom ect-lang-menu"><a href="${enHref}" class="elementor-item" hreflang="en" lang="en">English</a></li>`;
+  // Avoid duplicate injections
+  if (!html.includes('ect-lang-menu')) {
+    html = html.replace(
+      /(<\/ul>\s*<\/nav>)/gi,
+      `${roItem}${enItem}$1`
+    );
+  }
+
+  return html.replace(/<\/body>/i, `${bar}\n</body>`);
 }
 
 /**
@@ -171,7 +205,12 @@ export function generateEnglishPages({ outDir, site, indexable, orgSchema }) {
     }
 
     html = injectHreflang(html, route.ro, route.en, site);
-    html = injectLangSwitcher(html, 'en', route.ro === '/' ? '/' : route.ro, 'Română');
+    html = injectLangSwitcher(
+      html,
+      'en',
+      route.ro === '/' ? '/' : route.ro,
+      route.en
+    );
 
     // SEO index rules
     if (!indexable) {
@@ -300,7 +339,7 @@ export function patchRomanianPages({ outDir, site }) {
     if (!existsSync(file)) continue;
     let html = readFileSync(file, 'utf8');
     html = injectHreflang(html, route.ro, route.en, site);
-    html = injectLangSwitcher(html, 'ro', route.en, 'English');
+    html = injectLangSwitcher(html, 'ro', route.ro === '/' ? '/' : route.ro, route.en);
     // Ensure ro lang
     html = setLang(html, 'ro');
     writeFileSync(file, html, 'utf8');
