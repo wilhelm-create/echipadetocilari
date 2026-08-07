@@ -147,53 +147,59 @@ function injectHreflang(html, roPath, enPath, site) {
 }
 
 /**
- * Visible language switcher:
- * 1) Fixed top-right pill (always on screen)
- * 2) Menu items injected into Elementor nav (desktop + mobile burger)
+ * Single language switcher only (no menu items — those cluttered the header).
+ * Position: top bar, left of the "Got an idea?" CTA; never over logo or scroll-top.
  */
 function injectLangSwitcher(html, currentLang, roHref, enHref) {
   const roActive = currentLang === 'ro';
   const enActive = currentLang === 'en';
 
-  // Top-left under logo area on mobile; left of header on desktop — avoids overlapping "Ai o idee?" CTA
   const bar = `
-<!-- language switcher: always visible, does not cover header CTA -->
+<!-- language switcher -->
 <style id="ect-lang-css">
+/* Clear of logo (left) and of right CTA + mobile scroll-to-top */
 #ect-lang-switch{
   position:fixed;
-  top:auto;
-  bottom:max(1rem, env(safe-area-inset-bottom));
-  right:max(1rem, env(safe-area-inset-right));
+  z-index:99990;
+  top:max(0.75rem, env(safe-area-inset-top));
+  /* leave room for orange CTA ~ "Got an idea?" on the right */
+  right:max(9.5rem, calc(env(safe-area-inset-right) + 9rem));
   left:auto;
-  z-index:2147483646;
+  bottom:auto;
   font-family:Montserrat,system-ui,sans-serif;
   display:inline-flex;
   align-items:center;
-  gap:0;
   background:#fff;
   border:2px solid #fd8649;
   border-radius:999px;
   overflow:hidden;
-  box-shadow:0 8px 28px rgba(253,134,73,.35);
+  box-shadow:0 4px 18px rgba(0,0,0,.1);
 }
 #ect-lang-switch a{
   display:inline-flex;align-items:center;justify-content:center;
-  min-width:52px;min-height:48px;padding:0 1rem;
-  font-size:14px;font-weight:700;letter-spacing:.06em;
+  min-width:44px;min-height:40px;padding:0 .75rem;
+  font-size:13px;font-weight:700;letter-spacing:.04em;
   text-decoration:none;color:#fd8649;background:transparent;
   transition:background .15s,color .15s;
 }
 #ect-lang-switch a[aria-current="true"]{background:#fd8649;color:#fff}
 #ect-lang-switch a:hover{background:#ff6c2a;color:#fff}
 #ect-lang-switch a + a{border-left:1px solid rgba(253,134,73,.35)}
-/* Desktop: sit just under header, left side — clear of right CTA */
-@media (min-width:1025px){
+/* Tablet / mobile: still top, more inset from right edge (CTA smaller / burger) */
+@media (max-width:1024px){
   #ect-lang-switch{
-    top:1.1rem;
-    bottom:auto;
-    left:max(1rem, env(safe-area-inset-left));
-    right:auto;
+    right:max(5.5rem, calc(env(safe-area-inset-right) + 5rem));
+    top:max(0.55rem, env(safe-area-inset-top));
   }
+}
+@media (max-width:767px){
+  #ect-lang-switch{
+    /* top-right but left of burger / CTA; never bottom (scroll-to-top lives there) */
+    top:max(0.5rem, env(safe-area-inset-top));
+    right:max(4.25rem, calc(env(safe-area-inset-right) + 3.75rem));
+    bottom:auto;
+  }
+  #ect-lang-switch a{min-width:40px;min-height:36px;padding:0 .55rem;font-size:12px}
 }
 </style>
 <nav id="ect-lang-switch" aria-label="Language / Limbă">
@@ -202,22 +208,15 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
 </nav>
 `;
 
-  // Remove old switcher if present
-  html = html.replace(/<!-- language switcher[\s\S]*?<\/div>\s*/i, '');
-  html = html.replace(/<div id="ect-lang-switch"[\s\S]*?<\/div>\s*/i, '');
-  html = html.replace(/<style id="ect-lang-css">[\s\S]*?<\/style>\s*/i, '');
-  html = html.replace(/<nav id="ect-lang-switch"[\s\S]*?<\/nav>\s*/i, '');
-
-  // Inject menu items into Elementor nav lists (before </ul>)
-  const roItem = `<li class="menu-item menu-item-type-custom menu-item-object-custom ect-lang-menu"><a href="${roHref}" class="elementor-item" hreflang="ro" lang="ro">Română</a></li>`;
-  const enItem = `<li class="menu-item menu-item-type-custom menu-item-object-custom ect-lang-menu"><a href="${enHref}" class="elementor-item" hreflang="en" lang="en">English</a></li>`;
-  // Avoid duplicate injections
-  if (!html.includes('ect-lang-menu')) {
-    html = html.replace(
-      /(<\/ul>\s*<\/nav>)/gi,
-      `${roItem}${enItem}$1`
-    );
-  }
+  // Strip any previous switcher + menu lang items
+  html = html.replace(/<!-- language switcher[\s\S]*?<\/nav>\s*/i, '');
+  html = html.replace(/<style id="ect-lang-css">[\s\S]*?<\/style>\s*/gi, '');
+  html = html.replace(/<nav id="ect-lang-switch"[\s\S]*?<\/nav>\s*/gi, '');
+  html = html.replace(/<div id="ect-lang-switch"[\s\S]*?<\/div>\s*/gi, '');
+  html = html.replace(
+    /<li class="menu-item[^"]*ect-lang-menu[^"]*"[\s\S]*?<\/li>\s*/gi,
+    ''
+  );
 
   return html.replace(/<\/body>/i, `${bar}\n</body>`);
 }
