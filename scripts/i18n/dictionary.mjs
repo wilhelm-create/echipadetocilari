@@ -515,6 +515,179 @@ export const dictionary = [
     'În timp ce obții aproximativ 50% din traficul tău din căutările organice, SEO te poate ajuta să maximizezi acest număr astfel încât să nu pierzi niciun potențial client. O echipă de specialiști SEO te ajută să fii găsit când clienții caută exact ce oferi.',
     'While roughly half of traffic often comes from organic search, SEO helps maximize that share so you do not miss potential customers. An SEO team helps you get found when buyers search for what you offer.',
   ],
+
+  // ── Complete leftovers pass (full body copy) ──
+  [
+    'Atunci cand vine vorba de creare site web, designul si experienta utilizatorului (UX) sunt esentiale pentru a face o impresie puternica si de durata asupra vizitatorilor. Designul site-ului web include toate aspectele vizuale, de la aspectul general al site-ului si alegerea culorilor pana la grafica si imagini. Acesta poate influenta modul in care vizitatorii percep si interactioneaza cu site-ul si este vital pentru a transmite cu succes mesajul dorit.',
+    'When it comes to website design, layout and user experience (UX) are essential for a strong, lasting impression. Website design covers every visual aspect — overall look, color choices, graphics, and images. It shapes how visitors perceive and interact with your site and is vital for communicating your message successfully.',
+  ],
+  [
+    'La Echipa de Tocilari, excelența SEO începe cu un audit profund, urmat de analiza concurenței și a pieței pentru strategii de cuvinte cheie precisă. Ne dedicăm optimizării SEO on-page și off-page, asigurând că your website strălucește în fața publicului țintă. Monitorizăm îndeaproape campaniile pentru a ne asigura că fiecare pas consolidează prezența ta online. Parteneriatul cu noi înseamnă a avea la dispoziție experți dedicați succesului tău digital.',
+    'At Echipa de Tocilari, SEO excellence starts with a deep audit, then competitor and market analysis for precise keyword strategies. We focus on on-page and off-page SEO so your website stands out to your target audience. We closely monitor campaigns so every step strengthens your online presence. Partnering with us means access to experts dedicated to your digital success.',
+  ],
+  [
+    'La Echipa de Tocilari, excelența SEO începe cu un audit profund, urmat de analiza concurenței și a pieței pentru strategii de cuvinte cheie precisă. Ne dedicăm optimizării SEO on-page și off-page, asigurând că site-ul tău strălucește în fața publicului țintă. Monitorizăm îndeaproape campaniile pentru a ne asigura că fiecare pas consolidează prezența ta online. Parteneriatul cu noi înseamnă a avea la dispoziție experți dedicați succesului tău digital.',
+    'At Echipa de Tocilari, SEO excellence starts with a deep audit, then competitor and market analysis for precise keyword strategies. We focus on on-page and off-page SEO so your website stands out to your target audience. We closely monitor campaigns so every step strengthens your online presence. Partnering with us means access to experts dedicated to your digital success.',
+  ],
+  [
+    'Experienta utilizatorului este importanta pentru crearea unui site web eficient. Aceasta se refera la modul in care utilizatorii navigheaza pe site, cum interactioneaza cu conținutul și funcționalitatile si cum reacționează la diferite elemente ale site-ului. Un UX bun poate determina utilizatorii sa petreaca mai mult timp pe site, sa se intoarca in viitor si sa interactioneze in continuare cu brand-ul sau compania.',
+    'User experience is critical for an effective website. It covers how users navigate the site, interact with content and features, and react to page elements. Strong UX keeps people on the site longer, brings them back, and deepens engagement with your brand.',
+  ],
+  [
+    'Experiența utilizatorului este importantă pentru crearea unui site web eficient. Aceasta se referă la modul în care utilizatorii navighează pe site, cum interacționează cu conținutul și funcționalitățile și cum reacționează la diferite elemente ale site-ului. Un UX bun poate determina utilizatorii să petreacă mai mult timp pe site, să se întoarcă în viitor și să interacționeze în continuare cu brand-ul sau compania.',
+    'User experience is critical for an effective website. It covers how users navigate the site, interact with content and features, and react to page elements. Strong UX keeps people on the site longer, brings them back, and deepens engagement with your brand.',
+  ],
+  [
+    'Ne place să realizăm lucrurile eficient, iar metodele noastre sistematizate înseamnă că toate sarcinile SEO sunt executate într-un mod rapid și eficace. Îți raportăm rezultatele SEO în fiecare lună și ne propunem întotdeauna să te facem să te simți confortabil cu orice explicații tehnice. În anii noștri de experiență, suntem bine cunoscuți pentru excelentele noastre abilități de comunicare.',
+    'We like to work efficiently. Our systematic methods mean SEO tasks are executed quickly and effectively. We report SEO results every month and always explain technical details clearly. Over years of experience we have become known for excellent communication.',
+  ],
+  [
+    'Un mare avantaj al acestui tip de creare site web este faptul că îți permite să îți extinzi afacerea și să ajungi la un public mult mai larg decât în cazul vânzărilor tradiționale si poți să îți îmbunătățești relația cu clienții tăi, oferindu-le posibilitatea de a comanda produsele direct de pe site și de a primi feedback instantaneu cu privire la stocul disponibil.',
+    'A major advantage of this website type is that you can expand your business and reach a much wider audience than traditional sales, while improving customer relationships by letting them order directly online and get instant stock feedback.',
+  ],
+  [
+    'La Echipa de Tocilari, îți oferim ție și afacerii tale posibilitatea de a alege unul dintre numeroasele template-uri disponibile, fiecare fiind proiectat cu grijă pentru a satisface diverse gusturi și nevoi. Ne mândrim cu colecția noastră vastă și diversificată, care îți permite să găsești soluția perfectă pentru a-ți pune în valoare brandul în mediul online.',
+    'At Echipa de Tocilari we give you and your business a wide range of carefully designed templates for different tastes and needs. Our diverse collection helps you find the right solution to showcase your brand online.',
+  ],
+  [
+    'Un site web de prezentare este un website creat pentru a promova o afacere. Acesta poate fi comparat cu o broșură digitală care își prezintă compania și serviciile într-un mod interactiv. Un astfel de site este important deoarece oferă o prezență online profesională, ajutând la atragerea de noi clienți și la consolidarea relației cu cei existenți.',
+    'A business website is built to promote a company. Think of it as an interactive digital brochure presenting your brand and services. It matters because a professional online presence attracts new customers and strengthens relationships with existing ones.',
+  ],
+  [
+    'Cauti expertiza in creare site web? Echipa de Tocilari iti ofera design inovator, abordare personalizata, si SEO integrat pentru a transforma site-ul tau intr-o carte de vizita digitala. Pasionati de tehnologie si dedicati proiectului tau, ne asiguram ca fiecare site este gata de succes online. Alege-ne pentru a face diferenta in lumea digitala.',
+    'Looking for website design expertise? Echipa de Tocilari offers innovative design, a personalized approach, and integrated SEO to turn your website into a digital business card. Passionate about technology and dedicated to your project, we make sure every site is ready for online success. Choose us to stand out in the digital world.',
+  ],
+  [
+    'Cauti expertiza in creare site web? Echipa de Tocilari iti ofera design inovator, abordare personalizata, si SEO integrat pentru a transforma your website intr-o carte de vizita digitala. Pasionati de tehnologie si dedicati proiectului tau, ne asiguram ca fiecare site este gata de succes online. Alege-ne pentru a face diferenta in lumea digitala.',
+    'Looking for website design expertise? Echipa de Tocilari offers innovative design, a personalized approach, and integrated SEO to turn your website into a digital business card. Passionate about technology and dedicated to your project, we make sure every site is ready for online success. Choose us to stand out in the digital world.',
+  ],
+  [
+    'Cauți expertiză în creare site web? Echipa de Tocilari îți oferă design inovator, abordare personalizată, și SEO integrat pentru a transforma site-ul tău într-o carte de vizită digitală. Pasionați de tehnologie și dedicați proiectului tău, ne asigurăm că fiecare site este gata de succes online. Alege-ne pentru a face diferența în lumea digitală.',
+    'Looking for website design expertise? Echipa de Tocilari offers innovative design, a personalized approach, and integrated SEO to turn your website into a digital business card. Passionate about technology and dedicated to your project, we make sure every site is ready for online success. Choose us to stand out in the digital world.',
+  ],
+  [
+    'De asemenea, reclama PPC permite companiilor să concureze în mod direct cu competitorii lor, deoarece anunțurile sunt afișate în aceeași pagină de rezultate a căutării. Mai mult decât atât, companiile pot alege să afișeze anunțurile doar utilizatorilor care se află într-o anumită locație geografică sau care utilizează anumite cuvinte cheie.',
+    'PPC also lets companies compete directly with rivals, since ads appear on the same search results page. Businesses can show ads only to users in a specific location or searching specific keywords.',
+  ],
+  [
+    'Reclama PPC este un mod eficient de publicitate, dar necesită o planificare și o gestionare atentă. Este important ca companiile să identifice cuvintele cheie relevante și să aibă o strategie de ofertare adecvată pentru a se asigura că anunțurile lor sunt afișate în locurile potrivite și că obțin un nivel ridicat de clicuri.',
+    'PPC advertising is effective but needs careful planning and management. Companies must identify relevant keywords and set a sound bidding strategy so ads show in the right places and earn strong click-through rates.',
+  ],
+  [
+    'Reclama PPC poate fi un mod eficient de a aduce trafic calificat pe site-ul web al companiei și poate fi personalizată pentru a ajunge la un public țintă specific. De asemenea, companiile pot urmări și analiza performanța campaniilor lor PPC pentru a optimiza cheltuielile de publicitate și a obține rezultate mai bune.',
+    'PPC can efficiently drive qualified traffic to a company website and can be tailored to a specific target audience. Companies can also track and analyze campaign performance to optimize ad spend and improve results.',
+  ],
+  [
+    '***Offer subject to terms and conditions. Pricing is indicative only. Pret fara TVA. Preturile sunt pentru pentru website-uri in limba romana si care se adreseaza pietei romanesti*In functie de nevoile clientului si necesitatile tehnice intalnite pe parcursul colaborarii , este posibil sa oferim servicii bonus',
+    '***Offer subject to terms and conditions. Pricing is indicative only, excluding VAT. Prices apply to Romanian-language websites targeting the Romanian market. Depending on client needs and technical requirements during the project, bonus services may be included.',
+  ],
+  [
+    'În timp ce obții aproximativ 50% din traficul tău din căutările organice, SEO te poate ajuta să maximizezi acest număr astfel încât să nu pierzi niciun potențial client. O echipă de experți SEO îți poate amplifica succesul în toate aceste aspecte, asigurându-se că fiecare investiție are un ROI puternic.',
+    'While roughly 50% of traffic often comes from organic search, SEO helps maximize that share so you do not miss potential customers. An expert SEO team amplifies success across these areas and ensures every investment delivers strong ROI.',
+  ],
+  [
+    'Indiferent dacă vrei să îți promovezi afacerea, să îți faci cunoscut brandul sau să îți împărtășești pasiunile cu lumea, noi suntem aici să te ajutăm. Echipa noastră de experți în web design și dezvoltare îți va oferi soluții personalizate, adaptate nevoilor tale și ale publicului tău țintă.',
+    'Whether you want to promote your business, grow brand awareness, or share your passions with the world, we are here to help. Our web design and development experts deliver custom solutions tailored to your needs and your target audience.',
+  ],
+  [
+    'Crearea unui site web de tipul e-commerce reprezintă construirea unei platforme online special creată pentru a vinde produse prin intermediul internetului. Folosind acest tip de site, poți să vinzi orice produs îți dorești, de la haine și bijuterii, la electronice și echipamente sportive.',
+    'Building an e-commerce website means creating an online platform purpose-built to sell products on the internet — from clothing and jewelry to electronics and sports equipment.',
+  ],
+  [
+    'Un site web de tipul landing page este un site simplu, format dintr-o singură pagină, care are scopul de a atrage atenția vizitatorilor și de a-i convinge să ia o acțiune specifică, cum ar fi să completeze un formular, să cumpere un produs sau să se înscrie la un eveniment.',
+    'A landing page is a simple one-page website designed to capture attention and drive a specific action — fill a form, buy a product, or register for an event.',
+  ],
+  [
+    'De obicei, aceste anunțuri sunt afișate în partea de sus sau de jos a paginii de rezultate a căutării sau în alte zone relevante ale site-urilor partenere. Când cineva face clic pe anunț, compania plătește o sumă mică de bani, cunoscută sub numele de cost per click (CPC).',
+    'These ads usually appear at the top or bottom of search results or on partner sites. When someone clicks, the company pays a small cost-per-click (CPC).',
+  ],
+  [
+    'Fie că ești în căutarea unui design simplu și elegant sau unuia complex și inovator, la noi vei descoperi template-ul ideal care să răspundă cerințelor tale specifice. Toate modelele noastre sunt optimizate pentru a oferi o experiență de navigare fluidă și plăcută, indiferent de dispozitivul utilizat de vizitatori.',
+    'Whether you want a simple elegant design or a complex innovative one, you will find a template that fits your needs. All our designs are optimized for a smooth browsing experience on any device.',
+  ],
+  [
+    'Fie că ești în căutarea unui design simplu și elegant sau unuia complex și inovator, la noi vei descoperi template-ul ideal care să răspundă cerințelor tale specifice. Toate modelele noastre sunt optimizate pentru a oferi o experiență de navigare fluidă și plăcută, no matter dispozitivul utilizat de vizitatori.',
+    'Whether you want a simple elegant design or a complex innovative one, you will find a template that fits your needs. All our designs are optimized for a smooth browsing experience on any device.',
+  ],
+  [
+    'Noi știm că nu e ușor să îți construiești un site web, dar noi suntem aici să îți luăm acest stres de pe umeri. Cu experiența noastră vastă în crearea site-urilor web, îți garantăm că vei avea un site profesional, optimizat SEO și adaptat pentru toate dispozitivele.',
+    'We know building a website is not easy — we take that stress off your shoulders. With extensive website design experience, we deliver a professional, SEO-optimized site that works on every device.',
+  ],
+  [
+    'Pentru modificări asupra conținutului sau funcționalități noi în website se percepe un tarif suplimentar de 30 euro / oră (în cazul în care nu ai ales un pachet de administrare care include și un anumit număr de ore alocate lunar sau ai depășit acest număr).',
+    'Content changes or new features are billed at an additional rate of €30 / hour (if you did not choose a maintenance package that includes monthly hours, or if you exceed the included hours).',
+  ],
+  [
+    '** Pentru oferte de creare website personalizate , special gandite in functie de nevoile si bugetul tau – nu ezita sa ne contactezi. Oferta este supusa unor termeni si conditii. Oferta are titlu informativ si nu are un caracter contractual.',
+    '** For custom website design quotes tailored to your needs and budget — contact us anytime. Offer subject to terms and conditions. Pricing is informative and non-contractual.',
+  ],
+  [
+    '** Pentru oferte SEO personalizate , special gandite in functie de nevoile si bugetul tau – nu ezita sa ne contactezi. Oferta este supusa unor termeni si conditii. Oferta are titlu informativ si nu are un caracter contractual.',
+    '** For custom SEO quotes tailored to your needs and budget — contact us anytime. Offer subject to terms and conditions. Pricing is informative and non-contractual.',
+  ],
+  [
+    'Reclama Pay-per-click (PPC) este o metodă de publicitate online în care companiile plătesc pentru fiecare clic pe anunțurile lor afișate în rezultatele căutării sau în alte zone ale site-urilor web.',
+    'Pay-per-click (PPC) advertising is an online ads model where companies pay for each click on ads shown in search results or on partner websites.',
+  ],
+  [
+    'Mai mult decât atât, este important să se monitorizeze și să se analizeze performanța campaniilor PPC pentru a optimiza costurile și a obține un ROI (return on investment) pozitiv.',
+    'It is also important to monitor and analyze PPC campaign performance to optimize costs and achieve a positive return on investment (ROI).',
+  ],
+  [
+    'În concluzie, reclama PPC este o modalitate populară și eficientă pentru companii de a-și promova produsele și serviciile online și de a atrage trafic calificat pe site-ul lor web.',
+    'In short, PPC advertising is a popular, effective way for companies to promote products and services online and attract qualified website traffic.',
+  ],
+  [
+    'Costul per click variază în funcție de concurența pentru cuvintele cheie relevante și de nivelul de ofertare al companiilor care concurează pentru aceleași cuvinte cheie.',
+    'Cost per click varies with competition for relevant keywords and the bidding level of companies targeting the same keywords.',
+  ],
+  [
+    'Analiza continua a performantei si modificari bid-uri pentru atingerea unor KPI-uri (search impression share, numar conversii, rata de conversie, cost per conversie)',
+    'Continuous performance analysis and bid adjustments toward KPIs (search impression share, conversions, conversion rate, cost per conversion)',
+  ],
+  [
+    'Optimizare continua a anunturilor (scor de optimizare, scor relevanta)',
+    'Continuous ad optimization (optimization score, relevance score)',
+  ],
+  [
+    'Setup campanii Google Ads Search – maximum 120 Ad grupuri',
+    'Google Ads Search setup — up to 120 ad groups',
+  ],
+  [
+    'Setup campanii Google Ads Search – maximum 80 Ad grupuri',
+    'Google Ads Search setup — up to 80 ad groups',
+  ],
+  [
+    'Setup campanii Google Ads Search – maximum 40 Ad grupuri',
+    'Google Ads Search setup — up to 40 ad groups',
+  ],
+  [
+    'Beneficiază de serviciile noastre în&nbsp;administrare site și mentenață&nbsp;și crește-ți afacerea online cu succes!',
+    'Benefit from our website management and maintenance services and grow your online business successfully!',
+  ],
+  ['Optimizare viteza site', 'Website speed optimization'],
+  ['Optimizare viteză site', 'Website speed optimization'],
+  ['Optimizare imagini*', 'Image optimization*'],
+  ['Lista cuvinte cheie', 'Keyword list'],
+  ['de optimizare SEO', 'SEO optimization'],
+  ['abonament lunar', 'monthly subscription'],
+  ['Prezenta online', 'Online presence'],
+  ['Prezența online', 'Online presence'],
+  ['pe care il ai!', 'you have in mind!'],
+  ['pe care îl ai!', 'you have in mind!'],
+  ['optimizare SEO', 'SEO optimization'],
+  ['Pret fara TVA', 'Price excluding VAT'],
+  ['Preturile sunt pentru pentru website-uri in limba romana si care se adreseaza pietei romanesti', 'Prices are for Romanian-language websites targeting the Romanian market'],
+  ['In functie de nevoile clientului si necesitatile tehnice intalnite pe parcursul colaborarii , este posibil sa oferim servicii bonus', 'Depending on client needs and technical requirements during the project, bonus services may be included'],
+  ['numar conversii', 'number of conversions'],
+  ['rata de conversie', 'conversion rate'],
+  ['cost per conversie', 'cost per conversion'],
+  ['scor de optimizare', 'optimization score'],
+  ['scor relevanta', 'relevance score'],
+  ['Ad grupuri', 'ad groups'],
+  ['cuvinte cheie', 'keywords'],
+  ['mentenață', 'maintenance'],
+  ['mentenanta', 'maintenance'],
 ];
 
 /** Page-level SEO for English (natural search phrasing). */
