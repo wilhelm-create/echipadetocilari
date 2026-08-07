@@ -402,6 +402,102 @@ export const dictionary = [
     'Pentru a începe să lucrezi cu noi, tot ce trebuie să faci este să ne contactezi prin intermediul formularului de contact de pe website-ul nostru sau prin telefon sau e-mail. Vom discuta cu tine despre nevoile tale de marketing online și îți vom oferi un plan personalizat și un buget estimativ. Dacă sunteți de acord cu propunerea noastră, vom începe să lucrăm împreună pentru a-ți crește prezența online și a-ți ajuta afacerea să crească.',
     'To get started, contact us via the website form, phone, or email. We will discuss your online marketing needs and share a tailored plan with a budget estimate. If you agree, we begin work to grow your online presence and your business.',
   ],
+
+  // SEO services long-form
+  [
+    'Echipa de Tocilari dă putere afacerii tale prin servicii de optimizare SEO. Convertim vizitatorii in clienti si maximizam traficul de pe site-ul tau. Un impuls real pentru prezența ta online!',
+    'Echipa de Tocilari powers your business with SEO services. We turn visitors into customers and maximize traffic to your website — a real boost for your online presence.',
+  ],
+  [
+    'Echipa de Tocilari dă putere afacerii tale prin servicii de optimizare SEO. Convertim vizitatorii în clienți și maximizăm traficul de pe site-ul tău. Un impuls real pentru prezența ta online!',
+    'Echipa de Tocilari powers your business with SEO services. We turn visitors into customers and maximize traffic to your website — a real boost for your online presence.',
+  ],
+  ['Atrage-ti audienta cu o prezenta online crescuta', 'Attract your audience with a stronger online presence'],
+  ['Atrage-ți audiența cu o prezență online crescută', 'Attract your audience with a stronger online presence'],
+  [
+    'Începem cu un audit SEO detaliat, identificând oportunități de îmbunătățire și prioritizând acțiunile pentru un impact maxim.',
+    'We start with a detailed SEO audit, identifying improvement opportunities and prioritizing actions for maximum impact.',
+  ],
+  [
+    'Analizăm concurența și piața pentru a înțelege unde stai și cum poți să te diferențiezi eficient.',
+    'We analyze competitors and the market to understand where you stand and how to differentiate effectively.',
+  ],
+  [
+    'Dezvoltăm o strategie de cuvinte cheie bazată pe cercetare și date, pentru a atrage trafic calificat spre site-ul tău.',
+    'We build a research-driven keyword strategy to attract qualified traffic to your website.',
+  ],
+  [
+    'Optimizăm elementele on-page, inclusiv titluri, metadescrieri și structura de conținut, pentru a îmbunătăți relevanța și accesibilitatea paginilor tale.',
+    'We optimize on-page elements — titles, meta descriptions, and content structure — to improve relevance and accessibility.',
+  ],
+  [
+    'Consolidăm autoritatea site-ului tău prin strategii off-page, cum ar fi construirea de linkuri calitative și strategii de conținut, pentru a crește autoritatea și încrederea.',
+    'We strengthen site authority with off-page strategies such as quality link building and content campaigns.',
+  ],
+  [
+    'Urmărim performanța campaniei SEO prin instrumente avansate, ajustând strategiile în funcție de datele analitice pentru a optimiza rezultatele continue.',
+    'We track SEO performance with advanced tools and adjust strategy based on analytics for continuous improvement.',
+  ],
+  ['Oferta Pret Abonamente pentru website', 'Subscription pricing for websites'],
+  ['de prezentare in limba Romana***', 'business websites in Romanian***'],
+  ['de prezentare în limba Română***', 'business websites in Romanian***'],
+  ['3 articole de blog (min 600 cuv fiecare)', '3 blog articles (min. 600 words each)'],
+  ['5 articole de blog (min 600 cuv fiecare)', '5 blog articles (min. 600 words each)'],
+  ['7 articole de blog (min 600 cuv fiecare)', '7 blog articles (min. 600 words each)'],
+  ['Optimizare Google Afacerea Mea', 'Google Business Profile optimization'],
+  ['Consultanta management Google Afacerea Mea', 'Google Business Profile consulting'],
+  ['Consultanță management Google Afacerea Mea', 'Google Business Profile consulting'],
+  ['Optimizare canale Social Media', 'Social media channel optimization'],
+  [
+    '*Anumite aspecte tehnice vor fi implemenate doar daca website-ul este construit in WordPress si exista acces.',
+    '*Some technical items are implemented only if the website is built on WordPress and access is provided.',
+  ],
+
+  // Website design long-form
+  [
+    'Expertiza Noastră, Site-ul Tău Web Fără Stres',
+    'Our expertise, your stress-free website',
+  ],
+  ['Expertiza specializata', 'Specialized expertise'],
+  ['Expertiza specializată', 'Specialized expertise'],
+  ['Abordare personalizata', 'Personalized approach'],
+  ['Abordare personalizată', 'Personalized approach'],
+  [
+    'Promotia noastra de Black Friday se termina pe 30 noiembrie!',
+    'Our Black Friday promotion ends on November 30!',
+  ],
+  [
+    'Landing page - site de prezentare de o pagina',
+    'Landing page — single-page conversion website',
+  ],
+  ['template wordpress / elementor', 'WordPress / Elementor template'],
+  ['Site de prezentare clasic', 'Classic multi-page business website'],
+  ['10 produse / servicii incluse', '10 products / services included'],
+  [
+    '*oferta supusa unor termeni si conditii. Oferta de pret are caracter pur informativ.',
+    '*Offer subject to terms and conditions. Pricing is indicative only.',
+  ],
+  ['2. Site Web de prezentare', '2. Business website'],
+
+  // Maintenance long-form
+  [
+    'Beneficiază de serviciile noastre în administrare site și mentenață și crește-ți afacerea online cu succes!',
+    'Benefit from our website management and maintenance services and grow your online business successfully!',
+  ],
+  [
+    'Beneficiază de serviciile noastre în administrare site și mentenață și crește-ți afacerea online cu succes!',
+    'Benefit from our website management and maintenance services and grow your online business successfully!',
+  ],
+  [
+    'Un site cu conținut relevant și actualizat continuu poate fi un instrument performant de generare de trafic și de creștere a vânzărilor și a afacerii.',
+    'A website with relevant, continuously updated content is a powerful tool for traffic and sales growth.',
+  ],
+  ['Actualizare continut site', 'Website content updates'],
+  ['Actualizare conținut site', 'Website content updates'],
+  ['Timp alocat lunar - 2 ore', 'Monthly time allocation — 2 hours'],
+  ['Timp alocat lunar - 4 ore', 'Monthly time allocation — 4 hours'],
+  ['Timp alocat lunar - 6 ore', 'Monthly time allocation — 6 hours'],
+  ['sector 2', 'District 2'],
 ];
 
 /** Page-level SEO for English (natural search phrasing). */
