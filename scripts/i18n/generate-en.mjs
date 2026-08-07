@@ -157,22 +157,20 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
 
   const styles = `
 <style id="ect-lang-css">
-/* Chip sits inside nav widget, immediately before burger toggle — always adjacent */
+/* RO|EN chip — always immediately LEFT of the burger on mobile */
 .ect-lang-wrap{
   display:inline-flex !important;
   align-items:center;
-  align-self:center;
   flex:0 0 auto;
   width:auto !important;
   max-width:none !important;
-  margin:0 .45rem 0 0;
+  margin:0;
   padding:0;
-  z-index:5;
-  vertical-align:middle;
+  z-index:6;
+  line-height:1;
 }
 #ect-lang-switch{
   position:relative;
-  top:auto;right:auto;left:auto;bottom:auto;
   font-family:Montserrat,system-ui,sans-serif;
   display:inline-flex;
   align-items:center;
@@ -193,44 +191,63 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
 #ect-lang-switch a[aria-current="true"]{background:#fd8649;color:#fff}
 #ect-lang-switch a:hover{background:#ff6c2a;color:#fff}
 #ect-lang-switch a + a{border-left:1px solid rgba(253,134,73,.35)}
-/* Keep RO|EN + burger as one tight right-aligned group in the nav widget */
+
+/* Shared: nav widget container is a flex row; chip order BEFORE burger */
 .elementor-location-header .elementor-widget-nav-menu .elementor-widget-container{
-  display:flex;
+  display:flex !important;
+  flex-direction:row !important;
   flex-wrap:wrap;
   align-items:center;
 }
-.elementor-location-header .elementor-widget-nav-menu .elementor-nav-menu--main{
-  flex:1 1 auto;
-}
 .elementor-location-header .ect-lang-wrap{
-  order:2;
-  margin:0 .4rem 0 0;
+  order:1 !important; /* left of burger */
+  margin:0 .35rem 0 0 !important;
 }
 .elementor-location-header .elementor-menu-toggle{
-  order:3;
-  margin-left:0 !important; /* Elementor sets ml:auto — would separate chip from burger */
+  order:2 !important; /* right of chip */
+  margin-left:0 !important; /* Elementor default is ml:auto — separates them */
 }
 .elementor-location-header .elementor-nav-menu--dropdown{
-  order:4;
+  order:3 !important;
   flex:1 0 100%;
+  width:100%;
 }
+
+@media (min-width:768px){
+  .elementor-location-header .elementor-widget-nav-menu .elementor-nav-menu--main{
+    order:0 !important;
+    flex:1 1 auto;
+  }
+  .elementor-location-header .ect-lang-wrap{
+    margin:0 .5rem 0 .35rem !important;
+  }
+}
+
 @media (max-width:767px){
-  /* Logo left, nav widget (chip+burger) flush right */
+  /* Logo left — chip+burger tight group on the right */
   .elementor-location-header .e-con-inner > .elementor-widget-nav-menu{
-    margin-left:auto;
+    margin-left:auto !important;
     flex:0 0 auto !important;
     width:auto !important;
+    max-width:none !important;
+  }
+  .elementor-location-header .elementor-widget-nav-menu .elementor-widget-container{
+    justify-content:flex-end;
+    gap:0;
+  }
+  .elementor-location-header .elementor-nav-menu--main{
+    display:none !important;
   }
   .elementor-location-header .ect-lang-wrap{
-    margin:0 .35rem 0 0;
+    order:1 !important;
+    margin:0 .3rem 0 0 !important;
+  }
+  .elementor-location-header .elementor-menu-toggle{
+    order:2 !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
   }
   #ect-lang-switch a{min-width:36px;min-height:34px;padding:0 .5rem;font-size:11px}
-}
-@media (min-width:768px){
-  /* Desktop: chip after horizontal menu links, still tight; toggle usually hidden */
-  .elementor-location-header .ect-lang-wrap{
-    margin:0 .5rem 0 .25rem;
-  }
 }
 </style>
 `;
