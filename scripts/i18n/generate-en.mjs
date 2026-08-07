@@ -35,14 +35,45 @@ function applyDictionary(html) {
 }
 
 function absolutizeAssets(html) {
-  // From /en/.../index.html relative ../wp-content breaks — force root absolute
-  return html
+  // EN pages live under /en/… — any relative wp-content path 404s.
+  // Fix src, href, srcset, and CSS url() to root-absolute /wp-content/ and /wp-includes/.
+  let out = html
     .replace(/(src|href)="(\.\.\/)+wp-content\//gi, '$1="/wp-content/')
     .replace(/(src|href)="(\.\.\/)+wp-includes\//gi, '$1="/wp-includes/')
     .replace(/(src|href)="wp-content\//gi, '$1="/wp-content/')
     .replace(/(src|href)="wp-includes\//gi, '$1="/wp-includes/')
     .replace(/url\((['"]?)(\.\.\/)+wp-content\//gi, 'url($1/wp-content/')
-    .replace(/url\((['"]?)wp-content\//gi, 'url($1/wp-content/');
+    .replace(/url\((['"]?)wp-content\//gi, 'url($1/wp-content/')
+    .replace(/url\((['"]?)(\.\.\/)+wp-includes\//gi, 'url($1/wp-includes/')
+    .replace(/url\((['"]?)wp-includes\//gi, 'url($1/wp-includes/');
+
+  // srcset="path 836w, path2 288w" — each candidate path
+  out = out.replace(/srcset="([^"]+)"/gi, (_, value) => {
+    const fixed = value
+      .split(',')
+      .map((part) => {
+        const trimmed = part.trim();
+        // "url size" or just "url"
+        const m = trimmed.match(/^(\S+)(\s+.+)?$/);
+        if (!m) return part;
+        let url = m[1];
+        const rest = m[2] || '';
+        url = url
+          .replace(/^(\.\.\/)+wp-content\//, '/wp-content/')
+          .replace(/^(\.\.\/)+wp-includes\//, '/wp-includes/')
+          .replace(/^wp-content\//, '/wp-content/')
+          .replace(/^wp-includes\//, '/wp-includes/');
+        return url + rest;
+      })
+      .join(', ');
+    return `srcset="${fixed}"`;
+  });
+
+  // Logo / home links that still point to index.html relative
+  out = out.replace(/href="index\.html"/gi, 'href="/en/"');
+  out = out.replace(/href="\.\.\/index\.html"/gi, 'href="/en/"');
+
+  return out;
 }
 
 function rewriteInternalLinks(html) {
@@ -124,15 +155,46 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
   const roActive = currentLang === 'ro';
   const enActive = currentLang === 'en';
 
+  // Top-left under logo area on mobile; left of header on desktop — avoids overlapping "Ai o idee?" CTA
   const bar = `
-<!-- language switcher: always visible -->
+<!-- language switcher: always visible, does not cover header CTA -->
 <style id="ect-lang-css">
-#ect-lang-switch{position:fixed;top:max(.65rem,env(safe-area-inset-top));right:max(.65rem,env(safe-area-inset-right));z-index:2147483646;font-family:Montserrat,system-ui,sans-serif;display:flex;align-items:center;gap:0;background:#fff;border:2px solid #fd8649;border-radius:999px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.12)}
-#ect-lang-switch a{display:inline-flex;align-items:center;justify-content:center;min-width:48px;min-height:44px;padding:0 .9rem;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;color:#fd8649;background:transparent;transition:background .15s,color .15s}
+#ect-lang-switch{
+  position:fixed;
+  top:auto;
+  bottom:max(1rem, env(safe-area-inset-bottom));
+  right:max(1rem, env(safe-area-inset-right));
+  left:auto;
+  z-index:2147483646;
+  font-family:Montserrat,system-ui,sans-serif;
+  display:inline-flex;
+  align-items:center;
+  gap:0;
+  background:#fff;
+  border:2px solid #fd8649;
+  border-radius:999px;
+  overflow:hidden;
+  box-shadow:0 8px 28px rgba(253,134,73,.35);
+}
+#ect-lang-switch a{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:52px;min-height:48px;padding:0 1rem;
+  font-size:14px;font-weight:700;letter-spacing:.06em;
+  text-decoration:none;color:#fd8649;background:transparent;
+  transition:background .15s,color .15s;
+}
 #ect-lang-switch a[aria-current="true"]{background:#fd8649;color:#fff}
 #ect-lang-switch a:hover{background:#ff6c2a;color:#fff}
 #ect-lang-switch a + a{border-left:1px solid rgba(253,134,73,.35)}
-@media (max-width:767px){#ect-lang-switch{top:max(.5rem,env(safe-area-inset-top));right:max(.5rem,env(safe-area-inset-right))}}
+/* Desktop: sit just under header, left side — clear of right CTA */
+@media (min-width:1025px){
+  #ect-lang-switch{
+    top:1.1rem;
+    bottom:auto;
+    left:max(1rem, env(safe-area-inset-left));
+    right:auto;
+  }
+}
 </style>
 <nav id="ect-lang-switch" aria-label="Language / Limbă">
   <a href="${roHref}" hreflang="ro" lang="ro" ${roActive ? 'aria-current="true"' : ''} title="Română">RO</a>

@@ -688,6 +688,14 @@ export const dictionary = [
   ['cuvinte cheie', 'keywords'],
   ['mentenață', 'maintenance'],
   ['mentenanta', 'maintenance'],
+  ['Ai o idee?', 'Got an idea?'],
+  ['Ai o idee', 'Got an idea'],
+  ['Hai sa vorbim', "Let's talk"],
+  ['Hai să vorbim', "Let's talk"],
+  ['Nume', 'Name'],
+  ['Mesaj', 'Message'],
+  ['Telefon', 'Phone'],
+  ['Email', 'Email'],
 ];
 
 /** Page-level SEO for English (natural search phrasing). */
