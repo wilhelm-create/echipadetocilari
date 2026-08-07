@@ -263,15 +263,17 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
     ''
   );
 
-  // Inject immediately before the burger toggle (first in header) — sits left & tight
-  const toggleRe = /(<div class="elementor-menu-toggle"\b)/i;
+  // Inject immediately before the burger toggle — left of & flush with it
+  const toggleRe = /(<div class="elementor-menu-toggle"[^>]*>)/i;
   if (toggleRe.test(html)) {
+    // reset lastIndex after .test() before replace
+    toggleRe.lastIndex = 0;
     html = html.replace(toggleRe, `${wrap}$1`);
   } else {
-    // Fallback: before CTA, then before </header>
     const ctaRe =
       /(<div class="elementor-element elementor-element-682f9a60\b)/i;
     if (ctaRe.test(html)) {
+      ctaRe.lastIndex = 0;
       html = html.replace(ctaRe, `${wrap}$1`);
     } else {
       html = html.replace(/<\/header>/i, `${wrap}</header>`);
