@@ -11,6 +11,9 @@ export default defineConfig({
   site: process.env.PUBLIC_SITE_URL || 'https://www.echipadetocilari.ro',
   trailingSlash: 'always',
   compressHTML: true,
+  // The Elementor mirror still owns dist/ and is what Vercel deploys today.
+  // Astro builds alongside it until it reaches parity and we flip the cutover.
+  outDir: './dist-astro',
   build: {
     inlineStylesheets: 'auto',
   },

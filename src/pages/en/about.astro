@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { business } from '../../data/business';
+import { metaEn } from '../../i18n/content-en';
+import { organizationSchema, webPageSchema, breadcrumbSchema } from '../../lib/schema';
+
+const { title, description } = metaEn.about;
+
+const schemas = [
+  organizationSchema('en'),
+  webPageSchema({ path: '/en/about/', name: title, description, locale: 'en' }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/en/' },
+    { name: 'About us', path: '/en/about/' },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/en/about/" schemas={schemas}>
+  <section class="gradient-brand-soft section-pad">
+    <div class="container-page grid items-center gap-10 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow mb-2">About {business.name}</p>
+        <h1 class="mb-4 text-balance">
+          Nerds who do marketing that actually works
+        </h1>
+        <p class="mb-4 text-lg text-ink-soft">
+          <strong class="text-ink">Short answer:</strong> we are a digital marketing agency in Romania
+          specialising in website design, SEO, maintenance, PPC, logo, and copywriting — with a nerd's
+          mindset: data, details, execution.
+        </p>
+        <p class="text-ink-soft">
+          A group of specialists genuinely into marketing and technology, focused on fast websites,
+          SEO, and campaigns that convert.
+        </p>
+      </div>
+      <img
+        src="/images/About-Page-intro-pic.png"
+        alt="Echipa de Tocilari — about us"
+        width="640"
+        height="640"
+        class="mx-auto max-w-md rounded-2xl"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-page max-w-3xl space-y-6">
+      <h2 >What we believe</h2>
+      <p class="text-ink-soft">
+        A beautiful site that will not load on 4G is not worth it. SEO without useful content is
+        noise. Ads without a clear landing page burn budget. So we tie design, technology, and
+        message into one system serving a single goal:
+        <strong>customers for your business</strong>.
+      </p>
+      <h2 >How we work</h2>
+      <ol class="list-decimal space-y-3 pl-5 text-ink-soft">
+        <li>
+          <strong class="text-ink">Discovery</strong> — objectives, audience, competition, budget
+          constraints.
+        </li>
+        <li>
+          <strong class="text-ink">Plan</strong> — clear priorities (site / SEO / ads / content), not
+          twenty channels at once.
+        </li>
+        <li>
+          <strong class="text-ink">Execution</strong> — measurable deliverables on a realistic
+          schedule.
+        </li>
+        <li>
+          <strong class="text-ink">Measurement</strong> — reporting on KPIs (traffic, leads,
+          rankings, speed).
+        </li>
+      </ol>
+      <a href="/en/contact/#formular" class="btn-primary mt-4 inline-flex">Let's get acquainted</a>
+    </div>
+  </section>
+
+  <ContactForm />
+</BaseLayout>

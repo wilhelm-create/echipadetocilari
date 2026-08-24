@@ -1,0 +1,145 @@
+/* Logo design — page styles.
+   Design tokens taken from the live Elementor build: Montserrat throughout,
+   brand #fd8649, ink #27272d, h1 45/54 w900, h2 45/54 w500, body 18/24. */
+
+.ect-page {
+  font-family: Montserrat, system-ui, sans-serif;
+  color: #27272d;
+}
+
+.ect-container {
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.ect-hero {
+  background: #fff url('/wp-content/uploads/2022/03/day-care-page-header-blobs.svg') calc(0% - 138px) 0% / cover no-repeat;
+  padding: 120px 0 90px;
+}
+
+.ect-section {
+  padding: 80px 0;
+}
+
+.ect-eyebrow {
+  margin: 0 0 10px;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 300;
+  color: #fd8649;
+}
+
+.ect-h1 {
+  margin: 0 0 24px;
+  font-size: clamp(37px, 4vw, 45px);
+  line-height: 1.2;
+  font-weight: 900;
+  color: #fd8649;
+}
+
+.ect-h2 {
+  margin: 0 0 40px;
+  font-size: clamp(28px, 3.4vw, 45px);
+  line-height: 1.2;
+  font-weight: 500;
+  color: #27272d;
+}
+
+.ect-h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #fd8649;
+}
+
+.ect-lead {
+  margin: 0 0 32px;
+  max-width: 640px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.ect-body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22.4px;
+  font-weight: 300;
+}
+
+.ect-grid {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.ect-page .ect-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  padding: 15px 30px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ect-page .ect-btn strong {
+  margin: 0 4px;
+}
+
+.ect-page .ect-btn--outline {
+  border-color: #fd8649;
+  background: #fff;
+  color: #fd8649;
+  padding: 20px 40px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ect-page .ect-btn--outline:hover {
+  background: #fd8649;
+  color: #fff;
+}
+
+.ect-page .ect-btn--on-brand {
+  background: #fff;
+  color: #ff5600;
+  padding: 20px 40px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ect-cta {
+  background: linear-gradient(135deg, #ff6c2a 0%, #fd8649 45%, #ff9762 100%);
+  color: #fff;
+}
+
+.ect-cta__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 215px;
+  padding-block: 32px;
+}
+
+.ect-cta__title {
+  margin: 0;
+  max-width: 571px;
+  font-size: 35px;
+  line-height: 42px;
+  font-weight: 500;
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .ect-hero { padding: 60px 0 50px; }
+  .ect-section { padding: 50px 0; }
+  .ect-cta__title { font-size: 26px; line-height: 32px; }
+}

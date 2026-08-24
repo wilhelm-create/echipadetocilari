@@ -6,6 +6,8 @@ import MobileStickyCta from '../components/MobileStickyCta.astro';
 import JsonLd from '../components/JsonLd.astro';
 import Animations from '../components/Animations.astro';
 import { business } from '../data/business';
+import { alternatePath, getLocale, getRouteKey, routes } from '../i18n/routes';
+import { t } from '../i18n/ui';
 
 interface Props {
   title: string;
@@ -39,10 +41,19 @@ const site = Astro.site?.href?.replace(/\/$/, '') || business.url;
 const canonical = new URL(canonicalPath, site + '/').href;
 const ogImageAbs = ogImage.startsWith('http') ? ogImage : new URL(ogImage, site + '/').href;
 const fullTitle = title.includes(business.name) ? title : `${title} · ${business.name}`;
+
+const locale = getLocale(Astro.url.pathname);
+const s = t(locale);
+
+// hreflang only where a real counterpart exists; x-default points at Romanian,
+// which is the primary market.
+const routeKey = getRouteKey(canonicalPath);
+const roAlt = routeKey ? new URL(routes[routeKey].ro, site + '/').href : null;
+const enAlt = routeKey ? new URL(routes[routeKey].en, site + '/').href : null;
 ---
 
 <!doctype html>
-<html lang="ro">
+<html lang={s.htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -68,7 +79,17 @@ const fullTitle = title.includes(business.name) ? title : `${title} · ${busines
       )
     }
 
-    <meta property="og:locale" content="ro_RO" />
+    {
+      roAlt && enAlt && !blockIndexing && (
+        <>
+          <link rel="alternate" hreflang="ro" href={roAlt} />
+          <link rel="alternate" hreflang="en" href={enAlt} />
+          <link rel="alternate" hreflang="x-default" href={roAlt} />
+        </>
+      )
+    }
+
+    <meta property="og:locale" content={s.ogLocale} />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -87,11 +108,12 @@ const fullTitle = title.includes(business.name) ? title : `${title} · ${busines
     <link rel="icon" type="image/png" href="/images/Copie-a-fisierului-echipadetocilari-logo-pe-diforma-portocalie1.png" />
     <link rel="apple-touch-icon" href="/images/Logo_Echipa_de_Tocilari-1024x1024.webp" />
 
-    <!-- Fonts: display + UI + body — display swap for LCP/CLS -->
+    <!-- Montserrat only — the live site uses it for headings and body alike.
+         300/400/500 for copy, 600 for buttons, 900 for the h1. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Varela+Round&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;900&display=swap"
       rel="stylesheet"
     />
     <!-- Motion: plain CSS (scroll/float/lottie helpers) — not bundled by Tailwind -->
@@ -105,7 +127,7 @@ const fullTitle = title.includes(business.name) ? title : `${title} · ${busines
       href="#main"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-lg"
     >
-      Sari la conținut
+      {s.skipToContent}
     </a>
     <Header />
     <main id="main" class="flex-1">

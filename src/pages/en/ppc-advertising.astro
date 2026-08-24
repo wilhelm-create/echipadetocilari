@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Faq from '../../components/Faq.astro';
+import { metaEn, ppcPlansEn, ppcFaqsEn } from '../../i18n/content-en';
+import {
+  organizationSchema,
+  webPageSchema,
+  breadcrumbSchema,
+  serviceSchema,
+  faqSchema,
+} from '../../lib/schema';
+
+const { title, description } = metaEn.ppc;
+
+const schemas = [
+  organizationSchema('en'),
+  webPageSchema({ path: '/en/ppc-advertising/', name: title, description, locale: 'en' }),
+  serviceSchema({
+    name: 'PPC advertising management',
+    description,
+    path: '/en/ppc-advertising/',
+    locale: 'en',
+  }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/en/' },
+    { name: 'Services', path: '/en/services/' },
+    { name: 'PPC advertising', path: '/en/ppc-advertising/' },
+  ]),
+  faqSchema(ppcFaqsEn),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/en/ppc-advertising/"
+  schemas={schemas}
+>
+  <section class="section-pad gradient-brand-soft">
+    <div class="container-page max-w-3xl text-center">
+      <p class="eyebrow mb-2">Pay-per-click advertising</p>
+      <h1 class="mb-4 text-balance">PPC advertising</h1>
+      <p class="text-lg text-ink-soft">
+        <strong class="text-ink">Direct answer:</strong> PPC is online advertising where you pay only when
+        someone clicks your ad. Ads appear in Google results exactly when someone searches for what you
+        offer — so you are paying for purchase intent, not impressions.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-page grid gap-10 lg:grid-cols-2 lg:gap-14">
+      <div data-animate="fade-right">
+        <h2 class="mb-4">How it works, briefly</h2>
+        <div class="space-y-4 text-ink-soft">
+          <p>
+            Ads appear at the top or bottom of the results page, or in relevant spots on partner
+            sites. When someone clicks, you pay an amount called
+            <strong class="text-ink">cost per click (CPC)</strong>.
+          </p>
+          <p>
+            CPC varies with how competitive your keywords are and how much rival businesses bid on
+            the same searches. That is why keyword choice and bidding strategy decide whether a
+            budget is wasted or profitable.
+          </p>
+          <p>
+            PPC lets you compete head-on — you appear on the same results page as your competitors —
+            and show ads only to people in a given area or using particular search terms.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-surface" data-animate="fade-left">
+        <h2 class="mb-4 text-2xl text-brand-dark">Why it is worth it</h2>
+        <ul class="space-y-3 text-ink-soft">
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-dark" aria-hidden="true">✓</span>
+            <span><strong class="text-ink">Qualified traffic fast</strong> — results in days, not months like SEO.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-dark" aria-hidden="true">✓</span>
+            <span><strong class="text-ink">Precise targeting</strong> — by location, keyword, and intent.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-dark" aria-hidden="true">✓</span>
+            <span><strong class="text-ink">Everything is measurable</strong> — we track performance and optimise spend on data, not intuition.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-dark" aria-hidden="true">✓</span>
+            <span><strong class="text-ink">Budget stays yours</strong> — pause, raise, or reallocate any time.</span>
+          </li>
+        </ul>
+        <p class="mt-5 text-sm text-muted">
+          PPC needs careful planning and management: relevant keywords, a sound bidding strategy, and
+          constant monitoring to reach a positive ROI.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-surface-2" aria-labelledby="pricing-heading">
+    <div class="container-page">
+      <p class="eyebrow mb-2 text-center">Google Ads packages</p>
+      <h2 id="pricing-heading" class="mb-3 text-center text-balance">
+        Pick the package that fits your budget
+      </h2>
+      <p class="mx-auto mb-10 max-w-2xl text-center text-ink-soft">
+        The subscription covers campaign setup and management. The budget paid to Google is billed
+        separately and stays entirely under your control.
+      </p>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        {
+          ppcPlansEn.map((plan, i) => (
+            <article
+              class:list={[
+                'card-surface flex flex-col',
+                plan.highlight && 'ring-2 ring-brand shadow-brand',
+              ]}
+              data-animate="fade-up"
+              data-stagger={String(i + 1)}
+            >
+              {plan.highlight && (
+                <p class="mb-3 inline-flex self-start rounded-full bg-brand px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+                  Most chosen
+                </p>
+              )}
+              <h3 class="text-2xl text-brand-dark">{plan.name}</h3>
+              <p class="mt-1 text-sm text-muted">{plan.period}</p>
+              <p class="my-4 font-display text-4xl text-ink">{plan.price}</p>
+              <p class="mb-5 text-sm text-ink-soft">{plan.summary}</p>
+
+              <ul class="mb-6 space-y-2.5 text-sm text-ink-soft">
+                {plan.features.map((f) => (
+                  <li class="flex gap-2.5">
+                    <span class="mt-0.5 text-brand-dark" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="/en/contact/#formular"
+                class:list={[
+                  'mt-auto w-full text-center',
+                  plan.highlight ? 'btn-primary' : 'btn-secondary',
+                ]}
+              >
+                Order now
+              </a>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="mt-6 text-center text-xs text-muted">
+        Prices exclude VAT. Depending on your needs and the technical requirements that come up
+        during the work, bonus services may be included.
+      </p>
+    </div>
+  </section>
+
+  <Faq items={ppcFaqsEn} id="faq-ppc" eyebrow="PPC questions" />
+
+  <ContactForm />
+</BaseLayout>

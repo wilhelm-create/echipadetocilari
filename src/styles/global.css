@@ -14,9 +14,12 @@
   --color-muted-light: #828282;
   --color-surface: #fcfcfc;
   --color-surface-2: #f9f9f9;
-  --font-display: "Varela Round", system-ui, sans-serif;
+  /* The live site is Montserrat throughout — headings and body alike.
+     Kept as three tokens so callers do not have to change, but they all
+     resolve to the same family the Elementor build uses. */
+  --font-display: "Montserrat", system-ui, sans-serif;
   --font-sans: "Montserrat", system-ui, sans-serif;
-  --font-body: "Noto Sans", system-ui, sans-serif;
+  --font-body: "Montserrat", system-ui, sans-serif;
 }
 
 @layer base {
@@ -39,7 +42,12 @@
   }
 
   body {
-    @apply bg-white text-ink font-body antialiased;
+    @apply bg-white antialiased;
+    font-family: var(--font-body);
+    /* Live site: Montserrat 18/24, #27272d */
+    font-size: 18px;
+    line-height: 1.34;
+    color: var(--color-ink);
     text-rendering: optimizeLegibility;
   }
 
@@ -47,15 +55,48 @@
     @apply outline-2 outline-offset-2 outline-brand;
   }
 
+  /* Type scale lifted from the Elementor build (measured, not guessed):
+     h1 45/54 w900 brand · h2 45/54 w500 · h3 20/24 w500 brand.
+     clamp() reproduces Elementor's fluid step down to ~37px on mobile. */
   h1,
   h2,
   h3,
   h4 {
-    @apply font-display text-ink font-normal tracking-tight;
+    font-family: var(--font-display);
+    letter-spacing: normal;
+  }
+
+  h1 {
+    font-size: clamp(2.32rem, 1.85rem + 2.1vw, 2.8125rem);
+    line-height: 1.2;
+    font-weight: 900;
+    color: var(--color-brand);
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 1.15rem + 2.7vw, 2.8125rem);
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--color-brand);
+  }
+
+  h4 {
+    font-size: 1.125rem;
+    line-height: 1.2;
+    font-weight: 300;
+    color: var(--color-ink);
   }
 
   p {
-    @apply text-ink-soft leading-relaxed;
+    color: var(--color-ink);
+    line-height: 1.34;
   }
 
   /* 16px min on form controls — prevents iOS zoom */
@@ -83,28 +124,38 @@
     background: linear-gradient(180deg, rgba(253, 134, 73, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
   }
 
+  /* Hero backdrop from the Elementor build — same asset, same offset. */
+  .hero-blobs {
+    background-image: url('/images/day-care-page-header-blobs.svg');
+    background-size: cover;
+    background-position: calc(0% - 138px) 0%;
+    background-repeat: no-repeat;
+  }
+
   .shadow-brand {
     box-shadow: 0 12px 40px -12px rgba(253, 134, 73, 0.45);
   }
 
+  /* Buttons match the Elementor build: flat brand fill, 30px radius —
+     not a gradient pill. Measured from the live markup. */
   .btn-primary {
     display: inline-flex;
     min-height: 3rem;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    border-radius: 9999px;
-    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    padding: 15px 30px;
     text-align: center;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
-    background: linear-gradient(135deg, #ff6c2a 0%, #fd8649 45%, #ff9762 100%);
-    box-shadow: 0 12px 40px -12px rgba(253, 134, 73, 0.45);
-    transition: filter 0.2s ease, transform 0.2s ease;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fffefe;
+    background: var(--color-brand);
+    transition: background 0.2s ease, transform 0.2s ease;
   }
   .btn-primary:hover {
-    filter: brightness(1.05);
+    background: var(--color-brand-dark);
   }
   .btn-primary:active {
     transform: scale(0.98);
@@ -114,19 +165,20 @@
     outline-offset: 2px;
   }
 
+  /* The big "free consultation" CTA: white fill, brand outline, roomy padding. */
   .btn-secondary {
     display: inline-flex;
     min-height: 3rem;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    border-radius: 9999px;
+    border-radius: 30px;
     border: 2px solid var(--color-brand);
     background: #fff;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    padding: 20px 40px;
+    font-size: 16px;
     font-weight: 600;
-    color: var(--color-brand-dark);
+    color: var(--color-brand);
     transition: background 0.2s ease, transform 0.2s ease;
   }
   .btn-secondary:hover {
@@ -140,8 +192,25 @@
     @apply py-14 sm:py-16 lg:py-20;
   }
 
+  /* Section label above a heading. The live site uses a light, sentence-case
+     18px line — not small uppercase with wide tracking. */
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand-dark sm:text-sm;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 300;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--color-brand);
+  }
+
+  /* Hero variant: larger and ink-coloured. */
+  .eyebrow-hero {
+    font-size: 21px;
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--color-ink);
   }
 
   .card-surface {

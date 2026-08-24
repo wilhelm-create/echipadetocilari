@@ -18,26 +18,51 @@ npm run build
 npm run preview   # http://localhost:3000
 ```
 
+`npm run build` verifică automat rezultatul din `dist/` la final (JS/JSON-LD valid,
+meta prezente, hreflang complet, reguli de indexare corecte) și **iese cu eroare**
+dacă ceva nu e în regulă.
+
 Re-scrape original (opțional, actualizează `legacy-mirror/`):
 
 ```bash
-npm run mirror
+npm i -D website-scraper && npm run mirror
 # apoi mută public/www... → legacy-mirror dacă e nevoie
 ```
 
-## Indexare (staging)
+`website-scraper` se instalează doar la nevoie — nu e în `package.json`, ca să nu
+încetinească build-urile de pe Vercel.
 
-Implicit **nu e indexabil**:
+## Indexare
 
-- `meta robots` noindex
-- `robots.txt` Disallow
-- header `X-Robots-Tag`
+Controlată **exclusiv** de `PUBLIC_INDEXABLE` la build — nu există niciun header
+hardcodat care să o suprascrie.
 
-La lansare pe domeniu real:
+| | `PUBLIC_INDEXABLE` nesetat (staging) | `PUBLIC_INDEXABLE=true` (producție) |
+|---|---|---|
+| `meta robots` | `noindex, nofollow` pe tot | `index, follow` pe paginile noastre |
+| `robots.txt` | `Disallow: /` | `Allow: /` + sitemap |
+| `sitemap.xml` | absent | 20 URL-uri (10 RO + 10 EN) |
+
+La lansare, setează în Vercel → Project Settings → Environment Variables:
+
+```
+PUBLIC_INDEXABLE=true
+PUBLIC_SITE_URL=https://www.echipadetocilari.ro
+```
+
+Local:
 
 ```bash
 PUBLIC_INDEXABLE=true PUBLIC_SITE_URL=https://www.echipadetocilari.ro npm run build
 ```
+
+### Pagini rămase din scrape
+
+`legacy-mirror/` conține și 16 pagini pe care nu le-am scris noi — pagini demo din
+tema Astra/Beyond (`coming-soon`, `do-ppc-ninjas-really-exist`, …) și pagini de
+atașament WordPress. Se publică, ca să rămână oglinda 1:1, dar primesc **întotdeauna
+`noindex`** (inclusiv în producție) și nu primesc schema sau meta de-ale noastre.
+Sursa de adevăr pentru „ce e pagină de-a noastră" este `scripts/i18n/routes.mjs`.
 
 ## Multilingual (RO default + EN secondary)
 

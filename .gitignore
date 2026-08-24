@@ -1,5 +1,6 @@
 # build
 dist/
+dist-astro/
 .output/
 .vercel/
 .netlify/
@@ -27,3 +28,5 @@ scripts/content-extract.txt
 
 # misc
 .astro/
+.audit/
+.claude/

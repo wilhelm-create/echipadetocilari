@@ -3,7 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Faq from '../components/Faq.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Lottie from '../components/Lottie.astro';
-import { business, services, testimonials } from '../data/business';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import TestimonialCarousel from '../components/TestimonialCarousel.astro';
+import { business, homeServices, testimonials } from '../data/business';
 import { homeFaqs } from '../data/faqs';
 import {
   organizationSchema,
@@ -31,138 +33,96 @@ const schemas = [
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/" schemas={schemas}>
-  <!-- HERO — mobile: logo first (like brand site), text always visible -->
-  <section class="relative overflow-hidden gradient-brand-soft">
+  <!-- HERO — ported from the Elementor build: blobs background, text left,
+       the big Lottie right, one paragraph, one outline CTA. -->
+  <section class="hero-blobs relative overflow-hidden bg-white">
+    <!-- Column widths, gap and vertical offsets are the measured Elementor values:
+         397px text + 30px gap + 462px animation = 889px span. -->
     <div
-      class="pointer-events-none absolute inset-0 opacity-40"
-      style="background-image: url('/images/BG-HomePage-High.png'); background-size: cover; background-position: center;"
-      aria-hidden="true"
-    ></div>
-    <div
-      class="container-page relative grid items-center gap-8 py-10 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:gap-12 lg:py-20"
+      class="relative mx-auto flex w-full max-w-[889px] flex-col items-center gap-8 px-4 pb-12 pt-10 sm:px-6 lg:min-h-[780px] lg:flex-row lg:items-start lg:gap-[30px] lg:px-0 lg:pb-0 lg:pt-0"
     >
-      <!-- Visual first on mobile -->
       <div
-        class="relative order-1 mx-auto w-full max-w-[280px] sm:max-w-md lg:order-2 lg:max-w-none"
+        class="order-2 w-full text-center lg:order-1 lg:w-[397px] lg:shrink-0 lg:pt-[175px] lg:text-left"
+        data-animate-hero
+      >
+        <p class="eyebrow-hero mb-5">Agenție Web Design</p>
+        <h1 class="mb-7">Marketing online făcut de tocilari!</h1>
+        <p class="mb-7">
+          Suntem nerdy, suntem pricepuți și suntem gata să-ți oferim soluțiile de marketing online
+          de care afacerea ta are nevoie.
+        </p>
+        <a href="#formular" class="btn-secondary anim-pulse-cta">
+          Participă la o consultație <strong class="mx-1">GRATUITĂ</strong> de 30 minute
+        </a>
+      </div>
+
+      <div
+        class="order-1 w-full max-w-[320px] sm:max-w-md lg:order-2 lg:mt-[194px] lg:w-[462px] lg:max-w-none"
         data-animate-hero="zoom"
       >
-        <div class="anim-float">
-          <img
-            src="/images/Logo_Echipa_de_Tocilari-e1708028624694.webp"
-            alt={`${business.name} — logo agenție marketing digital`}
-            width="836"
-            height="870"
-            class="mx-auto h-auto w-full drop-shadow-2xl"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </div>
-        <div
-          class="pointer-events-none absolute -bottom-2 -right-1 w-24 sm:-bottom-4 sm:-right-2 sm:w-36 lg:w-44"
-        >
-          <Lottie src="/lottie/services.json" label="Animație decorativă" aspect="1 / 1" />
-        </div>
-      </div>
-
-      <div class="order-2 text-center lg:order-1 lg:text-left" data-animate-hero>
-        <p class="eyebrow mb-3">Agenție web design & marketing digital</p>
-        <h1 class="mb-4 text-3xl leading-tight text-balance sm:text-5xl lg:text-[3.25rem]">
-          Marketing online făcut de <span class="text-brand-dark">tocilari</span>!
-        </h1>
-        <p class="mx-auto mb-4 max-w-xl text-base text-ink-soft sm:text-lg lg:mx-0">
-          Suntem nerdy, suntem pricepuți și suntem gata să-ți oferim soluțiile de marketing online
-          de care afacerea ta are nevoie — site rapid, SEO care rankează și campanii care convertesc.
-        </p>
-        <p class="mx-auto mb-8 max-w-xl text-sm text-muted sm:text-base lg:mx-0">
-          <strong class="text-ink">Răspuns direct:</strong> {business.name} este agenția de
-          marketing digital din România care construiește prezența online (web + SEO + ads) pentru
-          afaceri care vor rezultate măsurabile.
-        </p>
-        <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
-          <a href="#formular" class="btn-primary anim-pulse-cta">
-            Consultație <strong class="ml-1">GRATUITĂ</strong> · 30 min
-          </a>
-          <a href="/servicii/" class="btn-secondary">Vezi serviciile</a>
-        </div>
+        <Lottie src="/lottie/hero.json" label="Animație marketing digital" aspect="1 / 1" />
       </div>
     </div>
   </section>
 
-  <!-- ABOUT STRIP -->
-  <section class="section-pad" aria-labelledby="despre-heading">
-    <div class="container-page grid items-center gap-10 lg:grid-cols-2">
-      <div data-animate="fade-left">
-        <p class="eyebrow mb-2">Echipa de Tocilari</p>
-        <h2 id="despre-heading" class="mb-4 text-3xl sm:text-4xl">Suntem aici pentru afacerea ta!</h2>
-        <div class="space-y-4 text-ink-soft">
+  <!-- ABOUT — Elementor puts the animation left and the copy right (580/634
+       columns, 780px tall), with an orange h2 and a filled button. -->
+  <section aria-labelledby="despre-heading">
+    <div
+      class="mx-auto flex w-full max-w-[1214px] flex-col items-center gap-10 px-4 py-14 sm:px-6 lg:min-h-[780px] lg:flex-row lg:items-start lg:gap-0 lg:px-0 lg:py-0"
+    >
+      <div class="w-full max-w-md lg:mt-[127px] lg:w-[580px] lg:max-w-none lg:shrink-0 lg:px-[10px]" data-animate="fade-left">
+        <Lottie src="/lottie/services.json" label="Animație echipă marketing" aspect="560 / 525" />
+      </div>
+
+      <div class="w-full lg:mt-[93px] lg:w-[634px] lg:pl-[122px]" data-animate="fade-right" data-stagger="2">
+        <p class="eyebrow mb-[20px] !text-[16px] !text-ink">ECHIPA DE TOCILARI</p>
+        <h2 id="despre-heading" class="mb-[20px] text-brand">Suntem aici pentru afacerea ta!</h2>
+        <div class="space-y-4 text-[16px] [&_p]:text-[16px] [&_p]:leading-[24px]">
           <p>
             Suntem un grup de tocilari pasionați de marketing și tehnologie. Punem la dispoziția ta
-            abilitățile noastre nerdy, ca să ajungi la publicul țintă și să te faci remarcat pe
-            piața online.
+            abilitățile noastre nerdy, pentru a te ajuta să ajungi la publicul țintă și să te faci
+            remarcat pe piața online.
           </p>
           <p>
-            Ne pricepem la optimizare SEO, creare site web, social media marketing, PPC și
-            copywriting — practic la aspectele de marketing digital pe care nu ai timp sau resurse
-            să le faci singur.
+            Cum te putem ajuta? Ei bine, ne pricepem la tot felul de tactici și strategii de
+            marketing online – de la optimizarea motoarelor de căutare, la crearea site-ului web și
+            social media marketing.
           </p>
           <p>
-            Suntem mereu la curent cu tendințele și tehnologiile din industrie, ca să-ți propunem
-            soluții concrete, nu jargon.
+            Practic, noi ne ocupăm de toate aspectele de marketing digital pe care nu ai timp sau
+            resurse să le faci singur. În plus, suntem mereu la curent cu cele mai noi tendințe și
+            tehnologii din industrie, așa că te putem ghida prin lumea complicată a marketingului
+            online și îți putem sugera cele mai bune soluții pentru afacerea ta.
           </p>
         </div>
-        <a href="/despre-noi/" class="btn-secondary mt-8">Despre noi</a>
-      </div>
-      <div class="relative" data-animate="fade-right" data-stagger="2">
-        <div class="absolute -inset-4 rounded-[2rem] bg-brand/10 blur-2xl anim-pulse-cta" aria-hidden="true"></div>
-        <img
-          src="/images/We-believe-BG.png"
-          alt="Echipa de Tocilari — credem în muncă și dedicare"
-          width="800"
-          height="600"
-          class="relative rounded-2xl shadow-lg"
-          loading="lazy"
-          decoding="async"
-        />
+        <a href="/despre-noi/" class="btn-primary mt-8">Despre noi</a>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="section-pad bg-surface" aria-labelledby="servicii-heading">
-    <div class="container-page">
-      <div class="mx-auto mb-10 max-w-2xl text-center" data-animate="fade-up">
-        <p class="eyebrow mb-2">Rezolvăm probleme reale</p>
-        <h2 id="servicii-heading" class="text-3xl sm:text-4xl">Cum îți putem ajuta afacerea?</h2>
+  <!-- SERVICES — the live homepage shows three boxes, not six: Logo Design,
+       PPC and Copywriting sit in an `elementor-hidden-*` container there.
+       Left-aligned heading, 294px columns, the original SVG icons. -->
+  <section aria-labelledby="servicii-heading">
+    <div class="mx-auto w-full max-w-[1150px] px-4 py-14 sm:px-6 lg:min-h-[640px] lg:px-0 lg:py-0">
+      <div data-animate="fade-up">
+        <p class="eyebrow mb-[10px]">Rezolvăm probleme reale</p>
+        <h2 id="servicii-heading">Cum îți putem ajuta afacerea?</h2>
       </div>
 
-      <div class="mb-10 mx-auto max-w-xs sm:max-w-sm" data-animate="zoom-in">
-        <Lottie
-          src="/lottie/hero.json"
-          label="Animație marketing digital"
-          aspect="1 / 1"
-          class="drop-shadow-lg"
-        />
-      </div>
-
-      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-10 grid gap-x-[108px] gap-y-10 sm:grid-cols-2 lg:mt-[149px] lg:grid-cols-3">
         {
-          services.map((s, i) => (
+          homeServices.map((s, i) => (
             <a
               href={s.href}
-              class="card-surface group block focus-visible:ring-2 focus-visible:ring-brand"
+              class="group block max-w-[294px] focus-visible:outline-2 focus-visible:outline-brand"
               data-animate="fade-up"
-              data-stagger={String((i % 3) + 1)}
+              data-stagger={String(i + 1)}
             >
-              <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl gradient-brand text-white shadow-brand anim-grow-icon">
-                <span class="text-lg font-bold" aria-hidden="true">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <h3 class="mb-2 font-display text-xl text-ink group-hover:text-brand-dark">{s.title}</h3>
-              <p class="text-sm leading-relaxed text-ink-soft">{s.short}</p>
-              <span class="mt-4 inline-flex items-center text-sm font-semibold text-brand-dark transition-transform group-hover:translate-x-1">
-                Află mai mult →
-              </span>
+              <ServiceIcon name={s.icon} class="mb-5 anim-grow-icon" />
+              <h3 class="mb-[10px] group-hover:text-brand-dark">{s.title}</h3>
+              <p class="text-[16px] font-light leading-[22.4px]">{s.desc}</p>
             </a>
           ))
         }
@@ -170,52 +130,41 @@ const schemas = [
     </div>
   </section>
 
-  <!-- CTA BAND -->
-  <section class="relative overflow-hidden py-16 text-white" data-animate="fade-up">
+  <!-- CTA BAND — heading left, button right, 215px tall (Elementor values). -->
+  <section class="relative overflow-hidden text-white" data-animate="fade-up">
     <div class="absolute inset-0 anim-gradient" aria-hidden="true"></div>
-    <div class="container-page relative text-center">
-      <h2 class="mb-4 text-3xl text-white sm:text-4xl">
-        Vorbește cu Echipa de Tocilari,<br class="hidden sm:block" />
-        <span class="text-white/95">agenția ta de marketing digital</span>
+    <div
+      class="relative mx-auto flex w-full max-w-[1150px] flex-col items-center gap-6 px-4 py-12 text-center sm:px-6 lg:min-h-[215px] lg:flex-row lg:justify-between lg:gap-10 lg:px-0 lg:py-0 lg:text-left"
+    >
+      <h2 class="max-w-[571px] !text-[35px] !leading-[42px] text-white">
+        Vorbește cu Echipa de Tocilari, agenția ta de marketing digital
       </h2>
       <a
         href="#formular"
-        class="btn-secondary mt-4 !border-white !bg-white !text-brand-deeper anim-pulse-cta"
+        class="btn-secondary shrink-0 !border-white !bg-white !text-brand-deeper anim-pulse-cta"
       >
-        Consultație GRATUITĂ de 30 minute
+        Participă la o consultație <strong class="mx-1">GRATUITĂ</strong> de 30 minute
       </a>
     </div>
   </section>
 
   <!-- TESTIMONIALS -->
   <section
-    class="section-pad relative"
+    class="relative py-14 lg:py-0"
     style="background-image: linear-gradient(rgba(252,252,252,.92), rgba(252,252,252,.96)), url('/images/BG-Testemonials-home-page.png'); background-size: cover;"
     aria-labelledby="testi-heading"
   >
-    <div class="container-page">
-      <div class="mx-auto mb-10 max-w-2xl text-center" data-animate="fade-up">
-        <p class="eyebrow mb-2">Testimoniale</p>
-        <h2 id="testi-heading" class="text-3xl sm:text-4xl">Ce spun clienții despre noi</h2>
+    <!-- Heading left (380px), carousel right (739px) — the Elementor layout. -->
+    <div
+      class="mx-auto flex w-full max-w-[1202px] flex-col gap-10 px-4 sm:px-6 lg:min-h-[545px] lg:flex-row lg:items-start lg:gap-10 lg:px-0"
+    >
+      <div class="lg:mt-[199px] lg:w-[380px] lg:shrink-0" data-animate="fade-up">
+        <p class="eyebrow mb-[20px] !text-[16px]">Testimoniale</p>
+        <h2 id="testi-heading">Ce spun clienții despre noi</h2>
       </div>
-      <div class="grid gap-6 md:grid-cols-3">
-        {
-          testimonials.map((t, i) => (
-            <blockquote
-              class="card-surface flex h-full flex-col"
-              data-animate="fade-up"
-              data-stagger={String(i + 1)}
-            >
-              <p class="mb-6 flex-1 text-ink-soft leading-relaxed">“{t.quote}”</p>
-              <footer>
-                <cite class="not-italic">
-                  <span class="block font-display text-lg text-ink">{t.name}</span>
-                  <span class="text-sm text-muted">{t.role}</span>
-                </cite>
-              </footer>
-            </blockquote>
-          ))
-        }
+
+      <div class="lg:mt-[180px] lg:w-[739px]" data-animate="fade-up" data-stagger="2">
+        <TestimonialCarousel items={testimonials} />
       </div>
     </div>
   </section>
@@ -224,20 +173,25 @@ const schemas = [
     <Faq items={homeFaqs} />
   </div>
 
-  <!-- GEO / coverage -->
-  <section class="section-pad bg-white">
-    <div class="container-page max-w-3xl text-center" data-animate="zoom-in">
-      <h2 class="mb-4 text-3xl sm:text-4xl text-balance">
-        Te putem ajuta, indiferent de <span class="text-brand-dark">orașul</span> în care te afli
-      </h2>
-      <p class="text-lg text-ink-soft">
-        Lucrăm remote în toată <strong>{business.areaServed}</strong>. Primul pas: o consultație
-        gratuită de 30 de minute în care clarificăm obiective, buget și priorități.
-      </p>
+  <!-- COVERAGE + FORM — one band, as on the live site: white copy on the brand
+       background at left, the form in a white 30px-radius card at right. -->
+  <section id="formular" class="relative overflow-hidden" aria-labelledby="acoperire-heading">
+    <div class="absolute inset-0 anim-gradient" aria-hidden="true"></div>
+    <div
+      class="relative mx-auto flex w-full max-w-[1150px] flex-col gap-10 px-4 py-14 sm:px-6 lg:min-h-[732px] lg:flex-row lg:items-start lg:gap-[60px] lg:px-0 lg:py-0"
+    >
+      <div class="lg:mt-[200px] lg:w-[477px] lg:shrink-0" data-animate="fade-right">
+        <h2 id="acoperire-heading" class="!text-[42px] !font-normal !leading-[50.4px] text-white">
+          Noi te putem ajuta, indiferent de orașul în care te afli.
+        </h2>
+        <p class="mt-10 !text-[22px] !leading-[26.4px] text-white">
+          Ne-ar face mare plăcere să luăm legătura și să te ajutăm cu proiectul pe care îl ai!
+        </p>
+      </div>
+
+      <div class="lg:mt-[130px] lg:w-[547px]" data-animate="fade-left" data-stagger="2">
+        <ContactForm card />
+      </div>
     </div>
   </section>
-
-  <div data-animate="fade-up">
-    <ContactForm id="formular" />
-  </div>
 </BaseLayout>

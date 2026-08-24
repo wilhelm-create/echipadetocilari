@@ -1,42 +1,44 @@
 /**
- * Generate English pages from RO Elementor HTML + dictionary.
- * Visual structure/CSS/JS preserved; text + SEO localized.
+ * Generate the English pages from the Romanian Elementor HTML + dictionary.
+ * Visual structure/CSS/JS is preserved byte-for-byte; only text and SEO change.
  */
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'fs';
 import path from 'path';
 import { routes, roToEn } from './routes.mjs';
-import { dictionary, enPageMeta, enFaqSchema } from './dictionary.mjs';
+import { dictionary, enPageMeta, enOrg, enFaqs } from './dictionary.mjs';
+import { injectLangSwitcher } from './lang-switcher.mjs';
+import {
+  appendToHead,
+  applyIndexPolicy,
+  injectHreflang,
+  renderJsonLd,
+  setLang,
+  stripJsonLd,
+  upsertMeta,
+  upsertTitle,
+} from '../lib/html.mjs';
+import { faqPage, organization, service, webPage, website } from '../lib/schema.mjs';
 
-function escapeAttr(s) {
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;');
-}
-
-function escapeHtml(s) {
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
+/**
+ * Longest phrase first, so "Servicii SEO" wins over "Servicii".
+ *
+ * This is a whole-document replace, scripts and styles included. That is
+ * intentional (Elementor keeps visible copy inside widget JSON), but it means a
+ * careless short entry can corrupt inline JS — `npm run build` syntax-checks
+ * every inline block afterwards to catch exactly that.
+ */
 function applyDictionary(html) {
-  // Sort longest first so longer phrases win
-  const pairs = [...dictionary].sort((a, b) => b[0].length - a[0].length);
+  const pairs = [...dictionary]
+    .filter(([from, to]) => from && from !== to)
+    .sort((a, b) => b[0].length - a[0].length);
+
   let out = html;
-  for (const [from, to] of pairs) {
-    if (!from || from === to) continue;
-    // Global replace of plain text (including inside HTML text nodes & attributes carefully)
-    // Avoid breaking URLs by skipping replacements that look like paths when source has no path chars
-    out = out.split(from).join(to);
-  }
+  for (const [from, to] of pairs) out = out.split(from).join(to);
   return out;
 }
 
+/** EN pages live one level deeper, so every relative asset path has to go root-absolute. */
 function absolutizeAssets(html) {
-  // EN pages live under /en/… — any relative wp-content path 404s.
-  // Fix src, href, srcset, and CSS url() to root-absolute /wp-content/ and /wp-includes/.
   let out = html
     .replace(/(src|href)="(\.\.\/)+wp-content\//gi, '$1="/wp-content/')
     .replace(/(src|href)="(\.\.\/)+wp-includes\//gi, '$1="/wp-includes/')
@@ -47,262 +49,80 @@ function absolutizeAssets(html) {
     .replace(/url\((['"]?)(\.\.\/)+wp-includes\//gi, 'url($1/wp-includes/')
     .replace(/url\((['"]?)wp-includes\//gi, 'url($1/wp-includes/');
 
-  // srcset="path 836w, path2 288w" — each candidate path
+  // srcset holds several "url 836w" candidates — fix each one.
   out = out.replace(/srcset="([^"]+)"/gi, (_, value) => {
     const fixed = value
       .split(',')
       .map((part) => {
-        const trimmed = part.trim();
-        // "url size" or just "url"
-        const m = trimmed.match(/^(\S+)(\s+.+)?$/);
+        const m = part.trim().match(/^(\S+)(\s+.+)?$/);
         if (!m) return part;
-        let url = m[1];
-        const rest = m[2] || '';
-        url = url
+        const url = m[1]
           .replace(/^(\.\.\/)+wp-content\//, '/wp-content/')
           .replace(/^(\.\.\/)+wp-includes\//, '/wp-includes/')
           .replace(/^wp-content\//, '/wp-content/')
           .replace(/^wp-includes\//, '/wp-includes/');
-        return url + rest;
+        return url + (m[2] || '');
       })
       .join(', ');
     return `srcset="${fixed}"`;
   });
 
-  // Logo / home links that still point to index.html relative
-  out = out.replace(/href="index\.html"/gi, 'href="/en/"');
-  out = out.replace(/href="\.\.\/index\.html"/gi, 'href="/en/"');
-
-  return out;
+  return out.replace(/href="(\.\.\/)?index\.html"/gi, 'href="/en/"');
 }
 
+/** Point every internal link at its EN twin. */
 function rewriteInternalLinks(html) {
   let out = html;
-  // Sort longer RO paths first
-  const roPaths = Object.keys(roToEn).sort((a, b) => b.length - a.length);
-  for (const ro of roPaths) {
+
+  // Longest RO path first so "/" does not swallow the others.
+  for (const ro of Object.keys(roToEn).sort((a, b) => b.length - a.length)) {
     const en = roToEn[ro];
-    // Absolute production URLs
     out = out.split(`https://www.echipadetocilari.ro${ro}`).join(en);
     out = out.split(`https://echipadetocilari.ro${ro}`).join(en);
-    // Root-relative
-    if (ro !== '/') {
-      out = out.replaceAll(`href="${ro}"`, `href="${en}"`);
-      out = out.replaceAll(`href='${ro}'`, `href='${en}'`);
-      // relative without trailing: /creare-site-web
-      const bare = ro.replace(/\/$/, '');
-      out = out.replaceAll(`href="${bare}"`, `href="${en}"`);
-      out = out.replaceAll(`href="${bare}/"`, `href="${en}"`);
-    } else {
+
+    if (ro === '/') {
       out = out.replaceAll('href="/"', 'href="/en/"');
-      // careful: don't double-replace /en/
+      continue;
     }
-  }
-  // Relative links used in menus sometimes
-  const relMap = {
-    'creare-site-web/': '/en/website-design/',
-    'servicii-seo/': '/en/seo-services/',
-    'administrare-site/': '/en/website-maintenance/',
-    'about-2/': '/en/about/',
-    'contact/': '/en/contact/',
-    'portofoliu/': '/en/portfolio/',
-    'services/': '/en/services/',
-    'clients/': '/en/clients/',
-    'pay-per-click/': '/en/ppc-advertising/',
-  };
-  for (const [rel, en] of Object.entries(relMap)) {
-    out = out.replaceAll(`href="${rel}"`, `href="${en}"`);
-    out = out.replaceAll(`href="/${rel}"`, `href="${en}"`);
-  }
-  // Fix accidental /en/en/
-  out = out.replaceAll('/en/en/', '/en/');
-  return out;
-}
-
-function upsertMeta(html, attr, value) {
-  const re = new RegExp(`<meta\\s+[^>]*${attr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^>]*>`, 'i');
-  const tag = `<meta ${attr} content="${escapeAttr(value)}">`;
-  if (re.test(html)) return html.replace(re, tag);
-  return html.replace(/<\/head>/i, `  ${tag}\n</head>`);
-}
-
-function setLang(html, lang) {
-  return html.replace(/<html\b([^>]*)>/i, (m, attrs) => {
-    if (/\blang\s*=/i.test(attrs)) {
-      return `<html${attrs.replace(/\blang\s*=\s*["'][^"']*["']/i, ` lang="${lang}"`)}>`;
-    }
-    return `<html lang="${lang}"${attrs}>`;
-  });
-}
-
-function injectHreflang(html, roPath, enPath, site) {
-  const block = `
-  <link rel="alternate" hreflang="ro" href="${site}${roPath === '/' ? '/' : roPath}" />
-  <link rel="alternate" hreflang="en" href="${site}${enPath}" />
-  <link rel="alternate" hreflang="x-default" href="${site}${roPath === '/' ? '/' : roPath}" />
-`;
-  // remove existing hreflang
-  html = html.replace(/<link\s+rel=["']alternate["'][^>]*hreflang[^>]*>/gi, '');
-  return html.replace(/<\/head>/i, `${block}</head>`);
-}
-
-/**
- * Language switcher in the header flex row (before CTA) — never position:fixed.
- * Fixed overlays fought logo / CTA / mobile scroll-to-top; header flow is stable.
- * No menu items (Română / English links clutter the nav).
- */
-function injectLangSwitcher(html, currentLang, roHref, enHref) {
-  const roActive = currentLang === 'ro';
-  const enActive = currentLang === 'en';
-
-  const styles = `
-<style id="ect-lang-css">
-/* RO|EN chip — always immediately LEFT of the burger on mobile */
-.ect-lang-wrap{
-  display:inline-flex !important;
-  align-items:center;
-  flex:0 0 auto;
-  width:auto !important;
-  max-width:none !important;
-  margin:0;
-  padding:0;
-  z-index:6;
-  line-height:1;
-}
-#ect-lang-switch{
-  position:relative;
-  font-family:Montserrat,system-ui,sans-serif;
-  display:inline-flex;
-  align-items:center;
-  background:#fff;
-  border:2px solid #fd8649;
-  border-radius:999px;
-  overflow:hidden;
-  box-shadow:0 2px 10px rgba(0,0,0,.08);
-  line-height:1;
-}
-#ect-lang-switch a{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:40px;min-height:36px;padding:0 .65rem;
-  font-size:12px;font-weight:700;letter-spacing:.04em;
-  text-decoration:none;color:#fd8649;background:transparent;
-  transition:background .15s,color .15s;
-}
-#ect-lang-switch a[aria-current="true"]{background:#fd8649;color:#fff}
-#ect-lang-switch a:hover{background:#ff6c2a;color:#fff}
-#ect-lang-switch a + a{border-left:1px solid rgba(253,134,73,.35)}
-
-/* Shared: nav widget container is a flex row; chip order BEFORE burger */
-.elementor-location-header .elementor-widget-nav-menu .elementor-widget-container{
-  display:flex !important;
-  flex-direction:row !important;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.elementor-location-header .ect-lang-wrap{
-  order:1 !important; /* left of burger */
-  margin:0 .35rem 0 0 !important;
-}
-.elementor-location-header .elementor-menu-toggle{
-  order:2 !important; /* right of chip */
-  margin-left:0 !important; /* Elementor default is ml:auto — separates them */
-}
-.elementor-location-header .elementor-nav-menu--dropdown{
-  order:3 !important;
-  flex:1 0 100%;
-  width:100%;
-}
-
-@media (min-width:768px){
-  .elementor-location-header .elementor-widget-nav-menu .elementor-nav-menu--main{
-    order:0 !important;
-    flex:1 1 auto;
-  }
-  .elementor-location-header .ect-lang-wrap{
-    margin:0 .5rem 0 .35rem !important;
-  }
-}
-
-@media (max-width:767px){
-  /* Logo left — chip+burger tight group on the right */
-  .elementor-location-header .e-con-inner > .elementor-widget-nav-menu{
-    margin-left:auto !important;
-    flex:0 0 auto !important;
-    width:auto !important;
-    max-width:none !important;
-  }
-  .elementor-location-header .elementor-widget-nav-menu .elementor-widget-container{
-    justify-content:flex-end;
-    gap:0;
-  }
-  .elementor-location-header .elementor-nav-menu--main{
-    display:none !important;
-  }
-  .elementor-location-header .ect-lang-wrap{
-    order:1 !important;
-    margin:0 .3rem 0 0 !important;
-  }
-  .elementor-location-header .elementor-menu-toggle{
-    order:2 !important;
-    margin-left:0 !important;
-    margin-right:0 !important;
-  }
-  #ect-lang-switch a{min-width:36px;min-height:34px;padding:0 .5rem;font-size:11px}
-}
-</style>
-`;
-
-  const wrap = `
-<span class="ect-lang-wrap">
-<nav id="ect-lang-switch" aria-label="Language">
-  <a href="${roHref}" hreflang="ro" lang="ro" ${roActive ? 'aria-current="true"' : ''} title="RO">RO</a>
-  <a href="${enHref}" hreflang="en" lang="en" ${enActive ? 'aria-current="true"' : ''} title="EN">EN</a>
-</nav>
-</span>
-`;
-
-  // Strip any previous switcher (fixed nav, wrap, styles) + menu lang items
-  html = html.replace(/<!-- language switcher[\s\S]*?<\/nav>\s*/gi, '');
-  html = html.replace(/<style id="ect-lang-css">[\s\S]*?<\/style>\s*/gi, '');
-  html = html.replace(/<nav id="ect-lang-switch"[\s\S]*?<\/nav>\s*/gi, '');
-  html = html.replace(/<div id="ect-lang-switch"[\s\S]*?<\/div>\s*/gi, '');
-  html = html.replace(
-    /<(?:div|span) class="(?:elementor-element )?ect-lang-wrap[^"]*"[\s\S]*?<\/nav>\s*<\/(?:div|span)>\s*/gi,
-    ''
-  );
-  html = html.replace(
-    /<li class="menu-item[^"]*ect-lang-menu[^"]*"[\s\S]*?<\/li>\s*/gi,
-    ''
-  );
-  // Remove leftover Română / English-only menu entries from older builds
-  html = html.replace(
-    /<li class="menu-item[^"]*"[\s\S]*?<a[^>]*>\s*(Română|Romana|English)\s*<\/a>\s*<\/li>\s*/gi,
-    ''
-  );
-
-  // Inject immediately before the burger toggle — left of & flush with it
-  const toggleRe = /(<div class="elementor-menu-toggle"[^>]*>)/i;
-  if (toggleRe.test(html)) {
-    // reset lastIndex after .test() before replace
-    toggleRe.lastIndex = 0;
-    html = html.replace(toggleRe, `${wrap}$1`);
-  } else {
-    const ctaRe =
-      /(<div class="elementor-element elementor-element-682f9a60\b)/i;
-    if (ctaRe.test(html)) {
-      ctaRe.lastIndex = 0;
-      html = html.replace(ctaRe, `${wrap}$1`);
-    } else {
-      html = html.replace(/<\/header>/i, `${wrap}</header>`);
-    }
+    const bare = ro.replace(/\/$/, '');
+    out = out
+      .replaceAll(`href="${ro}"`, `href="${en}"`)
+      .replaceAll(`href='${ro}'`, `href='${en}'`)
+      .replaceAll(`href="${bare}"`, `href="${en}"`)
+      // menus sometimes emit the path without a leading slash
+      .replaceAll(`href="${bare.slice(1)}/"`, `href="${en}"`)
+      .replaceAll(`href="${bare.slice(1)}"`, `href="${en}"`);
   }
 
-  // Styles once in <head>
-  if (!html.includes('id="ect-lang-css"')) {
-    html = html.replace(/<\/head>/i, `${styles}</head>`);
-  }
+  return out.replaceAll('/en/en/', '/en/');
+}
 
-  return html;
+function schemasFor(route, meta, site) {
+  const list = [
+    organization({ site, lang: 'en', ...enOrg }),
+    website({ site, lang: 'en' }),
+    webPage({
+      site,
+      lang: 'en',
+      url: route.en,
+      name: meta?.title,
+      description: meta?.description,
+    }),
+  ];
+
+  if (route.en === '/en/') list.push(faqPage(enFaqs));
+  if (route.service) {
+    list.push(
+      service({
+        site,
+        lang: 'en',
+        name: route.service.en,
+        description: meta?.description,
+        url: route.en,
+      })
+    );
+  }
+  return list;
 }
 
 /**
@@ -310,9 +130,8 @@ function injectLangSwitcher(html, currentLang, roHref, enHref) {
  * @param {string} opts.outDir
  * @param {string} opts.site
  * @param {boolean} opts.indexable
- * @param {object} opts.orgSchema base org
  */
-export function generateEnglishPages({ outDir, site, indexable, orgSchema }) {
+export function generateEnglishPages({ outDir, site, indexable }) {
   const results = [];
 
   for (const route of routes) {
@@ -323,24 +142,16 @@ export function generateEnglishPages({ outDir, site, indexable, orgSchema }) {
     }
 
     let html = readFileSync(srcPath, 'utf8');
-    // Drop RO JSON-LD we inject on RO pages (and Rank Math) so EN schemas stay clean
-    html = html.replace(
-      /<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi,
-      ''
-    );
+    const meta = enPageMeta[route.en];
+
+    html = stripJsonLd(html);
     html = applyDictionary(html);
     html = absolutizeAssets(html);
     html = rewriteInternalLinks(html);
     html = setLang(html, 'en');
 
-    const meta = enPageMeta[route.en];
     if (meta) {
-      if (/<title[^>]*>[\s\S]*?<\/title>/i.test(html)) {
-        html = html.replace(
-          /<title[^>]*>[\s\S]*?<\/title>/i,
-          `<title>${escapeHtml(meta.title)}</title>`
-        );
-      }
+      html = upsertTitle(html, meta.title);
       html = upsertMeta(html, 'name="description"', meta.description);
       html = upsertMeta(html, 'property="og:title"', meta.title);
       html = upsertMeta(html, 'property="og:description"', meta.description);
@@ -348,125 +159,12 @@ export function generateEnglishPages({ outDir, site, indexable, orgSchema }) {
       html = upsertMeta(html, 'name="twitter:title"', meta.title);
       html = upsertMeta(html, 'name="twitter:description"', meta.description);
     }
-
-    html = injectHreflang(html, route.ro, route.en, site);
-    html = injectLangSwitcher(
-      html,
-      'en',
-      route.ro === '/' ? '/' : route.ro,
-      route.en
-    );
-
-    // SEO index rules
-    if (!indexable) {
-      html = html.replace(
-        /<meta\s+name=["']robots["'][^>]*>/gi,
-        '<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">'
-      );
-      if (!/name=["']robots["']/i.test(html)) {
-        html = html.replace(
-          /<\/head>/i,
-          '  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">\n</head>'
-        );
-      }
-      html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/gi, '');
-    } else {
-      const canon = `${site}${route.en}`;
-      if (/rel=["']canonical["']/i.test(html)) {
-        html = html.replace(
-          /<link\s+rel=["']canonical["'][^>]*>/i,
-          `<link rel="canonical" href="${canon}">`
-        );
-      } else {
-        html = html.replace(/<\/head>/i, `  <link rel="canonical" href="${canon}">\n</head>`);
-      }
-    }
-
-    // EN schemas
-    const websiteEn = {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      '@id': `${site}/#website-en`,
-      url: `${site}/en/`,
-      name: 'Echipa de Tocilari',
-      inLanguage: 'en-US',
-      publisher: { '@id': `${site}/#organization` },
-    };
-    const webpage = {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      '@id': `${site}${route.en}#webpage`,
-      url: `${site}${route.en}`,
-      name: meta?.title,
-      description: meta?.description,
-      inLanguage: 'en-US',
-      isPartOf: { '@id': `${site}/#website-en` },
-      about: { '@id': `${site}/#organization` },
-    };
-    const schemas = [
-      {
-        ...orgSchema,
-        description:
-          'Digital marketing agency in Romania: website design, SEO services, website maintenance, PPC advertising, logo design, and copywriting.',
-        knowsAbout: [
-          'Website design',
-          'SEO services',
-          'Website maintenance',
-          'PPC advertising',
-          'Logo design',
-          'Copywriting',
-          'Digital marketing',
-        ],
-        areaServed: 'Romania',
-      },
-      websiteEn,
-      webpage,
-    ];
-    if (route.en === '/en/') schemas.push(enFaqSchema);
-    if (route.en === '/en/website-design/') {
-      schemas.push({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'Website design and development',
-        description: meta.description,
-        provider: { '@id': `${site}/#organization` },
-        areaServed: 'Romania',
-        url: `${site}/en/website-design/`,
-      });
-    }
-    if (route.en === '/en/seo-services/') {
-      schemas.push({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'SEO services',
-        description: meta.description,
-        provider: { '@id': `${site}/#organization` },
-        areaServed: 'Romania',
-        url: `${site}/en/seo-services/`,
-      });
-    }
-    if (route.en === '/en/website-maintenance/') {
-      schemas.push({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'Website maintenance',
-        description: meta.description,
-        provider: { '@id': `${site}/#organization` },
-        areaServed: 'Romania',
-        url: `${site}/en/website-maintenance/`,
-      });
-    }
-
-    const ld = schemas
-      .map(
-        (s) =>
-          `<script type="application/ld+json">${JSON.stringify(s).replace(/</g, '\\u003c')}</script>`
-      )
-      .join('\n');
-    html = html.replace(/<\/head>/i, `  ${ld}\n</head>`);
-
-    // og:url
     html = upsertMeta(html, 'property="og:url"', `${site}${route.en}`);
+
+    html = injectHreflang(html, { site, roPath: route.ro, enPath: route.en });
+    html = injectLangSwitcher(html, 'en', route.ro === '/' ? '/' : route.ro, route.en);
+    html = applyIndexPolicy(html, { indexable, canonical: `${site}${route.en}` });
+    html = appendToHead(html, renderJsonLd(schemasFor(route, meta, site)));
 
     const dest = path.join(outDir, route.enFile);
     mkdirSync(path.dirname(dest), { recursive: true });
@@ -477,15 +175,15 @@ export function generateEnglishPages({ outDir, site, indexable, orgSchema }) {
   return results;
 }
 
-/** Add hreflang + EN switcher to existing RO pages in dist. */
+/** Add hreflang + the switcher to the Romanian pages already written to dist. */
 export function patchRomanianPages({ outDir, site }) {
   for (const route of routes) {
     const file = path.join(outDir, route.roFile);
     if (!existsSync(file)) continue;
+
     let html = readFileSync(file, 'utf8');
-    html = injectHreflang(html, route.ro, route.en, site);
+    html = injectHreflang(html, { site, roPath: route.ro, enPath: route.en });
     html = injectLangSwitcher(html, 'ro', route.ro === '/' ? '/' : route.ro, route.en);
-    // Ensure ro lang
     html = setLang(html, 'ro');
     writeFileSync(file, html, 'utf8');
   }

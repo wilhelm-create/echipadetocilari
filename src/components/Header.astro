@@ -1,35 +1,51 @@
 ---
-import { business, nav } from '../data/business';
+import { business } from '../data/business';
+import LangSwitch from './LangSwitch.astro';
+import { getLocale, localizedPath, routes } from '../i18n/routes';
+import { navStructure, t } from '../i18n/ui';
+
 const path = Astro.url.pathname;
+const locale = getLocale(path);
+const s = t(locale);
+
+const nav = navStructure.map((item) => ({
+  href: localizedPath(item.key, locale),
+  label: s.routeLabels[item.key],
+  children: item.children?.map((c) => ({
+    href: localizedPath(c, locale),
+    label: s.routeLabels[c],
+  })),
+}));
+
+const home = routes.home[locale];
+const contactHref = `${routes.contact[locale]}#formular`;
+
+const isActive = (href: string) =>
+  href === home ? path === home : path === href || path.startsWith(href);
 ---
 
 <header
   class="sticky top-0 z-50 border-b border-black/5 bg-white/85 backdrop-blur-md supports-[backdrop-filter]:bg-white/75"
   style="padding-top: env(safe-area-inset-top)"
 >
-  <div class="container-page flex h-16 items-center justify-between gap-4 sm:h-[4.25rem]">
-    <a href="/" class="flex shrink-0 items-center gap-2" aria-label={`${business.name} — acasă`}>
+  <!-- Header proportions match the live site: ~121px tall, 72px logo, no wordmark. -->
+  <div class="container-page flex h-[76px] items-center justify-between gap-3 lg:h-[121px]">
+    <a href={home} class="flex shrink-0 items-center" aria-label={`${business.name} — ${s.homeAria}`}>
       <img
         src="/images/Logo_Echipa_de_Tocilari-e1708028624694.webp"
         alt={business.name}
-        width="48"
-        height="48"
-        class="h-11 w-11 object-contain sm:h-12 sm:w-12"
+        width="72"
+        height="75"
+        class="h-14 w-auto object-contain lg:h-[75px]"
         decoding="async"
       />
-      <span class="hidden font-display text-base text-ink sm:block sm:text-lg">
-        {business.name}
-      </span>
     </a>
 
-    <nav class="hidden items-center gap-1 lg:flex" aria-label="Navigare principală">
+    <nav class="hidden items-center gap-1 lg:flex" aria-label={s.navLabel}>
       {
         nav.map((item) => {
-          const active =
-            item.href === '/'
-              ? path === '/'
-              : path === item.href || path.startsWith(item.href);
-          if ('children' in item && item.children) {
+          const active = isActive(item.href);
+          if (item.children) {
             return (
               <div class="group relative">
                 <a
@@ -79,11 +95,13 @@ const path = Astro.url.pathname;
     </nav>
 
     <div class="flex items-center gap-2">
+      <LangSwitch />
+
       <a
-        href="/contact/#formular"
+        href={contactHref}
         class="btn-primary !min-h-10 !px-3 !py-2 text-xs sm:!min-h-11 sm:!px-5 sm:!py-2.5 sm:text-sm"
       >
-        Consultație gratuită
+        {s.ctaShort}
       </a>
 
       <button
@@ -92,7 +110,9 @@ const path = Astro.url.pathname;
         class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-black/10 bg-white text-ink lg:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
-        aria-label="Deschide meniul"
+        aria-label={s.openMenu}
+        data-label-open={s.openMenu}
+        data-label-close={s.closeMenu}
       >
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16" />
@@ -102,24 +122,20 @@ const path = Astro.url.pathname;
   </div>
 
   <div id="mobile-menu" class="hidden border-t border-black/5 bg-white lg:hidden" hidden>
-    <nav class="container-page flex flex-col gap-1 py-4" aria-label="Meniu mobil">
+    <nav class="container-page flex flex-col gap-1 py-4" aria-label={s.mobileNavLabel}>
       {
-        nav.flatMap((item) => {
-          const links =
-            'children' in item && item.children
-              ? [item, ...item.children]
-              : [item];
-          return links.map((link) => (
+        nav.flatMap((item) =>
+          (item.children ? [item, ...item.children] : [item]).map((link) => (
             <a
               href={link.href}
               class="min-h-12 rounded-xl px-3 py-3 text-base font-semibold text-ink-soft hover:bg-brand/10 hover:text-brand-dark"
             >
               {link.label}
             </a>
-          ));
-        })
+          ))
+        )
       }
-      <a href="/contact/#formular" class="btn-primary mt-2 w-full">Consultație gratuită de 30 min</a>
+      <a href={contactHref} class="btn-primary mt-2 w-full">{s.ctaLong}</a>
     </nav>
   </div>
 </header>
@@ -129,18 +145,13 @@ const path = Astro.url.pathname;
   const menu = document.getElementById('mobile-menu');
   if (btn && menu) {
     btn.addEventListener('click', () => {
-      const open = menu.hasAttribute('hidden');
-      if (open) {
-        menu.hidden = false;
-        menu.classList.remove('hidden');
-        btn.setAttribute('aria-expanded', 'true');
-        btn.setAttribute('aria-label', 'Închide meniul');
-      } else {
-        menu.hidden = true;
-        menu.classList.add('hidden');
-        btn.setAttribute('aria-expanded', 'false');
-        btn.setAttribute('aria-label', 'Deschide meniul');
-      }
+      const opening = menu.hasAttribute('hidden');
+      menu.hidden = !opening;
+      menu.classList.toggle('hidden', !opening);
+      btn.setAttribute('aria-expanded', String(opening));
+      // Labels come from the server-rendered locale, not hardcoded here.
+      const label = opening ? btn.dataset.labelClose : btn.dataset.labelOpen;
+      if (label) btn.setAttribute('aria-label', label);
     });
   }
 </script>

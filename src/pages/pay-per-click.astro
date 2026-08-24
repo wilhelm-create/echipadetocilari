@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Faq from '../components/Faq.astro';
+import { ppcPlans, ppcFaqs } from '../data/ppc';
+import {
+  organizationSchema,
+  webPageSchema,
+  breadcrumbSchema,
+  serviceSchema,
+  faqSchema,
+} from '../lib/schema';
+
+const title = 'Campanii Pay Per Click (PPC) & Google Ads';
+const description =
+  'Administrare campanii PPC și Google Ads: setup, conversion tracking, optimizare continuă și rapoarte lunare. Aduci clienți care caută deja ce vinzi — de la 99€/lună.';
+
+const schemas = [
+  organizationSchema(),
+  webPageSchema({ path: '/pay-per-click/', name: title, description }),
+  serviceSchema({
+    name: 'Administrare campanii Pay Per Click',
+    description,
+    path: '/pay-per-click/',
+  }),
+  breadcrumbSchema([
+    { name: 'Acasă', path: '/' },
+    { name: 'Servicii', path: '/servicii/' },
+    { name: 'Pay Per Click', path: '/pay-per-click/' },
+  ]),
+  faqSchema(ppcFaqs),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/pay-per-click/"
+  schemas={schemas}
+>
+  <section class="section-pad gradient-brand-soft">
+    <div class="container-page max-w-3xl text-center">
+      <p class="eyebrow mb-2">Reclamă pay per click</p>
+      <h1 class="mb-4 text-balance">Pay Per Click</h1>
+      <p class="text-lg text-ink-soft">
+        <strong class="text-ink">Răspuns direct:</strong> PPC este publicitatea online în care plătești
+        doar pentru fiecare clic pe anunțul tău. Anunțurile apar în rezultatele Google exact când cineva
+        caută ce oferi — deci plătești pentru intenție de cumpărare, nu pentru afișări.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-page grid gap-10 lg:grid-cols-2 lg:gap-14">
+      <div data-animate="fade-right">
+        <h2 class="mb-4">Cum funcționează, pe scurt</h2>
+        <div class="space-y-4 text-ink-soft">
+          <p>
+            Anunțurile se afișează în partea de sus sau de jos a paginii de rezultate, ori în zone
+            relevante ale site-urilor partenere. Când cineva dă clic, plătești o sumă numită
+            <strong class="text-ink">cost per clic (CPC)</strong>.
+          </p>
+          <p>
+            CPC-ul variază după competiția pe cuvintele cheie și după cât licitează firmele care se bat
+            pe aceleași căutări. De aceea alegerea cuvintelor și strategia de licitare fac diferența
+            între un buget irosit și unul profitabil.
+          </p>
+          <p>
+            PPC îți permite să concurezi direct cu competitorii — apăreți în aceeași pagină de
+            rezultate — și să afișezi anunțuri doar celor dintr-o anumită zonă geografică sau care
+            folosesc anumite cuvinte cheie.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-surface" data-animate="fade-left">
+        <h2 class="mb-4 text-2xl text-brand-dark">De ce merită</h2>
+        <ul class="space-y-3 text-ink-soft">
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-dark" aria-hidden="true">✓</span>
+            <span><strong class="text-ink">Trafic calificat rapid</strong> — rezultate în zile, nu în luni ca la SEO.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-dark" aria-hidden="true">✓</span>
+            <span><strong class="text-ink">Targetare fină</strong> — după locație, cuvinte cheie și intenție.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-dark" aria-hidden="true">✓</span>
+            <span><strong class="text-ink">Totul se măsoară</strong> — urmărim performanța și optimizăm cheltuiala pe date, nu pe intuiție.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 text-brand-dark" aria-hidden="true">✓</span>
+            <span><strong class="text-ink">Control pe buget</strong> — oprești, crești sau realoci oricând.</span>
+          </li>
+        </ul>
+        <p class="mt-5 text-sm text-muted">
+          PPC cere planificare și gestionare atentă: cuvinte cheie relevante, strategie de licitare și
+          monitorizare constantă, ca să obții un ROI pozitiv.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-surface-2" aria-labelledby="preturi-heading">
+    <div class="container-page">
+      <p class="eyebrow mb-2 text-center">Prețuri pachete Google Ads</p>
+      <h2 id="preturi-heading" class="mb-3 text-center text-balance">
+        Alege pachetul potrivit bugetului tău
+      </h2>
+      <p class="mx-auto mb-10 max-w-2xl text-center text-ink-soft">
+        Abonamentul acoperă setarea și administrarea campaniilor. Bugetul plătit către Google se
+        facturează separat și rămâne integral sub controlul tău.
+      </p>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        {
+          ppcPlans.map((plan, i) => (
+            <article
+              class:list={[
+                'card-surface flex flex-col',
+                plan.highlight && 'ring-2 ring-brand shadow-brand',
+              ]}
+              data-animate="fade-up"
+              data-stagger={String(i + 1)}
+            >
+              {plan.highlight && (
+                <p class="mb-3 inline-flex self-start rounded-full bg-brand px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+                  Cel mai ales
+                </p>
+              )}
+              <h3 class="text-2xl text-brand-dark">{plan.name}</h3>
+              <p class="mt-1 text-sm text-muted">{plan.period}</p>
+              <p class="my-4 font-display text-4xl text-ink">{plan.price}</p>
+              <p class="mb-5 text-sm text-ink-soft">{plan.summary}</p>
+
+              <ul class="mb-6 space-y-2.5 text-sm text-ink-soft">
+                {plan.features.map((f) => (
+                  <li class="flex gap-2.5">
+                    <span class="mt-0.5 text-brand-dark" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="/contact/#formular"
+                class:list={['mt-auto w-full text-center', plan.highlight ? 'btn-primary' : 'btn-secondary']}
+              >
+                Comandă acum
+              </a>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="mt-6 text-center text-xs text-muted">
+        Prețuri fără TVA. În funcție de nevoile clientului și de cerințele tehnice apărute pe parcurs,
+        putem include servicii bonus.
+      </p>
+    </div>
+  </section>
+
+  <Faq items={ppcFaqs} id="faq-ppc" eyebrow="Întrebări despre PPC" />
+
+  <ContactForm />
+</BaseLayout>

@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Faq from '../../components/Faq.astro';
+import { metaEn, seoFaqsEn } from '../../i18n/content-en';
+import {
+  organizationSchema,
+  webPageSchema,
+  breadcrumbSchema,
+  serviceSchema,
+  faqSchema,
+} from '../../lib/schema';
+
+const { title, description } = metaEn.seo;
+
+const pillars = [
+  {
+    name: 'Technical audit',
+    body: 'Crawlability, speed, Core Web Vitals, indexing, broken links, duplicate content — the foundation everything else stands on.',
+  },
+  {
+    name: 'Keyword strategy',
+    body: 'What your customers actually type, mapped to pages by search intent, so each page has a job instead of competing with its siblings.',
+  },
+  {
+    name: 'On-page SEO',
+    body: 'Titles, descriptions, headings, internal links, structured data — the parts you fully control and that AI answer engines read.',
+  },
+  {
+    name: 'Off-page SEO',
+    body: 'Authority built through relevant mentions and quality links, at a pace that looks natural rather than bought.',
+  },
+  {
+    name: 'Content',
+    body: 'Pages that answer real questions in full, because both Google and AI assistants surface complete answers over thin pages.',
+  },
+  {
+    name: 'Monitoring & reporting',
+    body: 'Rankings, organic traffic, and conversions tracked monthly — with the next action stated, not just numbers.',
+  },
+];
+
+const schemas = [
+  organizationSchema('en'),
+  webPageSchema({ path: '/en/seo-services/', name: title, description, locale: 'en' }),
+  serviceSchema({ name: 'SEO services', description, path: '/en/seo-services/', locale: 'en' }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/en/' },
+    { name: 'Services', path: '/en/services/' },
+    { name: 'SEO services', path: '/en/seo-services/' },
+  ]),
+  faqSchema(seoFaqsEn),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/en/seo-services/"
+  schemas={schemas}
+>
+  <section class="section-pad gradient-brand-soft">
+    <div class="container-page max-w-3xl text-center">
+      <p class="eyebrow mb-2">Search engine optimization</p>
+      <h1 class="mb-4 text-balance">SEO services</h1>
+      <p class="text-lg text-ink-soft">
+        <strong class="text-ink">Direct answer:</strong> SEO gets you found on Google when people search
+        for what you sell. We run the audit, the keyword strategy, the on-page and off-page work, and we
+        report on organic traffic that actually converts.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-pad" aria-labelledby="pillars-heading">
+    <div class="container-page">
+      <h2 id="pillars-heading" class="mb-10 text-center">
+        What an SEO engagement includes
+      </h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          pillars.map((p, i) => (
+            <article
+              class="card-surface"
+              data-animate="fade-up"
+              data-stagger={String((i % 3) + 1)}
+            >
+              <h3 class="mb-2 font-display text-xl text-brand-dark">{p.name}</h3>
+              <p class="text-sm leading-relaxed text-ink-soft">{p.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-surface-2">
+    <div class="container-page max-w-3xl text-center" data-animate="zoom-in">
+      <h2 class="mb-4 text-balance">SEO is compound interest, not a switch</h2>
+      <p class="text-lg text-ink-soft">
+        Expect 3–6 months for visible movement in competitive markets, faster in local niches. What
+        you build does not disappear when you stop paying for ads — that is the whole point.
+      </p>
+    </div>
+  </section>
+
+  <Faq items={seoFaqsEn} id="faq-seo" eyebrow="SEO questions" />
+
+  <ContactForm />
+</BaseLayout>

@@ -1,0 +1,135 @@
+---
+/**
+ * Testimonial carousel, matching the Elementor Swiper settings on the live site:
+ * autoplay every 3500ms, 500ms transition, infinite loop, pause on hover and on
+ * interaction, one slide per view, no arrows and no pagination.
+ *
+ * ~1KB of vanilla JS instead of Swiper's 140KB.
+ */
+interface Props {
+  items: ReadonlyArray<{ quote: string; name: string; role: string }>;
+  class?: string;
+}
+const { items, class: className = '' } = Astro.props;
+---
+
+<div
+  class:list={['ect-carousel relative overflow-hidden', className]}
+  data-autoplay="3500"
+  data-speed="500"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Testimoniale clienți"
+>
+  <div class="ect-carousel-track flex">
+    {
+      items.map((t, i) => (
+        <figure
+          class="w-full shrink-0"
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${i + 1} din ${items.length}`}
+          aria-hidden={i === 0 ? undefined : 'true'}
+        >
+          <blockquote>
+            <p class="!text-[18px] !font-light !leading-[24px] !text-ink italic">“{t.quote}”</p>
+          </blockquote>
+          <figcaption class="mt-6">
+            <span class="block text-[16px] font-light leading-[19.2px] text-brand">{t.name}</span>
+            <span class="mt-1 block text-[14px] leading-[21px] text-ink">{t.role}</span>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .ect-carousel-track {
+    transition: transform var(--ect-speed, 500ms) ease;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ect-carousel-track {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  class Carousel {
+    private track: HTMLElement;
+    private slides: HTMLElement[];
+    private index = 0;
+    private timer: number | undefined;
+    private readonly delay: number;
+    private paused = false;
+
+    constructor(private root: HTMLElement) {
+      this.track = root.querySelector('.ect-carousel-track') as HTMLElement;
+      this.slides = Array.from(this.track.children) as HTMLElement[];
+      this.delay = Number(root.dataset.autoplay) || 3500;
+      this.track.style.setProperty('--ect-speed', `${Number(root.dataset.speed) || 500}ms`);
+
+      if (this.slides.length < 2) return;
+
+      // Pause while the pointer is over the carousel, as Elementor does.
+      root.addEventListener('mouseenter', () => (this.paused = true));
+      root.addEventListener('mouseleave', () => (this.paused = false));
+      root.addEventListener('focusin', () => (this.paused = true));
+      root.addEventListener('focusout', () => (this.paused = false));
+
+      // Stop autoplay permanently once the visitor swipes or drags.
+      let startX = 0;
+      root.addEventListener(
+        'touchstart',
+        (e) => {
+          startX = e.touches[0].clientX;
+        },
+        { passive: true }
+      );
+      root.addEventListener(
+        'touchend',
+        (e) => {
+          const dx = e.changedTouches[0].clientX - startX;
+          if (Math.abs(dx) > 40) {
+            this.stop();
+            this.go(this.index + (dx < 0 ? 1 : -1));
+          }
+        },
+        { passive: true }
+      );
+
+      // Only run while the section is on screen.
+      const io = new IntersectionObserver(
+        ([entry]) => (entry.isIntersecting ? this.start() : this.stop()),
+        { threshold: 0.2 }
+      );
+      io.observe(root);
+    }
+
+    private go(next: number) {
+      const count = this.slides.length;
+      this.index = ((next % count) + count) % count;
+      this.track.style.transform = `translateX(-${this.index * 100}%)`;
+      this.slides.forEach((s, i) =>
+        i === this.index ? s.removeAttribute('aria-hidden') : s.setAttribute('aria-hidden', 'true')
+      );
+    }
+
+    private start() {
+      if (this.timer) return;
+      this.timer = window.setInterval(() => {
+        if (!this.paused) this.go(this.index + 1);
+      }, this.delay);
+    }
+
+    private stop() {
+      if (this.timer) window.clearInterval(this.timer);
+      this.timer = undefined;
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('.ect-carousel').forEach((el) => new Carousel(el));
+</script>

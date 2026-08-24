@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { metaEn } from '../../i18n/content-en';
+import { organizationSchema, webPageSchema, breadcrumbSchema } from '../../lib/schema';
+
+const { title, description } = metaEn.portfolio;
+
+const work = [
+  { img: '/images/work-1024x707.png', label: 'Business websites' },
+  { img: '/images/vr.webp', label: 'Interactive experiences' },
+  { img: '/images/character-4FKAQPE.png', label: 'Visual identity' },
+  { img: '/images/click.png', label: 'Conversion landing pages' },
+  { img: '/images/Tocilar-creare-site-web.webp', label: 'Custom web design' },
+  { img: '/images/About-Page-intro-pic.png', label: 'Brand story pages' },
+];
+
+const schemas = [
+  organizationSchema('en'),
+  webPageSchema({ path: '/en/portfolio/', name: title, description, locale: 'en' }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/en/' },
+    { name: 'Portfolio', path: '/en/portfolio/' },
+  ]),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/en/portfolio/"
+  schemas={schemas}
+>
+  <section class="section-pad gradient-brand-soft">
+    <div class="container-page max-w-3xl text-center">
+      <p class="eyebrow mb-2">Work & design directions</p>
+      <h1 class="mb-4 text-balance">Web design portfolio</h1>
+      <p class="text-lg text-ink-soft">
+        <strong class="text-ink">What you will find here:</strong> design directions we adapt to your
+        brand — from clean, simple layouts to more complex structures. Every project is tailored;
+        templates are a starting point, never a copied final product.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-page">
+      <h2 class="mb-8 text-center">What we can build for your business</h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          work.map((item, i) => (
+            <figure
+              class="card-surface group overflow-hidden !p-0"
+              data-animate="zoom-in"
+              data-stagger={String((i % 3) + 1)}
+            >
+              <img
+                src={item.img}
+                alt={item.label}
+                width="640"
+                height="480"
+                class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="p-4 font-display text-lg text-ink">{item.label}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <p class="mx-auto mt-10 max-w-2xl text-center text-ink-soft">
+        Want something similar, adapted to your niche? In the free consultation we walk you through
+        the steps and a realistic delivery window.
+      </p>
+      <div class="mt-6 text-center">
+        <a href="/en/contact/#formular" class="btn-primary">Discuss your project</a>
+      </div>
+    </div>
+  </section>
+
+  <ContactForm />
+</BaseLayout>

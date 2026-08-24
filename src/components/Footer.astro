@@ -1,99 +1,120 @@
 ---
-import { business, nav, services } from '../data/business';
+/**
+ * Footer ported from the Elementor build: white background with ink text
+ * (not the dark slab the Astro redesign used), three columns — logo, company
+ * details, important pages — then a bottom row with socials and the copyright.
+ */
+import { business } from '../data/business';
+import { getLocale, localizedPath, routes } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import type { RouteKey } from '../i18n/routes';
+
+const locale = getLocale(Astro.url.pathname);
+const s = t(locale);
 const year = new Date().getFullYear();
+
+const importantKeys: RouteKey[] = ['web', 'seo', 'maintenance', 'contact'];
+const importantLinks = importantKeys.map((k) => ({
+  href: localizedPath(k, locale),
+  label: s.routeLabels[k],
+}));
+
+const heading = locale === 'en' ? 'IMPORTANT PAGES' : 'PAGINI IMPORTANTE';
+const followUs = locale === 'en' ? 'Follow us:' : 'Urmărește-ne pe:';
+const rights = locale === 'en' ? 'All Rights Reserved' : 'Toate drepturile rezervate';
+const addressLabel = locale === 'en' ? 'Address' : 'Adresa';
 ---
 
-<footer class="border-t border-black/5 bg-ink text-white">
-  <div class="container-page section-pad">
-    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-      <div class="space-y-4 lg:col-span-1">
-        <a href="/" class="inline-flex items-center gap-3">
+<footer class="border-t border-black/5 bg-white text-ink">
+  <div class="mx-auto w-full max-w-[1214px] px-4 py-10 sm:px-6 lg:min-h-[355px] lg:px-0 lg:py-[60px]">
+    <div class="grid gap-8 lg:grid-cols-[348px_396px_396px] lg:gap-6">
+      <div class="flex items-start">
+        <a href={routes.home[locale]} aria-label={`${business.name} — ${s.homeAria}`}>
           <img
             src="/images/Logo_Echipa_de_Tocilari-e1708028624694.webp"
-            alt=""
-            width="48"
-            height="48"
-            class="h-12 w-12 rounded-full bg-white object-contain p-1"
+            alt={business.name}
+            width="120"
+            height="125"
+            class="h-auto w-[120px] object-contain"
             loading="lazy"
             decoding="async"
           />
-          <span class="font-display text-lg">{business.name}</span>
         </a>
-        <p class="text-sm leading-relaxed text-white/75">
-          {business.description}
-        </p>
-        <p class="text-sm text-white/60">
-          <span class="block font-semibold text-white/90">Zonă deservită</span>
-          {business.areaServed} · online & remote
-        </p>
-        {
-          business.email && (
-            <a
-              href={`mailto:${business.email}`}
-              class="inline-flex min-h-11 items-center text-sm font-semibold text-brand-pale hover:text-white"
-            >
-              {business.email}
-            </a>
-          )
-        }
       </div>
 
-      <div>
-        <h2 class="mb-4 font-display text-lg text-white">Navigare</h2>
-        <ul class="space-y-2">
+      <div class="text-[16px] leading-[27.2px]">
+        <p class="font-semibold">{business.legalName}</p>
+        <p>
+          {addressLabel}: {business.address.street},<br />
+          {business.address.locality}, {business.address.postalCode}, {
+            locale === 'en' ? 'Romania' : 'România'
+          }
+        </p>
+        <p>
+          site: <a class="hover:text-brand" href={routes.home[locale]}>echipadetocilari.ro</a>
+        </p>
+        <p>
+          email: <a class="hover:text-brand" href={`mailto:${business.email}`}>{business.email}</a>
+        </p>
+        <p>CUI: {business.vatId.replace(/^RO/, '')} | {business.registrationNumber}</p>
+      </div>
+
+      <div class="text-[16px] leading-[32px]">
+        <p class="font-semibold">{heading}</p>
+        <ul>
           {
-            nav.map((item) => (
+            importantLinks.map((l) => (
               <li>
-                <a
-                  href={item.href}
-                  class="inline-flex min-h-10 items-center text-sm text-white/75 transition hover:text-brand-pale"
-                >
-                  {item.label}
+                <a href={l.href} class="transition-colors hover:text-brand">
+                  {l.label}
                 </a>
               </li>
             ))
           }
         </ul>
-      </div>
-
-      <div>
-        <h2 class="mb-4 font-display text-lg text-white">Servicii</h2>
-        <ul class="space-y-2">
-          {
-            services.slice(0, 6).map((s) => (
-              <li>
-                <a
-                  href={s.href}
-                  class="inline-flex min-h-10 items-center text-sm text-white/75 transition hover:text-brand-pale"
-                >
-                  {s.title}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <div>
-        <h2 class="mb-4 font-display text-lg text-white">Hai să vorbim</h2>
-        <p class="mb-4 text-sm text-white/75">
-          Consultație gratuită de 30 de minute. Îți spunem ce merită prioritate pentru afacerea ta.
-        </p>
-        <a href="/contact/#formular" class="btn-primary w-full sm:w-auto">Programează consultația</a>
-        <p class="mt-4 text-xs text-white/50">{business.hours}</p>
       </div>
     </div>
 
     <div
-      class="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between"
+      class="mt-8 flex flex-col gap-4 border-t border-black/5 pt-5 sm:flex-row sm:items-center sm:justify-between"
     >
-      <p>© {year} {business.name}. Toate drepturile rezervate.</p>
-      <p>
-        <span class="text-white/40">NAP:</span>
-        {business.name}
-        {business.email ? ` · ${business.email}` : ''}
-        · {business.areaServed}
-      </p>
+      <div class="flex items-center gap-4">
+        <span class="text-[16px] leading-[19.2px]">{followUs}</span>
+        <ul class="flex items-center gap-3">
+          <li>
+            <a
+              href="https://www.facebook.com/EchipadeTocilari/"
+              class="inline-flex h-10 w-10 items-center justify-center text-ink transition-colors hover:text-brand"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"
+                ></path>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/company/echipa-de-tocilari/"
+              class="inline-flex h-10 w-10 items-center justify-center text-ink transition-colors hover:text-brand"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"
+                ></path>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <p class="text-[14px] leading-[16.8px]">© {year} {rights}</p>
     </div>
   </div>
 </footer>

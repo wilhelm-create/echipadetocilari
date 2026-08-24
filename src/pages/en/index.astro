@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Faq from '../../components/Faq.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Lottie from '../../components/Lottie.astro';
+import { business } from '../../data/business';
+import { metaEn, servicesEn, testimonialsEn, homeFaqsEn } from '../../i18n/content-en';
+import { organizationSchema, websiteSchema, webPageSchema, faqSchema } from '../../lib/schema';
+
+const { title, description } = metaEn.home;
+
+const schemas = [
+  organizationSchema('en'),
+  websiteSchema('en'),
+  webPageSchema({
+    path: '/en/',
+    name: title,
+    description,
+    locale: 'en',
+    datePublished: '2024-02-15',
+    dateModified: new Date().toISOString().slice(0, 10),
+  }),
+  faqSchema(homeFaqsEn),
+];
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/en/" schemas={schemas}>
+  <section class="relative overflow-hidden gradient-brand-soft">
+    <div
+      class="pointer-events-none absolute inset-0 opacity-40"
+      style="background-image: url('/images/BG-HomePage-High.png'); background-size: cover; background-position: center;"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="container-page relative grid items-center gap-8 py-10 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:gap-12 lg:py-20"
+    >
+      <div
+        class="relative order-1 mx-auto w-full max-w-[280px] sm:max-w-md lg:order-2 lg:max-w-none"
+        data-animate-hero="zoom"
+      >
+        <div class="anim-float">
+          <img
+            src="/images/Logo_Echipa_de_Tocilari-e1708028624694.webp"
+            alt={`${business.name} — digital marketing agency logo`}
+            width="836"
+            height="870"
+            class="mx-auto h-auto w-full drop-shadow-2xl"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <div
+          class="pointer-events-none absolute -bottom-2 -right-1 w-24 sm:-bottom-4 sm:-right-2 sm:w-36 lg:w-44"
+        >
+          <Lottie src="/lottie/services.json" label="Decorative animation" aspect="1 / 1" />
+        </div>
+      </div>
+
+      <div class="order-2 text-center lg:order-1 lg:text-left" data-animate-hero>
+        <p class="eyebrow mb-3">Web design & digital marketing agency</p>
+        <h1 class="mb-4 text-balance">
+          Online marketing done by <span class="text-brand-dark">nerds</span>!
+        </h1>
+        <p class="mx-auto mb-4 max-w-xl text-base text-ink-soft sm:text-lg lg:mx-0">
+          We are nerdy, we are good at this, and we are ready to build the online marketing your
+          business needs — a fast website, SEO that ranks, and campaigns that convert.
+        </p>
+        <p class="mx-auto mb-8 max-w-xl text-sm text-muted sm:text-base lg:mx-0">
+          <strong class="text-ink">Direct answer:</strong> {business.name} is the digital marketing agency
+          in Romania that builds your online presence — web, SEO, and ads — for businesses that want
+          measurable results.
+        </p>
+        <div
+          class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start"
+        >
+          <a href="#formular" class="btn-primary anim-pulse-cta">
+            <strong class="mr-1">FREE</strong> consultation · 30 min
+          </a>
+          <a href="/en/services/" class="btn-secondary">See our services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad" aria-labelledby="about-heading">
+    <div class="container-page grid items-center gap-10 lg:grid-cols-2">
+      <div data-animate="fade-left">
+        <p class="eyebrow mb-2">Echipa de Tocilari</p>
+        <h2 id="about-heading" class="mb-4">We are here for your business!</h2>
+        <div class="space-y-4 text-ink-soft">
+          <p>
+            We are a group of nerds who are genuinely into marketing and technology. We put those
+            nerdy skills to work so you reach your target audience and stand out in the online
+            market.
+          </p>
+          <p>
+            We know SEO, website design, social media marketing, PPC, and copywriting — the parts of
+            digital marketing you do not have the time or the resources to handle yourself.
+          </p>
+          <p>
+            We keep up with industry trends and technology so we can propose concrete solutions
+            rather than jargon.
+          </p>
+        </div>
+        <a href="/en/about/" class="btn-secondary mt-8">About us</a>
+      </div>
+      <div class="relative" data-animate="fade-right" data-stagger="2">
+        <div
+          class="absolute -inset-4 rounded-[2rem] bg-brand/10 blur-2xl anim-pulse-cta"
+          aria-hidden="true"
+        >
+        </div>
+        <img
+          src="/images/We-believe-BG.png"
+          alt="Echipa de Tocilari — we believe in work and dedication"
+          width="800"
+          height="600"
+          class="relative rounded-2xl shadow-lg"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-surface" aria-labelledby="services-heading">
+    <div class="container-page">
+      <div class="mx-auto mb-10 max-w-2xl text-center" data-animate="fade-up">
+        <p class="eyebrow mb-2">We solve real problems</p>
+        <h2 id="services-heading" >How can we help your business?</h2>
+      </div>
+
+      <div class="mb-10 mx-auto max-w-xs sm:max-w-sm" data-animate="zoom-in">
+        <Lottie
+          src="/lottie/hero.json"
+          label="Digital marketing animation"
+          aspect="1 / 1"
+          class="drop-shadow-lg"
+        />
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          servicesEn.map((s, i) => (
+            <a
+              href={s.href}
+              class="card-surface group block focus-visible:ring-2 focus-visible:ring-brand"
+              data-animate="fade-up"
+              data-stagger={String((i % 3) + 1)}
+            >
+              <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl gradient-brand text-white shadow-brand anim-grow-icon">
+                <span class="text-lg font-bold" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
+              <h3 class="mb-2 font-display text-xl text-ink group-hover:text-brand-dark">
+                {s.title}
+              </h3>
+              <p class="text-sm leading-relaxed text-ink-soft">{s.short}</p>
+              <span class="mt-4 inline-flex items-center text-sm font-semibold text-brand-dark transition-transform group-hover:translate-x-1">
+                Learn more →
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="relative overflow-hidden py-16 text-white" data-animate="fade-up">
+    <div class="absolute inset-0 anim-gradient" aria-hidden="true"></div>
+    <div class="container-page relative text-center">
+      <h2 class="mb-4 text-white">
+        Talk to Echipa de Tocilari,<br class="hidden sm:block" />
+        <span class="text-white/95">your digital marketing agency</span>
+      </h2>
+      <a
+        href="#formular"
+        class="btn-secondary mt-4 !border-white !bg-white !text-brand-deeper anim-pulse-cta"
+      >
+        FREE 30-minute consultation
+      </a>
+    </div>
+  </section>
+
+  <section
+    class="section-pad relative"
+    style="background-image: linear-gradient(rgba(252,252,252,.92), rgba(252,252,252,.96)), url('/images/BG-Testemonials-home-page.png'); background-size: cover;"
+    aria-labelledby="testi-heading"
+  >
+    <div class="container-page">
+      <div class="mx-auto mb-10 max-w-2xl text-center" data-animate="fade-up">
+        <p class="eyebrow mb-2">Testimonials</p>
+        <h2 id="testi-heading" >What our clients say</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        {
+          testimonialsEn.map((t, i) => (
+            <blockquote
+              class="card-surface flex h-full flex-col"
+              data-animate="fade-up"
+              data-stagger={String(i + 1)}
+            >
+              <p class="mb-6 flex-1 text-ink-soft leading-relaxed">“{t.quote}”</p>
+              <footer>
+                <cite class="not-italic">
+                  <span class="block font-display text-lg text-ink">{t.name}</span>
+                  <span class="text-sm text-muted">{t.role}</span>
+                </cite>
+              </footer>
+            </blockquote>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div data-animate="fade-up">
+    <Faq items={homeFaqsEn} />
+  </div>
+
+  <section class="section-pad bg-white">
+    <div class="container-page max-w-3xl text-center" data-animate="zoom-in">
+      <h2 class="mb-4 text-balance">
+        We can help you, whatever <span class="text-brand-dark">city</span> you are in
+      </h2>
+      <p class="text-lg text-ink-soft">
+        We work remotely across <strong>Romania</strong> and beyond. First step: a free 30-minute
+        consultation where we clarify goals, budget, and priorities.
+      </p>
+    </div>
+  </section>
+
+  <div data-animate="fade-up">
+    <ContactForm id="formular" />
+  </div>
+</BaseLayout>

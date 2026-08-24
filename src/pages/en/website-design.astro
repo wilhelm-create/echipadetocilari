@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Faq from '../../components/Faq.astro';
+import { metaEn, webFaqsEn } from '../../i18n/content-en';
+import {
+  organizationSchema,
+  webPageSchema,
+  breadcrumbSchema,
+  serviceSchema,
+  faqSchema,
+} from '../../lib/schema';
+
+const { title, description } = metaEn.web;
+
+const types = [
+  {
+    name: 'Landing page',
+    body: 'One focused page built around a single action — a campaign, a launch, a lead magnet. Fastest to ship, easiest to measure.',
+  },
+  {
+    name: 'Business website',
+    body: 'A multi-page digital brochure: services, portfolio, about, contact. The backbone of your online credibility.',
+  },
+  {
+    name: 'Online store',
+    body: 'E-commerce with product pages, cart, and checkout, built so the buying path is short and the catalogue stays manageable.',
+  },
+];
+
+const steps = [
+  { n: '01', name: 'Discovery', body: 'We map your goal, audience, and competition — before anyone opens a design tool.' },
+  { n: '02', name: 'Structure & design', body: 'Page structure, then visual direction adapted to your brand.' },
+  { n: '03', name: 'Build', body: 'Mobile-first development, fast loading, SEO fundamentals baked in.' },
+  { n: '04', name: 'Launch & support', body: 'We go live, verify everything works, and stay available for changes.' },
+];
+
+const schemas = [
+  organizationSchema('en'),
+  webPageSchema({ path: '/en/website-design/', name: title, description, locale: 'en' }),
+  serviceSchema({
+    name: 'Website design and development',
+    description,
+    path: '/en/website-design/',
+    locale: 'en',
+  }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/en/' },
+    { name: 'Services', path: '/en/services/' },
+    { name: 'Website design', path: '/en/website-design/' },
+  ]),
+  faqSchema(webFaqsEn),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/en/website-design/"
+  schemas={schemas}
+>
+  <section class="section-pad gradient-brand-soft">
+    <div class="container-page max-w-3xl text-center">
+      <p class="eyebrow mb-2">Website design & development</p>
+      <h1 class="mb-4 text-balance">Website design</h1>
+      <p class="text-lg text-ink-soft">
+        <strong class="text-ink">Direct answer:</strong> we build landing pages, business websites, and
+        online stores — fast, mobile-first, and with SEO fundamentals in place from day one, so the site
+        can actually be found.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-pad" aria-labelledby="types-heading">
+    <div class="container-page">
+      <h2 id="types-heading" class="mb-8 text-center">What we build</h2>
+      <div class="grid gap-6 lg:grid-cols-3">
+        {
+          types.map((t, i) => (
+            <article class="card-surface" data-animate="fade-up" data-stagger={String(i + 1)}>
+              <h3 class="mb-3 text-2xl text-brand-dark">{t.name}</h3>
+              <p class="text-ink-soft">{t.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-surface-2" aria-labelledby="process-heading">
+    <div class="container-page">
+      <p class="eyebrow mb-2 text-center">How we work</p>
+      <h2 id="process-heading" class="mb-10 text-center">
+        From idea to a live website
+      </h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          steps.map((s, i) => (
+            <article data-animate="fade-up" data-stagger={String((i % 4) + 1)}>
+              <div class="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl gradient-brand font-bold text-white shadow-brand">
+                {s.n}
+              </div>
+              <h3 class="mb-2 font-display text-xl text-ink">{s.name}</h3>
+              <p class="text-sm leading-relaxed text-ink-soft">{s.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Faq items={webFaqsEn} id="faq-web" eyebrow="Website questions" />
+
+  <ContactForm />
+</BaseLayout>

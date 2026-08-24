@@ -1,5 +1,13 @@
 /**
- * RO (source paths in legacy-mirror) → EN public paths (natural search slugs).
+ * The site's real pages: RO source file in legacy-mirror → EN public path
+ * (natural search slugs).
+ *
+ * This list is the single source of truth for: which mirror pages we treat as
+ * ours, which get EN twins, hreflang pairs, the sitemap, and llms.txt. Any
+ * other .html in the mirror is scraper leftover (theme demo posts, WordPress
+ * attachment pages) and is deliberately excluded — see `isOwnedPage`.
+ *
+ * `service` marks pages that describe a purchasable service (Service JSON-LD).
  */
 export const routes = [
   {
@@ -25,6 +33,7 @@ export const routes = [
     enFile: 'en/website-design/index.html',
     labelRo: 'Creare site web',
     labelEn: 'Website design',
+    service: { ro: 'Creare site web', en: 'Website design and development' },
   },
   {
     ro: '/servicii-seo/',
@@ -33,6 +42,7 @@ export const routes = [
     enFile: 'en/seo-services/index.html',
     labelRo: 'Servicii SEO',
     labelEn: 'SEO services',
+    service: { ro: 'Servicii SEO', en: 'SEO services' },
   },
   {
     ro: '/administrare-site/',
@@ -41,6 +51,7 @@ export const routes = [
     enFile: 'en/website-maintenance/index.html',
     labelRo: 'Administrare site',
     labelEn: 'Website maintenance',
+    service: { ro: 'Administrare site', en: 'Website maintenance' },
   },
   {
     ro: '/contact/',
@@ -75,14 +86,43 @@ export const routes = [
     labelEn: 'Clients',
   },
   {
+    ro: '/logo-design/',
+    en: '/en/logo-design/',
+    roFile: 'logo-design/index.html',
+    enFile: 'en/logo-design/index.html',
+    labelRo: 'Logo design',
+    labelEn: 'Logo design',
+    service: { ro: 'Logo design', en: 'Logo design' },
+  },
+  {
     ro: '/pay-per-click/',
     en: '/en/ppc-advertising/',
     roFile: 'pay-per-click/index.html',
     enFile: 'en/ppc-advertising/index.html',
     labelRo: 'Pay Per Click',
     labelEn: 'PPC advertising',
+    service: { ro: 'Campanii Pay Per Click', en: 'PPC advertising management' },
   },
 ];
 
 export const roToEn = Object.fromEntries(routes.map((r) => [r.ro, r.en]));
 export const enToRo = Object.fromEntries(routes.map((r) => [r.en, r.ro]));
+
+const roPaths = new Set(routes.map((r) => r.ro));
+const enPaths = new Set(routes.map((r) => r.en));
+
+/**
+ * Is this URL path one of our real pages?
+ *
+ * The mirror also contains ~16 pages we never wrote: Astra/Beyond theme demo
+ * posts (`coming-soon`, `do-ppc-ninjas-really-exist`, …) and WordPress
+ * attachment pages (directories named after an image). They ship so the mirror
+ * stays 1:1, but they must never be indexed or carry our schema.
+ */
+export function isOwnedPage(urlPath) {
+  return roPaths.has(urlPath) || enPaths.has(urlPath);
+}
+
+export function routeByRo(urlPath) {
+  return routes.find((r) => r.ro === urlPath);
+}

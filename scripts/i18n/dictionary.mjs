@@ -786,6 +786,11 @@ export const enPageMeta = {
     description:
       'See the businesses that chose Echipa de Tocilari for digital marketing, web design, and SEO. Real partnerships, measurable online growth.',
   },
+  '/en/logo-design/': {
+    title: 'Logo Design & Brand Identity | Distinctive Logos for Business',
+    description:
+      'Logo design and brand identity: distinctive marks tailored to your brand story, ready to use across web, print, and social media.',
+  },
   '/en/ppc-advertising/': {
     title: 'PPC Advertising Management | Google Ads Campaigns That Convert',
     description:
@@ -793,33 +798,32 @@ export const enPageMeta = {
   },
 };
 
-export const enFaqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'What is online marketing and why should I use it?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Online marketing promotes your business on the internet through SEO, paid ads, content, email, and social media. Most buyers search online first — without a strong presence you lose ready-to-buy customers.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'How long until I see results from online marketing services?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'SEO often takes a few months; PPC and social ads can show results in days or weeks. Online marketing is long-term and depends on competition, budget, and execution quality.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'How can I start working with your digital marketing agency?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Contact us via the form or email. We offer a free consultation, a tailored plan, and a budget estimate — then we start if you are happy to move forward.',
-      },
-    },
+export const enOrg = {
+  description:
+    'Digital marketing agency in Romania: website design, SEO services, website maintenance, PPC advertising, logo design, and copywriting.',
+  knowsAbout: [
+    'Website design',
+    'SEO services',
+    'Website maintenance',
+    'PPC advertising',
+    'Logo design',
+    'Copywriting',
+    'Digital marketing',
   ],
 };
+
+/** Home-page FAQ (AEO). Mirror of `roFaqs` in meta-ro.mjs. */
+export const enFaqs = [
+  {
+    q: 'What is online marketing and why should I use it?',
+    a: 'Online marketing promotes your business on the internet through SEO, paid ads, content, email, and social media. Most buyers search online first — without a strong presence you lose ready-to-buy customers.',
+  },
+  {
+    q: 'How long until I see results from online marketing services?',
+    a: 'SEO often takes a few months; PPC and social ads can show results in days or weeks. Online marketing is long-term and depends on competition, budget, and execution quality.',
+  },
+  {
+    q: 'How can I start working with your digital marketing agency?',
+    a: 'Contact us via the form or email. We offer a free consultation, a tailored plan, and a budget estimate — then we start if you are happy to move forward.',
+  },
+];
