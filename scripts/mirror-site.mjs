@@ -5,7 +5,9 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
-const outDir = path.join(root, 'public');
+// Scrape lands in a dedicated throwaway folder — never in a folder with
+// project files. Review the result, then move what you need into legacy-mirror/.
+const outDir = path.join(root, '.mirror-scrape');
 
 const urls = [
   'https://www.echipadetocilari.ro/',
@@ -36,7 +38,7 @@ const urls = [
 ];
 
 if (existsSync(outDir)) {
-  console.log('Removing existing public/ ...');
+  console.log('Removing existing .mirror-scrape/ ...');
   rmSync(outDir, { recursive: true, force: true });
 }
 

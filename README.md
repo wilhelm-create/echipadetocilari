@@ -26,7 +26,8 @@ Re-scrape original (opțional, actualizează `legacy-mirror/`):
 
 ```bash
 npm i -D website-scraper && npm run mirror
-# apoi mută public/www... → legacy-mirror dacă e nevoie
+# scrape-ul ajunge în .mirror-scrape/www.echipadetocilari.ro/
+# verifică rezultatul, apoi mută manual ce e nevoie → legacy-mirror/
 ```
 
 `website-scraper` se instalează doar la nevoie — nu e în `package.json`, ca să nu

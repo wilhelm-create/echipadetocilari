@@ -7,17 +7,10 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build:astro": "astro build",
-    "preview:astro": "astro preview",
     "build": "node scripts/build-static.mjs",
     "preview": "npx --yes serve dist -l 3000",
-    "mirror": "node scripts/mirror-site.mjs"
+    "mirror": "node scripts/mirror-site.mjs",
+    "new-page": "node scripts/new-page.mjs"
   },
-  "dependencies": {
-    "@astrojs/sitemap": "^3.7.3",
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.2.0",
-    "tailwindcss": "^4.3.3"
-  }
+  "dependencies": {}
 }

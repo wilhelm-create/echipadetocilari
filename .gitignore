@@ -1,6 +1,5 @@
 # build
 dist/
-dist-astro/
 .output/
 .vercel/
 .netlify/
@@ -25,8 +24,8 @@ Thumbs.db
 
 # scrapers / local notes
 scripts/content-extract.txt
+.mirror-scrape/
 
 # misc
-.astro/
 .audit/
 .claude/

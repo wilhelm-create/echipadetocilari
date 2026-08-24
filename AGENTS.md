@@ -1,22 +1,23 @@
-## Development
+# Echipa de Tocilari — pipeline
 
-When starting the dev server, use background mode:
+Oglindă statică 1:1 a echipadetocilari.ro (scrape WordPress/Elementor) cu injectări SEO/AEO/GEO în `<head>`. Fără framework, fără dev server — doar scripturi Node.
 
-```
-astro dev --background
-```
+## Comenzi
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+- `npm run build` — copiază `legacy-mirror/` → `dist/`, injectează meta/schema/hreflang, generează paginile EN și validează rezultatul (iese cu eroare dacă ceva nu e în regulă)
+- `npm run preview` — servește `dist/` pe http://localhost:3000
+- `npm run mirror` — re-scrape site-ul live în `.mirror-scrape/` (necesită `npm i -D website-scraper` mai întâi); mută manual ce e nevoie în `legacy-mirror/`
+- `npm run new-page` — scaffoduiește o pagină nouă în `legacy-mirror/` refolosind shell-ul site-ului (header/footer)
 
-## Documentation
+## Structură
 
-Full documentation: https://docs.astro.build
+- `legacy-mirror/` — sursa de adevăr pentru markup și asset-uri (comis în git)
+- `scripts/build-static.mjs` + `scripts/lib/` + `scripts/i18n/` — pipeline-ul de build
+- `scripts/i18n/routes.mjs` — sursa unică de adevăr pentru „ce e pagină de-a noastră"
+- `dist/` — output de build, deployat de Vercel (vezi `vercel.json`)
 
-Consult these guides before working on related tasks:
+## Convenții
 
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+- Indexarea e controlată exclusiv de env-ul `PUBLIC_INDEXABLE` (nesetat = `noindex` peste tot)
+- Nu edita niciodată `dist/` direct — editează `legacy-mirror/` sau pipeline-ul
+- Paginile EN sunt generate, nu scrise de mână — actualizează `scripts/i18n/dictionary.mjs`
