@@ -4,59 +4,59 @@
  */
 export const roPageMeta = {
   '/': {
-    title: 'Marketing online făcut de tocilari | Echipa de Tocilari',
+    title: 'Agenție marketing online București | Echipa de Tocilari',
     description:
-      'Echipa de Tocilari este agenția de marketing digital din România: creare site web, SEO, mentenanță, PPC, logo și copywriting. Consultație gratuită 30 minute.',
+      'Agenție de marketing digital din București: creare site web, SEO, Google Ads și mentenanță. Consultație gratuită 30 de minute, remote în toată România.',
   },
   '/about-2/': {
-    title: 'Despre noi | Echipa de Tocilari',
+    title: 'Despre noi | agenție marketing București',
     description:
-      'Cine suntem: Echipa de Tocilari — specialiști în marketing digital și tehnologie care construiesc site-uri, SEO și campanii pentru afaceri din România.',
+      'Echipa de Tocilari este agenția de marketing digital din București. Facem site-uri, SEO și campanii pentru firme din România — fără jargon de umplutură.',
   },
   '/creare-site-web/': {
-    title: 'Creare site web | Echipa de Tocilari',
+    title: 'Creare site web București | prezentare și landing',
     description:
-      'Creare site web modern: landing page, site de prezentare sau magazin online. Design, UX, viteză și SEO de bază — Echipa de Tocilari.',
+      'Creare site web în București: site de prezentare, landing page și bază de magazin online. Design, viteză și SEO tehnic de la prima versiune.',
   },
   '/servicii-seo/': {
-    title: 'Servicii SEO | Echipa de Tocilari',
+    title: 'Servicii SEO București | optimizare site Google',
     description:
-      'Servicii SEO în România: audit, keywords, on-page, off-page și monitorizare. Creștem traficul organic pe Google — Echipa de Tocilari.',
+      'Servicii SEO în București: audit, cuvinte cheie, on-page, off-page și monitorizare. Creștem traficul organic pe Google pentru site-uri și magazine.',
   },
   '/administrare-site/': {
-    title: 'Administrare site & mentenanță | Echipa de Tocilari',
+    title: 'Administrare și mentenanță site | WordPress',
     description:
-      'Administrare site și magazin online: actualizări, securitate, backup și conținut. Mentenanță la nivel înalt — Echipa de Tocilari.',
+      'Administrare site și mentenanță WordPress: actualizări, backup, securitate și conținut. Abonament lunar, ca site-ul să rămână rapid și în siguranță.',
   },
   '/contact/': {
-    title: 'Contact | Echipa de Tocilari',
+    title: 'Contact | consultație marketing București',
     description:
-      'Contactează Echipa de Tocilari pentru creare site, SEO sau mentenanță. Consultație gratuită 30 minute — remote în toată România.',
+      'Contactează Echipa de Tocilari pentru creare site, SEO sau Google Ads. Consultație gratuită 30 de minute — lucrăm remote în toată România.',
   },
   '/portofoliu/': {
-    title: 'Portofoliu web design | Echipa de Tocilari',
+    title: 'Portofoliu web design | site-uri realizate',
     description:
-      'Portofoliu Echipa de Tocilari: exemple de design web și direcții vizuale pentru site-uri de prezentare și landing page.',
+      'Portofoliu de web design: site-uri de prezentare, landing page-uri și direcții vizuale pentru branduri din România. Vezi ce putem construi pentru tine.',
   },
   '/services/': {
-    title: 'Servicii marketing digital | Echipa de Tocilari',
+    title: 'Servicii marketing digital: site, SEO, Ads',
     description:
-      'Servicii complete: creare site, SEO, administrare, PPC, logo design și copywriting. Echipa de Tocilari.',
+      'Servicii de marketing digital: creare site web, SEO, administrare, Google Ads, logo și copywriting. Un singur partener pentru creșterea online.',
   },
   '/clients/': {
-    title: 'Clienți | Echipa de Tocilari',
+    title: 'Clienți | proiecte web design și SEO',
     description:
-      'Clienții Echipei de Tocilari — branduri și afaceri care ne-au ales pentru marketing digital și web design.',
+      'Clienții Echipei de Tocilari — firme care ne-au ales pentru web design, SEO și marketing digital. Parteneriate reale, nu slide-uri goale.',
   },
   '/logo-design/': {
-    title: 'Logo design & identitate vizuală | Echipa de Tocilari',
+    title: 'Logo design și identitate vizuală | Echipa de Tocilari',
     description:
-      'Proiectăm logo-uri distincte, adaptate poveștii brandului tău și ușor de folosit pe web, print și social media — Echipa de Tocilari.',
+      'Logo design și identitate vizuală: mărci clare, ușor de folosit pe web, print și social media. Brief, iterații și livrabile gata de produs.',
   },
   '/pay-per-click/': {
-    title: 'Campanii Pay Per Click (PPC) & Google Ads | Echipa de Tocilari',
+    title: 'Campanii Google Ads București | administrare PPC',
     description:
-      'Administrare campanii PPC și Google Ads: targetare, optimizare buget și rapoarte. Aduci clienți care caută deja ce vinzi — Echipa de Tocilari.',
+      'Administrare campanii Google Ads în București: cuvinte cheie, buget și rapoarte. Aduci clienți care caută deja ce vinzi, nu like-uri goale.',
   },
 };
 
@@ -71,6 +71,12 @@ export const roOrg = {
     'Logo design',
     'Copywriting',
   ],
+  address: {
+    streetAddress: 'Alexandru Zagoritz nr. 12, sector 2',
+    addressLocality: 'București',
+    postalCode: '021998',
+    addressCountry: 'RO',
+  },
 };
 
 /** Home-page FAQ, mirrored from the visible Elementor accordion (AEO). */

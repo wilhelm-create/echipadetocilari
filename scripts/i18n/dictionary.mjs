@@ -48,11 +48,29 @@ export const dictionary = [
   ['PAGINI IMPORTANTE', 'IMPORTANT PAGES'],
   ['Pagini importante', 'Important pages'],
 
-  // Hero / home
+  // Hero / home + new on-page H1s (longest first is applied at runtime)
+  ['Agenție de marketing online în București', 'Digital marketing agency in Bucharest'],
+  ['Agentie de marketing online in Bucuresti', 'Digital marketing agency in Bucharest'],
+  ['Creare site web de prezentare în București', 'Business website design in Bucharest'],
+  ['Creare site web de prezentare in Bucuresti', 'Business website design in Bucharest'],
+  ['Servicii de optimizare SEO pentru Google', 'SEO optimization services for Google'],
+  ['Administrare și mentenanță site web', 'Website management and maintenance'],
+  ['Administrare si mentenanta site web', 'Website management and maintenance'],
+  ['Contactează agenția de marketing online', 'Contact the online marketing agency'],
+  ['Contacteaza agentia de marketing online', 'Contact the online marketing agency'],
+  ['Servicii de marketing digital', 'Digital marketing services'],
+  ['Logo design și identitate vizuală', 'Logo design and visual identity'],
+  ['Logo design si identitate vizuala', 'Logo design and visual identity'],
+  ['Portofoliu de web design', 'Web design portfolio'],
+  ['Campanii Google Ads', 'Google Ads campaigns'],
+  ['Clienții noștri', 'Our clients'],
+  ['Clientii nostri', 'Our clients'],
   ['Agentie Web Design', 'Web design agency'],
   ['Agenție Web Design', 'Web design agency'],
   ['Marketing online facut de tocilari!', 'Online marketing done by nerds!'],
   ['Marketing online făcut de tocilari!', 'Online marketing done by nerds!'],
+  ['Marketing online facut de tocilari', 'Online marketing done by nerds'],
+  ['Marketing online făcut de tocilari', 'Online marketing done by nerds'],
   [
     'Suntem nerdy, suntem priceputi, si suntem gata sa-ti oferim solutiile de marketing online de care afacerea ta are nevoie.',
     'We are nerdy, we are skilled, and we are ready to deliver the online marketing solutions your business needs.',
@@ -742,59 +760,59 @@ export const dictionary = [
 /** Page-level SEO for English (natural search phrasing). */
 export const enPageMeta = {
   '/en/': {
-    title: 'Digital Marketing Agency Romania | Online Marketing by Nerds',
+    title: 'Digital Marketing Agency Bucharest | Echipa de Tocilari',
     description:
-      'Looking for a digital marketing agency in Romania? Echipa de Tocilari delivers website design, SEO services, website maintenance, PPC, and copywriting. Free 30-minute consultation.',
+      'Bucharest digital marketing agency: website design, SEO, Google Ads, and maintenance. Free 30-minute consult — we work remotely across Romania.',
   },
   '/en/about/': {
-    title: 'About Us | Digital Marketing Team — Echipa de Tocilari',
+    title: 'About Us | Digital Marketing Agency in Bucharest',
     description:
-      'Meet Echipa de Tocilari: a nerdy digital marketing team in Romania focused on websites, SEO, and campaigns that help businesses get found and convert.',
+      'Echipa de Tocilari is a Bucharest digital marketing team. We build websites, SEO, and campaigns for Romanian businesses — without filler jargon.',
   },
   '/en/website-design/': {
-    title: 'Website Design & Development | Business Websites & Landing Pages',
+    title: 'Website Design Bucharest | Business Sites & Landing Pages',
     description:
-      'Professional website design and development: landing pages, business websites, and online stores. Fast, mobile-first sites with SEO basics built in.',
+      'Website design in Bucharest: business sites, landing pages, and a solid base for online stores. Fast, mobile-first, with technical SEO from day one.',
   },
   '/en/seo-services/': {
-    title: 'SEO Services Romania | Improve Google Rankings & Organic Traffic',
+    title: 'SEO Services Bucharest | Google Rankings & Organic Traffic',
     description:
-      'SEO services to improve Google rankings: SEO audit, keyword strategy, on-page SEO, off-page SEO, and ongoing monitoring. Grow organic traffic that converts.',
+      'SEO services in Bucharest: audit, keywords, on-page, off-page, and monitoring. We grow organic Google traffic for sites and online stores.',
   },
   '/en/website-maintenance/': {
-    title: 'Website Maintenance Services | Updates, Security & Support',
+    title: 'Website Management & Maintenance | WordPress Support',
     description:
-      'Website maintenance and management for WordPress sites and online stores: updates, backups, security, and content support so your site stays fast and safe.',
+      'WordPress website management: updates, backups, security, and content. A monthly retainer so your site stays fast and safe.',
   },
   '/en/contact/': {
-    title: 'Contact a Digital Marketing Agency | Free Consultation',
+    title: 'Contact | Free Digital Marketing Consultation',
     description:
-      'Contact Echipa de Tocilari for website design, SEO, or maintenance. Book a free 30-minute consultation — we work remotely across Romania and beyond.',
+      'Contact Echipa de Tocilari for website design, SEO, or Google Ads. Free 30-minute consult — remote across Romania.',
   },
   '/en/portfolio/': {
-    title: 'Web Design Portfolio | Website Examples & Brand Work',
+    title: 'Web Design Portfolio | Sites We Have Shipped',
     description:
-      'Browse our web design portfolio: business websites, landing pages, and visual directions we adapt to your brand and industry.',
+      'Web design portfolio: business websites, landing pages, and visual directions for Romanian brands. See what we can build for you.',
   },
   '/en/services/': {
-    title: 'Digital Marketing Services | Web Design, SEO, PPC & More',
+    title: 'Digital Marketing Services: Web, SEO, Google Ads',
     description:
-      'Full digital marketing services: website design, SEO, website maintenance, PPC advertising, logo design, and copywriting — one partner for online growth.',
+      'Digital marketing services: website design, SEO, maintenance, Google Ads, logo, and copywriting. One partner for online growth.',
   },
   '/en/clients/': {
-    title: 'Our Clients | Brands That Trust Our Digital Marketing',
+    title: 'Our Clients | Web Design and SEO Projects',
     description:
-      'See the businesses that chose Echipa de Tocilari for digital marketing, web design, and SEO. Real partnerships, measurable online growth.',
+      'Businesses that chose Echipa de Tocilari for web design, SEO, and digital marketing. Real partnerships, not empty slide decks.',
   },
   '/en/logo-design/': {
-    title: 'Logo Design & Brand Identity | Distinctive Logos for Business',
+    title: 'Logo Design and Visual Identity | Echipa de Tocilari',
     description:
-      'Logo design and brand identity: distinctive marks tailored to your brand story, ready to use across web, print, and social media.',
+      'Logo design and visual identity: distinctive marks ready for web, print, and social. Brief, iterations, and production-ready files.',
   },
   '/en/ppc-advertising/': {
-    title: 'PPC Advertising Management | Google Ads Campaigns That Convert',
+    title: 'Google Ads Campaigns Bucharest | PPC Management',
     description:
-      'PPC advertising and Google Ads management: targeted campaigns that maximize budget impact and drive qualified leads and sales.',
+      'Google Ads management in Bucharest: keywords, budget, and reporting. Reach people already searching for what you sell.',
   },
 };
 
@@ -810,6 +828,12 @@ export const enOrg = {
     'Copywriting',
     'Digital marketing',
   ],
+  address: {
+    streetAddress: 'Alexandru Zagoritz nr. 12, sector 2',
+    addressLocality: 'Bucharest',
+    postalCode: '021998',
+    addressCountry: 'RO',
+  },
 };
 
 /** Home-page FAQ (AEO). Mirror of `roFaqs` in meta-ro.mjs. */

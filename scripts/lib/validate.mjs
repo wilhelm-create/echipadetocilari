@@ -37,11 +37,12 @@ export function validateBuild({ outDir, files, urlPathOf, indexable }) {
       errors.push(`${rel(file)}: no robots meta`);
     } else {
       const noindex = /noindex/i.test(robots[1]);
-      // Anything that is not one of our pages must stay out of the index even
-      // in a production build — the mirror carries theme-demo and attachment pages.
-      if (!owned && !noindex) errors.push(`${rel(file)}: leftover page is indexable`);
-      if (owned && indexable && noindex) errors.push(`${rel(file)}: own page is noindex`);
-      if (owned && !indexable && !noindex) errors.push(`${rel(file)}: staging page is indexable`);
+      if (!owned) {
+        errors.push(`${rel(file)}: leftover HTML shipped — delete from the mirror; 301 is in vercel.json`);
+        continue;
+      }
+      if (indexable && noindex) errors.push(`${rel(file)}: own page is noindex`);
+      if (!indexable && !noindex) errors.push(`${rel(file)}: staging page is indexable`);
     }
 
     if (html.includes('/en/en/')) errors.push(`${rel(file)}: doubled /en/en/ path`);

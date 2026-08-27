@@ -3,9 +3,9 @@
  * (natural search slugs).
  *
  * This list is the single source of truth for: which mirror pages we treat as
- * ours, which get EN twins, hreflang pairs, the sitemap, and llms.txt. Any
- * other .html in the mirror is scraper leftover (theme demo posts, WordPress
- * attachment pages) and is deliberately excluded — see `isOwnedPage`.
+ * ours, which get EN twins, hreflang pairs, the sitemap, and llms.txt. Theme
+ * demo posts and attachment HTML are deleted from the mirror and 301'd — see
+ * `scripts/lib/junk-redirects.mjs`. `isOwnedPage` still gates schema/index.
  *
  * `service` marks pages that describe a purchasable service (Service JSON-LD).
  */
@@ -114,10 +114,9 @@ const enPaths = new Set(routes.map((r) => r.en));
 /**
  * Is this URL path one of our real pages?
  *
- * The mirror also contains ~16 pages we never wrote: Astra/Beyond theme demo
- * posts (`coming-soon`, `do-ppc-ninjas-really-exist`, …) and WordPress
- * attachment pages (directories named after an image). They ship so the mirror
- * stays 1:1, but they must never be indexed or carry our schema.
+ * Theme-demo and attachment HTML is stripped from dist and redirected (301),
+ * not published as noindex leftovers. Anything that still is not in `routes`
+ * must never be indexed or carry our schema.
  */
 export function isOwnedPage(urlPath) {
   return roPaths.has(urlPath) || enPaths.has(urlPath);

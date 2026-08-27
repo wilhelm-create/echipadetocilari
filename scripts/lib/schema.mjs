@@ -5,14 +5,28 @@
 
 const LOGO = '/wp-content/uploads/2024/02/Logo_Echipa_de_Tocilari-1024x1024.webp';
 
+const SAME_AS = [
+  'https://www.facebook.com/EchipadeTocilari/',
+  'https://www.linkedin.com/company/echipa-de-tocilari/',
+];
+
 /** Stable @id so every page's schema references the same entity. */
 export const orgId = (site) => `${site}/#organization`;
 export const websiteId = (site, lang) => `${site}/#website${lang === 'en' ? '-en' : ''}`;
 
-export function organization({ site, lang, description, knowsAbout }) {
-  return {
+/**
+ * @param {object} opts
+ * @param {string} opts.site
+ * @param {string} opts.lang
+ * @param {string} opts.description
+ * @param {string[]} opts.knowsAbout
+ * @param {{ streetAddress: string, addressLocality: string, postalCode: string, addressCountry: string }} [opts.address]
+ * @param {string} [opts.telephone] omit rather than invent
+ */
+export function organization({ site, lang, description, knowsAbout, address, telephone }) {
+  const org = {
     '@context': 'https://schema.org',
-    '@type': ['Organization', 'ProfessionalService'],
+    '@type': ['Organization', 'ProfessionalService', 'LocalBusiness'],
     '@id': orgId(site),
     name: 'Echipa de Tocilari',
     url: site,
@@ -23,7 +37,22 @@ export function organization({ site, lang, description, knowsAbout }) {
     logo: `${site}${LOGO}`,
     image: `${site}${LOGO}`,
     knowsAbout,
+    sameAs: SAME_AS,
   };
+
+  if (telephone) org.telephone = telephone;
+
+  if (address) {
+    org.address = {
+      '@type': 'PostalAddress',
+      streetAddress: address.streetAddress,
+      addressLocality: address.addressLocality,
+      postalCode: address.postalCode,
+      addressCountry: address.addressCountry,
+    };
+  }
+
+  return org;
 }
 
 export function website({ site, lang }) {

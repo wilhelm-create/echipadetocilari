@@ -57,13 +57,12 @@ Local:
 PUBLIC_INDEXABLE=true PUBLIC_SITE_URL=https://www.echipadetocilari.ro npm run build
 ```
 
-### Pagini rămase din scrape
+### Igienă URL-uri vechi
 
-`legacy-mirror/` conține și 16 pagini pe care nu le-am scris noi — pagini demo din
-tema Astra/Beyond (`coming-soon`, `do-ppc-ninjas-really-exist`, …) și pagini de
-atașament WordPress. Se publică, ca să rămână oglinda 1:1, dar primesc **întotdeauna
-`noindex`** (inclusiv în producție) și nu primesc schema sau meta de-ale noastre.
-Sursa de adevăr pentru „ce e pagină de-a noastră" este `scripts/i18n/routes.mjs`.
+Posturile demo Lorem Ipsum, duplicatele (`/ex-*`, `/home/`, `/coming-soon/`) și
+paginile de atașament WordPress **nu se mai publică**. 301-urile sunt în
+`vercel.json` (lista e ținută în `scripts/lib/junk-redirects.mjs`). Sursa de
+adevăr pentru „ce e pagină de-a noastră" rămâne `scripts/i18n/routes.mjs`.
 
 ## Multilingual (RO default + EN secondary)
 

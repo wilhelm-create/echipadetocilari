@@ -34,6 +34,7 @@ import {
   upsertTitle,
 } from './lib/html.mjs';
 import { faqPage, organization, service, webPage, website } from './lib/schema.mjs';
+import { junkRedirects, vercelRedirects } from './lib/junk-redirects.mjs';
 import { validateBuild } from './lib/validate.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -48,13 +49,6 @@ if (!existsSync(path.join(srcDir, 'index.html'))) {
   console.error('Missing legacy-mirror/index.html — run `npm run mirror` first.');
   process.exit(1);
 }
-
-console.log('→ Cleaning dist/');
-rmSync(outDir, { recursive: true, force: true });
-mkdirSync(outDir, { recursive: true });
-
-console.log('→ Copying 1:1 mirror (HTML/CSS/JS/images/fonts)…');
-cpSync(srcDir, outDir, { recursive: true });
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -72,6 +66,42 @@ function urlPathOf(file) {
   if (rel === 'index.html') return '/';
   if (rel.endsWith('/index.html')) return '/' + rel.slice(0, -'index.html'.length);
   return '/' + rel;
+}
+
+function distPathFromUrl(urlPath) {
+  return path.join(outDir, urlPath.replace(/^\//, '').replace(/\/$/, ''));
+}
+
+/**
+ * Theme-demo / duplicate / attachment HTML must not ship. 301s live in
+ * vercel.json; leftover files in dist would still 200 on a static host.
+ */
+function pruneJunkFromDist() {
+  let removed = 0;
+  for (const { from } of junkRedirects) {
+    const target = distPathFromUrl(from);
+    if (existsSync(target)) {
+      rmSync(target, { recursive: true, force: true });
+      removed += 1;
+    }
+  }
+  const leftoverHtml = walkHtml(outDir).filter((f) => !isOwnedPage(urlPathOf(f)));
+  for (const file of leftoverHtml) {
+    rmSync(file, { force: true });
+    removed += 1;
+  }
+  console.log(`  pruned ${removed} leftover path(s) (301s are in vercel.json)`);
+}
+
+function assertVercelRedirects() {
+  const vercel = JSON.parse(readFileSync(path.join(root, 'vercel.json'), 'utf8'));
+  const expected = vercelRedirects();
+  const actual = vercel.redirects || [];
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(
+      'vercel.json redirects do not match scripts/lib/junk-redirects.mjs — update both together.'
+    );
+  }
 }
 
 function schemasFor(urlPath, meta) {
@@ -97,13 +127,16 @@ function schemasFor(urlPath, meta) {
   return list;
 }
 
+console.log('→ Cleaning dist/');
+rmSync(outDir, { recursive: true, force: true });
+mkdirSync(outDir, { recursive: true });
+
+console.log('→ Copying 1:1 mirror (HTML/CSS/JS/images/fonts)…');
+cpSync(srcDir, outDir, { recursive: true });
+pruneJunkFromDist();
+
 // ─── per-page enhancement ───────────────────────────────────────────────────
 
-/**
- * Pages the scraper picked up that we never wrote (theme demo posts, WordPress
- * attachment pages) still ship — the mirror is meant to be 1:1 — but they get
- * no metadata, no schema, and are kept out of the index even in production.
- */
 function enhanceHtml(file) {
   const urlPath = urlPathOf(file);
   const owned = isOwnedPage(urlPath);
@@ -173,8 +206,8 @@ function enhanceHtml(file) {
 const roFiles = walkHtml(outDir);
 console.log(`→ Enhancing ${roFiles.length} HTML pages (SEO/AEO/GEO, keep 1:1 visuals)…`);
 const enhanced = roFiles.map(enhanceHtml);
-const ownedCount = enhanced.filter((p) => p.owned).length;
-console.log(`  ${ownedCount} own pages, ${enhanced.length - ownedCount} mirror leftovers (noindex)`);
+const leftoverCount = enhanced.filter((p) => !p.owned).length;
+console.log(`  ${enhanced.filter((p) => p.owned).length} own pages, ${leftoverCount} leftovers`);
 
 console.log('→ Generating English pages (/en/…) with natural-language SEO…');
 const enPages = generateEnglishPages({ outDir, site: SITE, indexable: INDEXABLE });
@@ -183,8 +216,8 @@ console.log('  EN pages:', enPages.join(', '));
 
 // ─── site-level files ───────────────────────────────────────────────────────
 
-// Leftover pages are excluded by their noindex meta, not by robots.txt —
-// a disallowed URL is never crawled, so its noindex would never be seen.
+// Staging keeps Disallow: / so Google never sees the site. Leftover URLs are
+// 301'd in vercel.json, not published as noindex HTML.
 writeFileSync(
   path.join(outDir, 'robots.txt'),
   INDEXABLE
@@ -227,6 +260,7 @@ if (INDEXABLE) {
 // ─── verify ─────────────────────────────────────────────────────────────────
 
 console.log('→ Validating output…');
+assertVercelRedirects();
 const errors = validateBuild({
   outDir,
   files: walkHtml(outDir),

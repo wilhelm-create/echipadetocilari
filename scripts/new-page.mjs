@@ -315,7 +315,7 @@ console.log(`✓ legacy-mirror/wp-content/ect-pages/${slug}.css`);
 console.log('');
 console.log('Next: add the route to scripts/i18n/routes.mjs so it gets meta, hreflang,');
 console.log('the language switcher and a sitemap entry — otherwise the build treats it');
-console.log('as scraper leftover and marks it noindex.');
+console.log('as leftover HTML and the build will fail until you add the route.');
 
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

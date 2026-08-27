@@ -2,6 +2,11 @@ import scrape from 'website-scraper';
 import { existsSync, rmSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { junkRedirects } from './lib/junk-redirects.mjs';
+
+const junkPaths = new Set(
+  junkRedirects.map(({ from }) => from.replace(/\/$/, '') || '/')
+);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -20,21 +25,7 @@ const urls = [
   'https://www.echipadetocilari.ro/clients/',
   'https://www.echipadetocilari.ro/services/',
   'https://www.echipadetocilari.ro/pay-per-click/',
-  // secondary / legacy pages still linked
-  'https://www.echipadetocilari.ro/ex-servicii-seo/',
-  'https://www.echipadetocilari.ro/ex-creare-site-web/',
-  'https://www.echipadetocilari.ro/home/',
-  'https://www.echipadetocilari.ro/coming-soon/',
-  // blog posts from sitemap
-  'https://www.echipadetocilari.ro/will-there-be-a-future-post-facebook/',
-  'https://www.echipadetocilari.ro/always-learn-from-experience-and-past-mistakes/',
-  'https://www.echipadetocilari.ro/the-weekly-podcast-design-meets-technology/',
-  'https://www.echipadetocilari.ro/onward-our-award-winning-creative-campaign/',
-  'https://www.echipadetocilari.ro/the-digital-marketing-revolution-is-here-is-here-now/',
-  'https://www.echipadetocilari.ro/fun-fun-and-more-fun-come-work-at-beyond/',
-  'https://www.echipadetocilari.ro/lets-party-our-end-of-the-year-celebration/',
-  'https://www.echipadetocilari.ro/do-ppc-ninjas-really-exist/',
-  'https://www.echipadetocilari.ro/case-study-how-to-improve-your-seo-scores/',
+  'https://www.echipadetocilari.ro/logo-design/',
 ];
 
 if (existsSync(outDir)) {
@@ -63,6 +54,8 @@ const result = await scrape({
       if (u.pathname.includes('/feed')) return false;
       if (u.pathname.includes('/xmlrpc')) return false;
       if (u.pathname.includes('/cdn-cgi')) return false;
+      const clean = u.pathname.replace(/\/$/, '') || '/';
+      if (junkPaths.has(clean)) return false;
       // allow assets + pages
       return true;
     } catch {
