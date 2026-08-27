@@ -1,0 +1,78 @@
+{
+  "crawledAt": "2026-08-24T21:20:43.768Z",
+  "method": "HTTP fetch of sitemap + HTML (SF-equivalent Internal HTML columns)",
+  "sites": [
+    {
+      "domain": "webis.ro",
+      "urls": 80
+    },
+    {
+      "domain": "digitalcuisine.ro",
+      "urls": 53
+    },
+    {
+      "domain": "sonic-web-design.ro",
+      "urls": 80
+    },
+    {
+      "domain": "mipadoweb.ro",
+      "urls": 80
+    },
+    {
+      "domain": "spartanseo.ro",
+      "urls": 32
+    },
+    {
+      "domain": "webhero.ro",
+      "urls": 12
+    },
+    {
+      "domain": "seomark.ro",
+      "urls": 80
+    },
+    {
+      "domain": "wsite.ro",
+      "urls": 1
+    },
+    {
+      "domain": "searchads.ro",
+      "urls": 74
+    },
+    {
+      "domain": "re7consulting.ro",
+      "urls": 80
+    },
+    {
+      "domain": "divasweb.ro",
+      "urls": 37
+    },
+    {
+      "domain": "bromedia.ro",
+      "urls": 80
+    },
+    {
+      "domain": "servicii-seo.com",
+      "urls": 1
+    },
+    {
+      "domain": "webdesignersalley.ro",
+      "urls": 33
+    },
+    {
+      "domain": "agentiewebdesignbucuresti.ro",
+      "urls": 21
+    },
+    {
+      "domain": "oricemedia.ro",
+      "urls": 80
+    },
+    {
+      "domain": "rauden.ro",
+      "urls": 16
+    },
+    {
+      "domain": "digitalpath.ro",
+      "urls": 23
+    }
+  ]
+}
