@@ -6,7 +6,7 @@ export const roPageMeta = {
   '/': {
     title: 'Agenție marketing online București | Echipa de Tocilari',
     description:
-      'Agenție de marketing digital din București: creare site web, SEO, Google Ads și mentenanță. Consultație gratuită 30 de minute, remote în toată România.',
+      'Agenție de marketing digital din București. Facem promovare online, web design, SEO și Google Ads. Consultație gratuită 30 de minute, remote în toată România.',
   },
   '/about-2/': {
     title: 'Despre noi | agenție marketing București',
@@ -83,14 +83,14 @@ export const roOrg = {
 export const roFaqs = [
   {
     q: 'Ce este marketingul online și de ce ar trebui să îl folosesc?',
-    a: 'Marketingul online este promovarea unei afaceri prin internet (SEO, PPC, conținut, e-mail, social). Merită pentru că majoritatea clienților caută produse și servicii online.',
+    a: 'Marketingul online e felul în care te găsesc oamenii care deja caută ce vinzi. O agenție de marketing digital din București face promovare online cu un plan, nu postări aruncate când îți amintești.',
   },
   {
     q: 'Cât timp durează până când voi vedea rezultate din serviciile de marketing online?',
-    a: 'SEO aduce rezultate de obicei în câteva luni; PPC și social ads pot aduce rezultate în zile sau săptămâni. Marketingul online este pe termen lung.',
+    a: 'SEO se vede de obicei în câteva luni. Google Ads și social pot aduce clienți în zile sau săptămâni. Marketingul online e treabă lungă: concurența, bugetul și cât de repede răspunzi la lead-uri contează la fel de mult.',
   },
   {
-    q: 'Cum pot să încep să lucrez cu firma voastră de marketing online?',
-    a: 'Completează formularul de contact sau scrie pe e-mail. Oferim consultație, plan personalizat și buget estimativ; dacă ești de acord, începem colaborarea.',
+    q: 'Cum pot să încep să lucrez cu agenția voastră de marketing digital?',
+    a: 'Ne scrii din formular sau pe mail. Facem o consultație de 30 de minute, îți zicem ce am face și cam cât costă. Dacă ți se pare cinstit, începem.',
   },
 ];

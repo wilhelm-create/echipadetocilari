@@ -3,7 +3,7 @@ import { chromium } from 'playwright';
 const base = process.env.BASE_URL || 'http://localhost:54537';
 
 const pages = [
-  ['/', 'Agenție marketing online București', 'Agentie de marketing online in Bucuresti'],
+  ['/', 'Agenție marketing online București', 'Agenție de marketing online în București'],
   ['/about-2/', 'Despre noi', 'Despre noi'],
   ['/creare-site-web/', 'Creare site web București', 'Creare site web de prezentare in Bucuresti'],
   ['/servicii-seo/', 'Servicii SEO București', 'Servicii de optimizare SEO pentru Google'],

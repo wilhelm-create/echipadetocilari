@@ -72,6 +72,22 @@ export const dictionary = [
   ['Marketing online facut de tocilari', 'Online marketing done by nerds'],
   ['Marketing online făcut de tocilari', 'Online marketing done by nerds'],
   [
+    'Suntem nerdy și suntem pricepuți. O agenție de marketing digital din București, pentru promovarea online de care chiar ai nevoie — nu pentru cea din broșuri.',
+    'We are nerdy and we are skilled. A digital marketing agency in Bucharest, for the online promotion you actually need — not the brochure version.',
+  ],
+  [
+    'Suntem nerdy si suntem priceputi. O agentie de marketing digital din Bucuresti, pentru promovarea online de care chiar ai nevoie — nu pentru cea din brosuri.',
+    'We are nerdy and we are skilled. A digital marketing agency in Bucharest, for the online promotion you actually need — not the brochure version.',
+  ],
+  [
+    'Suntem nerdy, suntem priceputi: o agentie de marketing digital din Bucuresti, gata sa-ti ofere promovarea online de care afacerea ta are nevoie.',
+    'We are nerdy, we are skilled: a digital marketing agency in Bucharest, ready to deliver the online promotion your business needs.',
+  ],
+  [
+    'Suntem nerdy, suntem pricepuți: o agenție de marketing digital din București, gata să-ți ofere promovarea online de care afacerea ta are nevoie.',
+    'We are nerdy, we are skilled: a digital marketing agency in Bucharest, ready to deliver the online promotion your business needs.',
+  ],
+  [
     'Suntem nerdy, suntem priceputi, si suntem gata sa-ti oferim solutiile de marketing online de care afacerea ta are nevoie.',
     'We are nerdy, we are skilled, and we are ready to deliver the online marketing solutions your business needs.',
   ],
@@ -79,9 +95,14 @@ export const dictionary = [
     'Suntem nerdy, suntem pricepuți, și suntem gata să-ți oferim soluțiile de marketing online de care afacerea ta are nevoie.',
     'We are nerdy, we are skilled, and we are ready to deliver the online marketing solutions your business needs.',
   ],
+  ['Promovare online și marketing digital, pe înțelesul tău', 'Online promotion and digital marketing, in plain language'],
+  ['Promovare online si marketing digital, pe intelesul tau', 'Online promotion and digital marketing, in plain language'],
+  ['Promovare online si marketing digital pentru afacerea ta', 'Online promotion and digital marketing for your business'],
+  ['Promovare online și marketing digital pentru afacerea ta', 'Online promotion and digital marketing for your business'],
   ['Suntem aici pentru afacerea ta!', 'We are here for your business!'],
-  ['Rezolvam probleme reale', 'We solve real business problems'],
-  ['Rezolvăm probleme reale', 'We solve real business problems'],
+  ['Rezolvăm probleme reale', 'We solve real problems'],
+  ['Rezolvam probleme reale', 'We solve real problems'],
+  ['Cum te putem ajuta, concret?', 'How can we help, specifically?'],
   ['Cum iti putem ajuta afacerea?', 'How can we help your business grow?'],
   ['Cum îți putem ajuta afacerea?', 'How can we help your business grow?'],
   [
@@ -99,11 +120,21 @@ export const dictionary = [
   ['Ce spun clientii despre noi', 'What our clients say about us'],
   ['Ce spun clienții despre noi', 'What our clients say about us'],
   ['Testimoniale', 'Testimonials'],
+  ['Răspunsuri drepte', 'Straight answers'],
+  ['Întrebări frecvente', 'Frequently asked questions'],
   ['Noi avem raspunsurile', 'We have the answers'],
   ['Noi avem răspunsurile', 'We have the answers'],
   ['Intrebari adresate frecvent (FAQ)', 'Frequently asked questions (FAQ)'],
   ['Întrebări adresate frecvent (FAQ)', 'Frequently asked questions (FAQ)'],
   // Contact band — real HTML includes <b> tags that break plain-text phrases
+  [
+    '<b>Te putem ajuta</b>, indiferent de <b>orașul</b> din care ne scrii.',
+    '<b>We can help you</b>, no matter which <b>city</b> you write from.',
+  ],
+  [
+    'Ne-ar face <b>mare plăcere</b> să vorbim despre <b>proiectul</b> tău — fără slides.',
+    'We would <b>love</b> to talk about your <b>project</b> — no slide deck.',
+  ],
   [
     '<b>Noi te putem ajuta</b>, indferent de <b>orasul</b> in care te afli.',
     '<b>We can help you</b>, no matter which <b>city</b> you are in.',
@@ -168,6 +199,26 @@ export const dictionary = [
 
   // About blurb
   [
+    'Suntem un grup de tocilari pasionați de marketing și de tehnologie. Lucrăm ca agenție de marketing digital din București: îți luăm treaba grea, ca tu să fii găsit de oamenii care te caută deja.',
+    'We are a group of nerds who care about marketing and technology. We work as a digital marketing agency in Bucharest: we take the heavy lifting so people who already search for you can find you.',
+  ],
+  [
+    'Ne ocupăm de promovare online — Google, social, conținut. Și, dacă îți lipsește locul unde ajung clienții, lucrăm și ca agenție de web design în București: site de prezentare, landing page sau baza pentru un magazin online, după ce ai nevoie tu.',
+    'We handle online promotion — Google, social, content. And if you are missing the place clients land, we also work as a web design agency in Bucharest: a business site, a landing page, or the base for an online store, based on what you actually need.',
+  ],
+  [
+    'Când nu ai timp sau oameni pe marketing digital, preluăm noi. Îți spunem ce merită, ce e zgomot și ce se potrivește unei firme mici sau în creștere. Apoi punem mâna și facem.',
+    'When you do not have time or people for digital marketing, we take it on. We tell you what is worth it, what is noise, and what fits a small or growing business. Then we get to work.',
+  ],
+  [
+    'Suntem un grup de tocilari pasionati de marketing si tehnologie — o agentie de marketing digital din Bucuresti. Punem la dispozitia ta abilitatile noastre nerdy, ca sa ajungi la publicul tinta si sa te faci remarcat pe piata online.',
+    'We are a team of nerds passionate about marketing and technology — a digital marketing agency in Bucharest. We put our nerdy skills to work so you can reach your target audience and stand out online.',
+  ],
+  [
+    'Suntem un grup de tocilari pasionați de marketing și tehnologie — o agenție de marketing digital din București. Punem la dispoziția ta abilitățile noastre nerdy, ca să ajungi la publicul țintă și să te faci remarcat pe piața online.',
+    'We are a team of nerds passionate about marketing and technology — a digital marketing agency in Bucharest. We put our nerdy skills to work so you can reach your target audience and stand out online.',
+  ],
+  [
     'Suntem un grup de tocilari pasionati de marketing si tehnologie. Punem la dispozitia ta abilitatile noastre nerdy, pentru a te ajuta sa ajungi la publicul tinta si sa te faci remarcat pe piata online.',
     'We are a team of nerds passionate about marketing and technology. We put our nerdy skills to work so you can reach your target audience and stand out in the online market.',
   ],
@@ -176,12 +227,28 @@ export const dictionary = [
     'We are a team of nerds passionate about marketing and technology. We put our nerdy skills to work so you can reach your target audience and stand out in the online market.',
   ],
   [
+    'Cum te putem ajuta? Facem promovare online pe Google si pe social media, si lucram ca agentie de web design in Bucuresti: site-uri de prezentare, landing page-uri si o baza solida pentru magazin online.',
+    'How can we help? We handle online promotion on Google and social media, and we work as a web design agency in Bucharest: business sites, landing pages, and a solid base for an online store.',
+  ],
+  [
+    'Cum te putem ajuta? Facem promovare online pe Google și pe social media, și lucrăm ca agenție de web design în București: site-uri de prezentare, landing page-uri și o bază solidă pentru magazin online.',
+    'How can we help? We handle online promotion on Google and social media, and we work as a web design agency in Bucharest: business sites, landing pages, and a solid base for an online store.',
+  ],
+  [
     'Cum te putem ajuta? Ei bine, ne pricepem la tot felul de tactici si strategii de marketing online – de la optimizarea motoarelor de cautare, la crearea site-ului web si social media marketing.',
     'How can we help? We specialize in online marketing tactics and strategies — from search engine optimization to website design and social media marketing.',
   ],
   [
     'Cum te putem ajuta? Ei bine, ne pricepem la tot felul de tactici și strategii de marketing online – de la optimizarea motoarelor de căutare, la crearea site-ului web și social media marketing.',
     'How can we help? We specialize in online marketing tactics and strategies — from search engine optimization to website design and social media marketing.',
+  ],
+  [
+    'Practic, preluam tot ce tine de marketing digital cand nu ai timp sau resurse sa le faci singur. Te ghidam prin marketingul online si iti propunem solutiile potrivite pentru o firma mica sau in crestere.',
+    'In practice, we take on the digital marketing work you do not have time or resources for. We guide you through online marketing and recommend the right solutions for a small or growing business.',
+  ],
+  [
+    'Practic, preluăm tot ce ține de marketing digital când nu ai timp sau resurse să le faci singur. Te ghidăm prin marketingul online și îți propunem soluțiile potrivite pentru o firmă mică sau în creștere.',
+    'In practice, we take on the digital marketing work you do not have time or resources for. We guide you through online marketing and recommend the right solutions for a small or growing business.',
   ],
   [
     'Practic, noi ne ocupam de toate aspectele de marketing digital pe care nu ai timp sau resurse sa le faci singur. In plus, suntem mereu la curent cu cele mai noi tendinte si tehnologii din industrie, asa ca te putem ghida prin lumea complicata a marketingului online si iti putem sugera cele mai bune solutii pentru afacerea ta.',
@@ -193,6 +260,38 @@ export const dictionary = [
   ],
 
   // Services short
+  [
+    'Ca agenție de web design din București, facem site-uri clare, rapide și ușor de folosit — nu template-uri cu logo-ul lipit.',
+    'As a web design agency in Bucharest, we make clear, fast sites that are easy to use — not templates with your logo stuck on.',
+  ],
+  [
+    'Te scoatem în Google pe ce caută clienții tăi, nu pe cuvinte care arată bine doar în raport.',
+    'We get you found on Google for what your clients actually search — not vanity keywords that only look good in a report.',
+  ],
+  [
+    'Actualizări, backup, securitate. Tu te ocupi de firmă, noi de site — ca să nu te trezești cu el picat într-o luni dimineața.',
+    'Updates, backups, security. You run the business, we run the site — so you do not wake up to it down on a Monday morning.',
+  ],
+  [
+    'Un logo pe care îl recunoști din două linii, nu o ilustrație pe care o uiți imediat.',
+    'A logo you recognize in two lines, not an illustration you forget immediately.',
+  ],
+  [
+    'Bani de ads puși pe căutări care aduc clienți, nu pe afișări de vanitate.',
+    'Ad spend on searches that bring clients, not vanity impressions.',
+  ],
+  [
+    'Texte care spun ce vinzi, pe limba omului care cumpără. Fără „sinergii” și fără umplutură.',
+    'Copy that says what you sell, in the language of the person who buys. No “synergies” and no filler.',
+  ],
+  [
+    'Ca agentie de web design din Bucuresti, cream site-uri moderne, rapide si usor de navigat.',
+    'As a web design agency in Bucharest, we build modern, fast websites that are easy to navigate.',
+  ],
+  [
+    'Ca agenție de web design din București, creăm site-uri moderne, rapide și ușor de navigat.',
+    'As a web design agency in Bucharest, we build modern, fast websites that are easy to navigate.',
+  ],
   [
     'Oferim servicii de design si dezvoltare web personalizate pentru a crea site-uri moderne, rapide si usor de navigat.',
     'We offer custom web design and development to build modern, fast websites that are easy to navigate.',
@@ -265,6 +364,18 @@ export const dictionary = [
     'How long until I see results from online marketing services?',
   ],
   [
+    'Trebuie să măresc bugetul ca să meargă marketingul online?',
+    'Do I have to increase my budget for online marketing to work?',
+  ],
+  [
+    'Cum aleg ce să facem împreună?',
+    'How do we choose what to work on together?',
+  ],
+  [
+    'Cum știu dacă treaba merge?',
+    'How do I know if the work is working?',
+  ],
+  [
     'Cum pot să îmi măresc bugetul pentru serviciile de marketing online?',
     'How can I increase my budget for online marketing services?',
   ],
@@ -289,6 +400,14 @@ export const dictionary = [
     'How do you track online marketing campaign performance?',
   ],
   [
+    'Cum pot să încep să lucrez cu agenția voastră de marketing digital?',
+    'How can I start working with your digital marketing agency?',
+  ],
+  [
+    'Cum pot sa incep sa lucrez cu agentia voastra de marketing digital?',
+    'How can I start working with your digital marketing agency?',
+  ],
+  [
     'Cum pot să încep să lucrez cu firma voastră de marketing online?',
     'How can I start working with your digital marketing agency?',
   ],
@@ -297,6 +416,42 @@ export const dictionary = [
     'How can I start working with your digital marketing agency?',
   ],
 
+  [
+    'Marketingul online e felul în care te găsesc oamenii care deja caută ce vinzi: Google, ads, conținut, social. Asta face o agenție de marketing digital din București — promovare online cu un plan, nu postări aruncate când îți amintești.',
+    'Online marketing is how people who already search for what you sell find you: Google, ads, content, social. That is what a digital marketing agency in Bucharest does — online promotion with a plan, not leftover posts when you remember.',
+  ],
+  [
+    'Dacă nu ești acolo, clientul nu te ocolește din răutate. Pur și simplu nu știe că exiști. De-asta merită o agenție de marketing online, nu un hobby de weekend.',
+    'If you are not there, the client is not snubbing you. They simply do not know you exist. That is why an online marketing agency is worth it — not a weekend hobby.',
+  ],
+  [
+    'Depinde de canal, nu de magie. SEO se vede de obicei în câteva luni. Google Ads și social pot aduce clienți în zile sau săptămâni, dacă oferta e clară. Marketingul online e treabă lungă: concurența, bugetul și cât de repede poți tu să răspunzi la lead-uri contează la fel de mult ca treaba noastră.',
+    'It depends on the channel, not on magic. SEO usually shows in a few months. Google Ads and social can bring clients in days or weeks, if the offer is clear. Online marketing is long work: competition, budget, and how fast you answer leads matter as much as what we do.',
+  ],
+  [
+    'Nu neapărat. Mai întâi scoatem mai mult din ce ai deja: site care convertește, canale care aduc clienți, tăiat ce arde bani degeaba. Abia apoi are sens să crești bugetul. Altfel doar plătești mai scump aceeași problemă.',
+    'Not necessarily. First we get more from what you already have: a site that converts, channels that bring clients, cutting what burns money for nothing. Only then does a bigger budget make sense. Otherwise you just pay more for the same problem.',
+  ],
+  [
+    'Pornim de la ce vrei tu să se întâmple, nu de la un pachet. Vrei să te găsească lumea pe Google în 6–12 luni? SEO. Vrei clienți luna asta? Ads. Îți lipsește site-ul? Îl facem. De obicei e un mix — ți-l spunem pe limba ta, cu un buget realist.',
+    'We start from what you want to happen, not from a package. Want people to find you on Google in 6–12 months? SEO. Want clients this month? Ads. Missing a site? We build it. Usually it is a mix — we say it in plain language, with a realistic budget.',
+  ],
+  [
+    'Ne uităm la ce contează: câți oameni ajung pe site, câți cer ofertă, cât costă un client. Nu-ți trimitem un PDF cu grafice ca să pară că s-a lucrat. Dacă ceva nu duce, îl oprim sau îl schimbăm. Date, nu intuiție.',
+    'We look at what matters: how many people reach the site, how many ask for a quote, what a client costs. We will not send a PDF of charts to look busy. If something does not work, we stop it or change it. Data, not gut feel.',
+  ],
+  [
+    'Ne scrii din formular, pe mail sau ne suni. Facem o consultație de 30 de minute, îți zicem ce am face și cam cât costă. Dacă ți se pare cinstit, începem. Dacă nu, rămâi cu o opinie utilă, nu cu un pitch de 40 de slide-uri.',
+    'Write via the form, email, or call. We do a 30-minute consult, tell you what we would do and roughly what it costs. If it feels fair, we start. If not, you still leave with a useful opinion — not a 40-slide pitch.',
+  ],
+  [
+    'Marketingul online este promovarea unei afaceri prin internet: SEO, publicitate plătită, conținut și social media. O agenție de marketing digital din București se ocupă de promovare online ca să fii găsit de clienții care te caută deja.',
+    'Online marketing is promoting a business on the internet: SEO, paid ads, content, and social media. A digital marketing agency in Bucharest handles online promotion so customers who already search for you can find you.',
+  ],
+  [
+    'Fără o prezență puternică online, pierzi potențiali clienți gata să cumpere. De aceea merită o agenție de marketing online, nu să încerci totul pe cont propriu.',
+    'Without a strong online presence, you lose potential customers ready to buy. That is why an online marketing agency is worth it — instead of trying to do everything yourself.',
+  ],
   [
     'Marketingul online este procesul de promovare a unei afaceri sau a unui produs prin intermediul internetului. Acesta implică utilizarea diferitelor tactici de marketing online, cum ar fi publicitatea plătită, marketingul de conținut, optimizarea motoarelor de căutare (SEO), marketingul prin e-mail și multe altele.',
     'Online marketing is promoting a business or product on the internet. It includes paid ads, content marketing, search engine optimization (SEO), email marketing, and more.',
@@ -762,7 +917,7 @@ export const enPageMeta = {
   '/en/': {
     title: 'Digital Marketing Agency Bucharest | Echipa de Tocilari',
     description:
-      'Bucharest digital marketing agency: website design, SEO, Google Ads, and maintenance. Free 30-minute consult — we work remotely across Romania.',
+      'Bucharest digital marketing agency. We do online promotion, web design, SEO, and Google Ads. Free 30-minute consult — we work remotely across Romania.',
   },
   '/en/about/': {
     title: 'About Us | Digital Marketing Agency in Bucharest',
@@ -840,14 +995,14 @@ export const enOrg = {
 export const enFaqs = [
   {
     q: 'What is online marketing and why should I use it?',
-    a: 'Online marketing promotes your business on the internet through SEO, paid ads, content, email, and social media. Most buyers search online first — without a strong presence you lose ready-to-buy customers.',
+    a: 'Online marketing is how people who already search for what you sell find you. A digital marketing agency in Bucharest does online promotion with a plan — not leftover posts when you remember.',
   },
   {
     q: 'How long until I see results from online marketing services?',
-    a: 'SEO often takes a few months; PPC and social ads can show results in days or weeks. Online marketing is long-term and depends on competition, budget, and execution quality.',
+    a: 'SEO usually shows in a few months. Google Ads and social can bring clients in days or weeks. Online marketing is long work: competition, budget, and how fast you answer leads matter as much as what we do.',
   },
   {
     q: 'How can I start working with your digital marketing agency?',
-    a: 'Contact us via the form or email. We offer a free consultation, a tailored plan, and a budget estimate — then we start if you are happy to move forward.',
+    a: 'Write via the form or email. We do a 30-minute consult, tell you what we would do and roughly what it costs. If it feels fair, we start.',
   },
 ];

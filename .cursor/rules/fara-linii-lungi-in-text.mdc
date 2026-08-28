@@ -1,0 +1,20 @@
+---
+description: Nu folosi liniuțe lungi sau -- ca punctuație în textul scris pentru oameni
+alwaysApply: true
+---
+
+# Fără `--` / liniuță lungă în text
+
+În copy, chat, meta, FAQ, documentație și orice text pentru oameni: **nu folosi** `--`, liniuță em (`—`) sau liniuță en (`–`) ca pauză în frază.
+
+Rescrie propoziția. Folosește virgulă, punct, două puncte sau o frază nouă.
+
+Nu se aplică la cod: flag-uri CLI (`--watch`), comentarii de cod, git, HTML.
+
+```
+Greșit: O agenție din București — pentru promovarea de care ai nevoie.
+Greșit: O agenție din București -- pentru promovarea de care ai nevoie.
+
+Corect: O agenție din București, pentru promovarea de care ai nevoie.
+Corect: O agenție din București. Promovarea de care ai nevoie, nu cea din broșuri.
+```
