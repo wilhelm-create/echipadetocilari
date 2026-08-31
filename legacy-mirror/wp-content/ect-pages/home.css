@@ -1,7 +1,7 @@
-/* Homepage additions: service grid trim, maintenance band, "Cum lucrăm cu tine".
-   Tokens taken from the live Elementor build: Montserrat, brand #fd8649,
-   ink #27272d, body 16/22.4. Everything here is prefixed `ect-` so it never
-   collides with Elementor's ID-bound rules. */
+/* Homepage additions: service grid trim, maintenance band, checklist band,
+   "Cum lucrăm cu tine". Tokens taken from the live Elementor build:
+   Montserrat, brand #fd8649, ink #27272d, body 16/22.4. Everything here is
+   prefixed `ect-` so it never collides with Elementor's ID-bound rules. */
 
 /* The mirror only painted the first card's icon in brand colour because the
    other five were hidden. Now that all six show, they match. */
@@ -477,5 +477,375 @@
 
   .ect-gantt {
     margin-top: 36px;
+  }
+}
+
+/* ─── checklist band ──────────────────────────────────────────────────────── */
+/* White card, charcoal list well, orange bubbles. Layout follows Project One
+   (list left, copy vertically centered, bubbles over the whole panel). */
+
+.ect-checklist {
+  position: relative;
+  font-family: Montserrat, system-ui, sans-serif;
+  color: #27272d;
+  padding: 16px 0 28px;
+}
+
+.ect-checklist__shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1312px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.ect-checklist__panel {
+  position: relative;
+  display: grid;
+  gap: 20px;
+  padding: 16px 18px 18px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  color: #27272d;
+  box-shadow: 0 0 28px 0 rgba(253, 134, 73, 0.22);
+  outline: 1px solid rgba(253, 134, 73, 0.28);
+}
+
+.ect-checklist__board {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  height: 220px;
+  background: #27272d;
+  color: #fff;
+  border-radius: 16px;
+  padding: 4px 8px;
+}
+
+.ect-checklist__stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
+.ect-checklist__track {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: ect-checklist-scroll 42s linear infinite;
+}
+
+.ect-checklist__stage:hover .ect-checklist__track {
+  animation-play-state: paused;
+}
+
+.ect-checklist__track li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px 10px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.ect-checklist__track li::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  opacity: 0.45;
+}
+
+.ect-checklist__track li::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 14px;
+  height: 4px;
+  margin-left: auto;
+  background-image: radial-gradient(circle, currentColor 1.15px, transparent 1.25px);
+  background-size: 4.6px 4px;
+  background-repeat: repeat-x;
+  opacity: 0.35;
+}
+
+.ect-checklist__copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.ect-checklist__eyebrow {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22.4px;
+  font-weight: 300;
+  color: #fd8649;
+}
+
+.ect-checklist__title {
+  margin: 0;
+  font-size: 7.5vw;
+  line-height: 1.2;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.ect-checklist__hl {
+  display: inline;
+  padding: 0.02em 0.16em 0.08em;
+  border-radius: 8px;
+  background: #fd8649;
+  color: #27272d;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.ect-checklist__lead {
+  margin: 0;
+  max-width: 36em;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 300;
+}
+
+.ect-checklist__cta {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 12px 22px;
+  border-radius: 15px 15px 15px 40px;
+  background: #fd8649;
+  color: #fff;
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ect-checklist__cta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px 0 rgba(253, 134, 73, 0.69);
+  color: #fff;
+}
+
+.ect-checklist__quotes {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.ect-checklist__quotes li {
+  position: absolute;
+  max-width: 230px;
+  padding: 8px 14px 10px;
+  border-radius: 14px 14px 14px 4px;
+  background: #fd8649;
+  color: #27272d;
+  font-family: 'Caveat ECT', 'Segoe Script', cursive;
+  font-size: 20px;
+  line-height: 1.15;
+  font-weight: 600;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  animation: ect-bubble 14s ease-in-out infinite;
+}
+
+.ect-checklist__quotes li::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  bottom: -7px;
+  border: 7px solid transparent;
+  border-top-color: #fd8649;
+}
+
+.ect-checklist__quotes li:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  --r: -4deg;
+  animation-delay: 0s;
+}
+
+.ect-checklist__quotes li:nth-child(2) {
+  top: 14%;
+  left: 56%;
+  --r: 3deg;
+  animation-delay: 2.2s;
+}
+
+.ect-checklist__quotes li:nth-child(3) {
+  top: 48%;
+  left: 7%;
+  --r: -2deg;
+  animation-delay: 4.4s;
+}
+
+.ect-checklist__quotes li:nth-child(4) {
+  top: 36%;
+  left: 62%;
+  --r: 5deg;
+  animation-delay: 6.6s;
+}
+
+.ect-checklist__quotes li:nth-child(5) {
+  top: 6%;
+  left: 32%;
+  --r: -6deg;
+  animation-delay: 8.8s;
+}
+
+.ect-checklist__quotes li:nth-child(6) {
+  top: 76%;
+  left: 8%;
+  --r: 2deg;
+  animation-delay: 11s;
+}
+
+@keyframes ect-checklist-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes ect-bubble {
+  0%,
+  5% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.88) rotate(var(--r, 0deg));
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0) scale(1.04) rotate(var(--r, 0deg));
+  }
+  14%,
+  48% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(var(--r, 0deg));
+  }
+  56%,
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9) rotate(var(--r, 0deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ect-checklist__track {
+    animation: none;
+  }
+
+  .ect-checklist__quotes li {
+    animation: none;
+    opacity: 0;
+  }
+
+  .ect-checklist__quotes li:nth-child(1),
+  .ect-checklist__quotes li:nth-child(2) {
+    opacity: 1;
+    transform: rotate(var(--r, 0deg));
+  }
+}
+
+@media (min-width: 768px) {
+  .ect-checklist {
+    padding: 20px 0 32px;
+  }
+
+  .ect-checklist__title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  .ect-checklist__panel {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    align-items: stretch;
+    height: 400px;
+    gap: 24px;
+    padding: 14px 24px 14px 14px;
+  }
+
+  .ect-checklist__copy {
+    order: 0;
+    padding: 4px 0 4px 4px;
+  }
+
+  .ect-checklist__board {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+@media (min-width: 1025px) {
+  .ect-checklist__shell {
+    width: calc(100% - 128px);
+    max-width: 1312px;
+    padding: 0;
+  }
+
+  .ect-checklist__panel {
+    height: 480px;
+    gap: 32px;
+    padding: 16px 32px 16px 16px;
+  }
+
+  .ect-checklist__title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .ect-checklist__lead {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .ect-checklist__copy {
+    padding: 8px 0 8px 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ect-checklist__copy {
+    order: -1;
+  }
+
+  .ect-checklist__quotes li {
+    max-width: 200px;
+  }
+
+  .ect-checklist__quotes li:nth-child(2),
+  .ect-checklist__quotes li:nth-child(4) {
+    left: 22%;
+  }
+
+  .ect-checklist__cta {
+    align-self: stretch;
+    justify-content: center;
   }
 }
