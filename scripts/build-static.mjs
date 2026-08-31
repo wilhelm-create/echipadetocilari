@@ -146,6 +146,14 @@ function enhanceHtml(file) {
   // The scraper wrote `?_ver%3D…`; the files on disk (and Vercel) use `_ver=`.
   html = html.replace(/(src|href)="([^"]*?)_ver%3D([^"]*)"/gi, '$1="$2_ver=$3"');
 
+  // The scrape left page links relative (`servicii-seo/index.html`). They resolve
+  // at the RO root but not from /en/, so every EN twin linked into a 404. Only
+  // paths that are real routes are rewritten; anything else stays untouched.
+  html = html.replace(/href="((?:\.\.\/)*)([\w\-/]*)index\.html"/gi, (match, _up, dir) => {
+    const target = '/' + dir.replace(/^\/+/, '');
+    return isOwnedPage(target) ? `href="${target}"` : match;
+  });
+
   html = setLang(html, 'ro');
 
   if (!/name=["']viewport["']/i.test(html)) {

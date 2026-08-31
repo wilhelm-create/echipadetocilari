@@ -62,14 +62,15 @@ export const roPageMeta = {
 
 export const roOrg = {
   description:
-    'Agenție de marketing digital din România: creare site web, optimizare SEO, mentenanță, PPC, logo design și copywriting.',
+    'Agenție de marketing digital din România: creare site web, creare magazin online, dezvoltare aplicații, optimizare SEO, Google Ads, Facebook Ads și mentenanță.',
   knowsAbout: [
     'Creare site web',
-    'Optimizare SEO',
+    'Creare magazin online',
+    'Dezvoltare aplicații mobile',
+    'Servicii SEO',
+    'Campanii Google Ads',
+    'Promovare Facebook Ads',
     'Administrare site',
-    'Pay Per Click',
-    'Logo design',
-    'Copywriting',
   ],
   address: {
     streetAddress: 'Alexandru Zagoritz nr. 12, sector 2',

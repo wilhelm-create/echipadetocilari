@@ -261,16 +261,40 @@ export const dictionary = [
 
   // Services short
   [
+    'Ca agenție de web design din București, facem site-uri clare, rapide și ușor de folosit. Nu template-uri cu logo-ul lipit.',
+    'As a web design agency in Bucharest, we make clear, fast sites that are easy to use. Not templates with your logo stuck on.',
+  ],
+  [
     'Ca agenție de web design din București, facem site-uri clare, rapide și ușor de folosit — nu template-uri cu logo-ul lipit.',
-    'As a web design agency in Bucharest, we make clear, fast sites that are easy to use — not templates with your logo stuck on.',
+    'As a web design agency in Bucharest, we make clear, fast sites that are easy to use. Not templates with your logo stuck on.',
+  ],
+  [
+    'Magazin online din care chiar se cumpără. Nu un catalog frumos care cade la checkout.',
+    'An online store people actually buy from. Not a pretty catalogue that falls over at checkout.',
+  ],
+  [
+    'Aplicații mobile și aplicații web interne: programări, CRM, platformă. Nu un site cu alt nume.',
+    'Mobile apps and internal web apps: bookings, CRM, platform. Not a website under another name.',
   ],
   [
     'Te scoatem în Google pe ce caută clienții tăi, nu pe cuvinte care arată bine doar în raport.',
-    'We get you found on Google for what your clients actually search — not vanity keywords that only look good in a report.',
+    'We get you found on Google for what your clients actually search, not vanity keywords that only look good in a report.',
+  ],
+  [
+    'Campanii Google Ads puse pe căutări care aduc clienți, nu pe afișări de vanitate.',
+    'Google Ads campaigns aimed at searches that bring clients, not vanity impressions.',
+  ],
+  [
+    'Promovare pe Facebook și Instagram către oameni care au de ce să te caute, nu către tot feed-ul.',
+    'Facebook and Instagram ads aimed at people with a reason to look for you, not at the whole feed.',
+  ],
+  [
+    'Actualizări, backup, securitate. Tu te ocupi de firmă, noi de site, ca să nu te trezești cu el picat într-o luni dimineața.',
+    'Updates, backups, security. You run the business, we run the site, so you do not wake up to it down on a Monday morning.',
   ],
   [
     'Actualizări, backup, securitate. Tu te ocupi de firmă, noi de site — ca să nu te trezești cu el picat într-o luni dimineața.',
-    'Updates, backups, security. You run the business, we run the site — so you do not wake up to it down on a Monday morning.',
+    'Updates, backups, security. You run the business, we run the site, so you do not wake up to it down on a Monday morning.',
   ],
   [
     'Un logo pe care îl recunoști din două linii, nu o ilustrație pe care o uiți imediat.',
@@ -283,6 +307,73 @@ export const dictionary = [
   [
     'Texte care spun ce vinzi, pe limba omului care cumpără. Fără „sinergii” și fără umplutură.',
     'Copy that says what you sell, in the language of the person who buys. No “synergies” and no filler.',
+  ],
+
+  // Home: service cards + maintenance band
+  ['Creare magazin online', 'Online store development'],
+  ['Dezvoltare aplicații', 'App development'],
+  ['Mentenanță site', 'Website maintenance'],
+  ['>Vezi ce include<', '>See what it covers<'],
+  ['>Toate serviciile<', '>All services<'],
+
+  // Home: "Cum lucrăm cu tine" (header + chart)
+  ['De la primul mesaj până la site live', 'From your first message to a live site'],
+  [
+    'Cum lucrăm <span class="ect-process__hl">cu tine</span>',
+    'How we work <span class="ect-process__hl">with you</span>',
+  ],
+  [
+    'Un apel de 30 de minute, un plan pe înțeles, apoi punem mâna. Site-ul, magazinul și aplicația au termen scris în ofertă. SEO, ads și mentenanța merg lună de lună.',
+    'A 30-minute call, a plan in plain language, then we get to work. Sites, stores and apps get a delivery date in the quote. SEO, ads and maintenance run month to month.',
+  ],
+  ['Consultație de 30 de minute, gratuită', 'Free 30-minute consultation'],
+  ['Îți spunem și ce nu merită', 'We also tell you what is not worth doing'],
+  ['Un singur om de contact', 'One person to talk to'],
+  ['Termen scris în ofertă', 'A deadline written into the quote'],
+  ['Și fără ședințe inutile!', 'And no pointless meetings!'],
+
+  // Chart phases. Anchored on the tags: "Apelul" alone is short enough to hit
+  // unrelated copy elsewhere in the document.
+  ['>Primul contact<', '>First contact<'],
+  ['>Apelul<', '>The call<'],
+  ['>Plan și ofertă<', '>Plan and quote<'],
+  ['>Execuție și teste<', '>Build and testing<'],
+  ['>Live și raport<', '>Live and reporting<'],
+
+  // Chart steps
+  ['>Ne scrii<', '>You write to us<'],
+  [
+    'Ce te arde: site, magazin, aplicație, ads sau SEO. Două paragrafe ajung.',
+    'What hurts: site, store, app, ads or SEO. Two paragraphs are enough.',
+  ],
+  ['Vorbim 30 de minute', 'We talk for 30 minutes'],
+  [
+    'Îți spunem dacă merită, ce am face și cam cât costă. Dacă nu e pentru noi, afli în apel, nu după o lună.',
+    'We tell you if it is worth it, what we would do and roughly what it costs. If it is not for us, you find out on the call, not a month later.',
+  ],
+  ['>Primești planul<', '>You get the plan<'],
+  [
+    'Pași, termen sau ritm lunar, preț. Fără 12 ședințe până la un răspuns.',
+    'Steps, a deadline or a monthly rhythm, a price. No 12 meetings to get an answer.',
+  ],
+  ['>Punem mâna<', '>We get to work<'],
+  [
+    'Construim sau pornim campaniile. Vorbești cu un singur om, nu cu un grup.',
+    'We build, or we launch the campaigns. You talk to one person, not a group chat.',
+  ],
+  ['>Verificăm tot<', '>We check everything<'],
+  [
+    'Viteză, mobil, formulare, analytics. Verificăm tot înainte să zicem gata.',
+    'Speed, mobile, forms, analytics. We check all of it before we call it done.',
+  ],
+  ['>Vezi rezultatul<', '>You see the result<'],
+  [
+    'Site-ul, magazinul sau aplicația live. La abonament, raport lunar pe înțeles.',
+    'The site, store or app goes live. On a retainer, a monthly report in plain language.',
+  ],
+  [
+    'Proiectele au dată de livrare scrisă în ofertă. SEO, Google Ads, Facebook Ads și mentenanța merg lunar, cu raport din prima lună.',
+    'Projects get a delivery date written into the quote. SEO, Google Ads, Facebook Ads and maintenance run monthly, with a report from the first month.',
   ],
   [
     'Ca agentie de web design din Bucuresti, cream site-uri moderne, rapide si usor de navigat.',
@@ -973,14 +1064,15 @@ export const enPageMeta = {
 
 export const enOrg = {
   description:
-    'Digital marketing agency in Romania: website design, SEO services, website maintenance, PPC advertising, logo design, and copywriting.',
+    'Digital marketing agency in Romania: website design, online stores, mobile and web apps, SEO services, Google Ads, Facebook Ads, and website maintenance.',
   knowsAbout: [
     'Website design',
+    'Online store development',
+    'Mobile app development',
     'SEO services',
+    'Google Ads',
+    'Facebook Ads',
     'Website maintenance',
-    'PPC advertising',
-    'Logo design',
-    'Copywriting',
     'Digital marketing',
   ],
   address: {
