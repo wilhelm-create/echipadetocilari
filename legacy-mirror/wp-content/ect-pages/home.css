@@ -144,15 +144,22 @@
   padding: 70px 0 84px;
 }
 
+/* BG-home-new4 carries the only real turquoise the theme owns (#e6f9fe; every
+   other sheet washes out to #f2fcfe) and pairs it with lavender on the right,
+   which is the arrangement this section wants. Sized rather than covered: the
+   section is 1270px tall against a sheet cut for an 800px band, so cover would
+   blow the blobs up to twice the size they are drawn at everywhere else. The
+   width here keeps the turquoise at ~525px, same as it renders further up the
+   page. Already loaded up there too, so it costs no request. */
 .ect-process::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url('../uploads/2024/02/Bg-more-about-the-services.png');
-  background-position: center center;
+  background-image: url('../uploads/2024/02/BG-home-new4.png');
+  background-position: left -60px center;
+  background-size: 1750px auto;
   background-repeat: no-repeat;
-  background-size: cover;
   pointer-events: none;
 }
 
@@ -219,12 +226,11 @@
   gap: 10px;
   padding: 12px 20px;
   border-radius: 15px;
-  background: #fd8649;
-  box-shadow: 0 10px 24px 0 rgba(253, 134, 73, 0.45);
-  color: #27272d;
+  background: #fff;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
   font-size: 15px;
   line-height: 21px;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 .ect-process__chips li::before {
@@ -233,7 +239,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #fff;
+  background: #fd8649;
 }
 
 /* Hand-drawn aside pointing at the chart. Decorative, so it only shows where
@@ -271,15 +277,15 @@
   counter-reset: ect-step;
 }
 
-/* White fill like every other card on the page. The hairline is the one
-   addition: at chart size the theme's 5% shadow alone does not read as a bar. */
+/* Solid brand orange: the bars are the subject of the section, so they carry
+   the colour instead of borrowing it from a title. No hairline any more, the
+   fill separates them from the page on its own. */
 .ect-step {
   position: relative;
   counter-increment: ect-step;
-  padding: 18px 52px 20px 22px;
-  border: 1px solid rgba(253, 134, 73, 0.3);
+  padding: 19px 53px 21px 23px;
   border-radius: 15px 15px 15px 40px;
-  background: #fff;
+  background: #fd8649;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
 }
 
@@ -293,10 +299,10 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #fd8649;
-  color: #27272d;
+  background: #fff;
+  color: #fd8649;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .ect-step__title {
@@ -304,15 +310,17 @@
   font-size: 18px;
   line-height: 22px;
   font-weight: 500;
-  color: #fd8649;
+  color: #fff;
 }
 
+/* 400 rather than the 300 used elsewhere: white on orange is a low-contrast
+   pairing and hairline strokes are the first thing to disappear in it. */
 .ect-step__body {
   margin: 0;
   font-size: 15px;
   line-height: 21px;
-  font-weight: 300;
-  color: #27272d;
+  font-weight: 400;
+  color: #fff;
 }
 
 @media (min-width: 600px) {
@@ -398,7 +406,7 @@
   .ect-step {
     z-index: 1;
     margin-right: 6px;
-    padding: 16px 46px 18px 20px;
+    padding: 17px 47px 19px 21px;
   }
 
   /* Gantt choreography: each bar starts where the previous phase hands over.
