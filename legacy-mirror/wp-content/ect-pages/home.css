@@ -134,16 +134,31 @@
   src: url('fonts/caveat-600.woff2') format('woff2');
 }
 
-/* No background of its own: the rest of the home page is white and the chart
-   is what should stand out, not the band it sits in. */
+/* No flat fill of its own. Every other block on the home page sits on white
+   with one of the theme's blob sheets behind it, painted on an Elementor
+   container's ::before; same trick here, by hand. */
 .ect-process {
+  position: relative;
   font-family: Montserrat, system-ui, sans-serif;
   color: #27272d;
   padding: 70px 0 84px;
 }
 
+.ect-process::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../uploads/2024/02/Bg-more-about-the-services.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: none;
+}
+
 .ect-process__inner {
   position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 1150px;
   margin: 0 auto;
@@ -204,11 +219,12 @@
   gap: 10px;
   padding: 12px 20px;
   border-radius: 15px;
-  background: #fff;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+  background: #fd8649;
+  box-shadow: 0 10px 24px 0 rgba(253, 134, 73, 0.45);
+  color: #27272d;
   font-size: 15px;
   line-height: 21px;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 .ect-process__chips li::before {
@@ -217,7 +233,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #fd8649;
+  background: #fff;
 }
 
 /* Hand-drawn aside pointing at the chart. Decorative, so it only shows where
